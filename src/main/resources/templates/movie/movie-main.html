@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Movie</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Все кино/сериалы</h1>
+<a href="/movie/filter">Поиск кино/сериалов</a>
+<a href="/movie/add">Добавить кино/сериал</a>
+<div th:each="el : ${movie}">
+    <h3 th:text="${el.name}"></h3>
+</div>
+</body>
+</html>
