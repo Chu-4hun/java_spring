@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add user</title>
+</head>
+<body>
+<form th:action="${'/user/add'}" method="post">
+  <input type="text" name="nickname" placeholder="Введите имя"/>
+  <input type="date" name="birthdate" placeholder="Введите дату рождения"/>
+  <input type="number" name="views" placeholder="Введите кол-во просмотров"/>
+  <input type="number" name="friends" placeholder="Введите кол-во друзей"/>
+  <input type="date" name="register_date" placeholder="Введите дату регистрации"/>
+  <br>
+  <button type="submit">Добавить пользователя</button>
+</form>
+</body>
+</html>

@@ -8,11 +8,12 @@ import javax.persistence.Id;
 
 @Entity
 public class User {
-     public User(String nickname, String birthdate, int views,int friends) {
+     public User(String nickname, String birthdate,String register_date, int views,int friends) {
         this.nickname = nickname;
         this.birthdate = birthdate;
         this.views = views;
         this.friends = friends;
+        this.register_date = register_date;
     }
 
     public User() {
@@ -22,7 +23,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String nickname, birthdate;
+    private String nickname, birthdate, register_date;
     private int views, friends;
 
     public void setId(Long id) {
@@ -63,5 +64,13 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    public String getRegister_date() {
+        return register_date;
+    }
+
+    public void setRegister_date(String register_date) {
+        this.register_date = register_date;
     }
 }

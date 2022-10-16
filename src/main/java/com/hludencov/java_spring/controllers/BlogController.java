@@ -15,18 +15,18 @@ public class BlogController  {
     @Autowired
     PostRepository postRepository;
 
-    @GetMapping("/")
+    @GetMapping("/blog")
     public String blogMain(Model model)
     {
         Iterable<Post> posts = postRepository.findAll();
         model.addAttribute("posts", posts);
-        return "blog-main";
+        return "blog/blog-main";
     }
 
    @GetMapping("/blog/add")
     public String blogAdd(Model model)
     {
-        return "blog-add";
+        return "blog/blog-add";
     }
 
     @PostMapping("/blog/add")
@@ -42,7 +42,7 @@ public class BlogController  {
     @GetMapping("/blog/filter")
     public String blogFilter(Model model)
     {
-        return "blog-filter";
+        return "blog/blog-filter";
     }
 
     @PostMapping("/blog/filter/result")
@@ -51,7 +51,7 @@ public class BlogController  {
         List<Post> result = postRepository.findByTitleContains(title);
 //        List<Post> result = postRepository.findLikeTitle(title);
         model.addAttribute("result", result);
-        return "blog-filter";
+        return "blog/blog-filter";
     }
 
 
