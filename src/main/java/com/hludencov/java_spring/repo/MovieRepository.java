@@ -8,5 +8,6 @@ import java.util.List;
 public interface MovieRepository extends CrudRepository<Movie, Long> {
 
     List<Movie> findByNameContains(String title);
+    List<Movie> findByName(String title);
 
 }

@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface UsersRepository extends CrudRepository<User, Long> {
     List<User> findByNicknameContains(String title);
+    List<User> findByNickname(String title);
 }

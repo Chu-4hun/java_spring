@@ -6,11 +6,11 @@
 </head>
 <body>
 <form th:action="${'/movie/add'}" method="post">
-  <input type="text" name="nickname" placeholder="Введите имя"/>
-  <input type="date" name="birthdate" placeholder="Введите дату рождения"/>
-  <input type="number" name="views" placeholder="Введите кол-во просмотров"/>
-  <input type="number" name="friends" placeholder="Введите кол-во друзей"/>
-  <input type="date" name="register_date" placeholder="Введите дату регистрации"/>
+  <input type="text" name="name" placeholder="Введите имя"/>
+  <input type="date" name="release_date" placeholder="Введите дату выпуска"/>
+  <input type="number" name="rating" placeholder="Введите рейтинг"/>
+  <input type="number" name="series_amount" placeholder="Введите кол-во просмотров"/>
+  <input type="number" name="comments_amount" placeholder="Введите количество комметариев"/>
   <br>
   <button type="submit">Добавить кино/сериал</button>
 </form>

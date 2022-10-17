@@ -50,4 +50,10 @@ public class MovieController {
         model.addAttribute("result", result);
         return "movie/movie-filter";
     }
+    @PostMapping("/movie/filter_strict/result")
+    public String blogStrictResult(@RequestParam String title, Model model) {
+        List<Movie> result = movieRepository.findByName(title);
+        model.addAttribute("result", result);
+        return "movie/movie-filter";
+    }
 }

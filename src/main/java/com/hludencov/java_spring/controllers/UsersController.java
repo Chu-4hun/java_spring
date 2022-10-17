@@ -55,4 +55,10 @@ public class UsersController {
         model.addAttribute("result", result);
         return "user/user-filter";
     }
+    @PostMapping("/user/filter_strict/result")
+    public String userStrictResult(@RequestParam String title, Model model) {
+        List<User> result = usersRepository.findByNickname(title);
+        model.addAttribute("result", result);
+        return "user/user-filter";
+    }
 }
