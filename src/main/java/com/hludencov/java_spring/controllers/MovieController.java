@@ -67,6 +67,20 @@ public class MovieController {
         return "redirect:../";
     }
 
+    @GetMapping("/movie/show/{movie}")
+    public String movieShow(
+            Movie movie,
+            Model model) {
+        model.addAttribute("movie", movie);
+        return "movie/movie-show";
+    }
+
+    @PostMapping("/movie/del/{movie}")
+    public String movieDel(
+            Movie movie) {
+        movieRepository.delete(movie);
+        return "redirect:../";
+    }
     @GetMapping("/movie/filter")
     public String blogFilter(Model model) {
         return "movie/movie-filter";

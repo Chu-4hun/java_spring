@@ -14,9 +14,9 @@
     <p>
         <a th:href="'/movie/edit/'+${el.getId()}">Редактировать</a>
         <a th:href="'/movie/show/'+${el.getId()}">Посмореть</a>
-<!--        <a href="#" onclick="document.getElementById('delForm').submit();">Удалить</a>-->
+        <a href="#" onclick="document.getElementById('delForm').submit();">Удалить</a>
     </p>
-<!--    <form id="delForm" method="post" th:action="'/book/del/'+${book.id}"></form>-->
+    <form id="delForm" method="post" th:action="'/movie/del/'+${el.id}"></form>
 </div>
 </body>
 </html>
