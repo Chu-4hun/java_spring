@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Movie</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<form th:action="${'/user/edit/'+user.getId()}" method="post">
+    <label>
+        Имя:
+        <input type="text" name="nickname" placeholder="Введите никнейм" th:value="${user.getNickname()}">
+    </label>
+    <br>
+    <label>
+        День рождения:
+        <input type="date" name="birthdate" placeholder="Введите дату рождения" th:value="${user.getNickname()}"/>
+    </label>
+    <br>
+    <label>
+        Количество просмотров:
+        <input type="number" name="views" placeholder="Введите количество просмотров" th:value="${user.views}"/>
+    </label>
+    <br>
+    <label>
+        Количество друзей:
+        <input type="number" name="friends" placeholder="Введите кол-во друзей" th:value="${user.friends}"/>
+    </label>
+    <br>
+    <label>
+        Дата регистрации:
+        <input type="date" name="register_date" placeholder="Введите дату регистрации" th:value="${user.register_date}"/>
+    </label>
+    <br>
+    <button type="submit">Редактировать пользователя</button>
+</form>
+</body>
+</html>

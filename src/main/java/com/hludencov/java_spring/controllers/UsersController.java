@@ -44,6 +44,48 @@ public class UsersController {
         return "redirect:/user";
     }
 
+
+    @GetMapping("/user/edit/{user}")
+    public String movieEdit(
+            User user,
+            Model model) {
+        model.addAttribute("user", user);
+        return "user/user-edit";
+    }
+
+    @PostMapping("/user/edit/{user}")
+    public String userPostEdit(
+            @RequestParam String nickname,
+            @RequestParam String birthdate,
+            @RequestParam String register_date,
+            @RequestParam int views,
+            @RequestParam int friends,
+            User user
+    ) {
+        user.setNickname(nickname);
+        user.setBirthdate(birthdate);
+        user.setRegister_date(register_date);
+        user.setViews(views);
+        user.setFriends(friends);
+        usersRepository.save(user);
+        return "redirect:../";
+    }
+
+    @GetMapping("/user/show/{user}")
+    public String movieShow(
+            User user,
+            Model model) {
+        model.addAttribute("user", user);
+        return "user/user-show";
+    }
+
+    @GetMapping("/user/del/{user}")
+    public String movieDel(
+            User user) {
+        usersRepository.delete(user);
+        return "redirect:../";
+    }
+
     @GetMapping("/user/filter")
     public String userFilter(Model model) {
         return "user/user-filter";

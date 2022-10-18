@@ -75,7 +75,7 @@ public class MovieController {
         return "movie/movie-show";
     }
 
-    @PostMapping("/movie/del/{movie}")
+    @GetMapping("/movie/del/{movie}")
     public String movieDel(
             Movie movie) {
         movieRepository.delete(movie);

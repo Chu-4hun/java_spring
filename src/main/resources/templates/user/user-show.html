@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title th:value="${user.nickname}"></title>
+</head>
+<body>
+<h3 th:text="${user.nickname}"></h3>
+<p th:text="${user.birthdate}"></p>
+<p th:text="${user.views}"></p>
+<p th:text="${user.friends}"></p>
+<p th:text="${user.register_date}"></p>
+</body>
+</html>

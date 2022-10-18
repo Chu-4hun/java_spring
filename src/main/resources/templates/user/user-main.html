@@ -10,6 +10,12 @@
 <a href="/user/add">Добавить пользователя</a>
 <div th:each="el : ${users}">
     <h3 th:text="${el.nickname}"></h3>
+    <p th:text="${el.birthdate}"></p>
+    <p>
+        <a th:href="'/user/edit/'+${el.getId()}">Редактировать</a>
+        <a th:href="'/user/show/'+${el.getId()}">Посмореть</a>
+        <a th:href="'/user/del/'+${el.getId()}">Удалить</a>
+    </p>
 </div>
 </body>
 </html>
