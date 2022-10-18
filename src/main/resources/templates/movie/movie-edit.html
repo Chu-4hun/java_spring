@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Movie</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<form th:action="${'/movie/edit/'+movie.getId()}" method="post">
+    <label>
+        Название:
+        <input type="text" name="name" placeholder="Введите название кинги" th:value="${movie.name}">
+    </label>
+    <br>
+    <label>
+        Дата выпуска:
+        <input type="date" name="release_date" placeholder="Введите дату выпуска" th:value="${movie.release_date}"/>
+    </label>
+    <br>
+    <label>
+        Рейтинг:
+        <input type="number" name="rating" placeholder="Введите рейтинг" th:value="${movie.rating}"/>
+    </label>
+    <br>
+    <label>
+        Количество комметариев:
+        <input type="number" name="series_amount" placeholder="Введите количество комметариев" th:value="${movie.comments_amount}"/>
+    </label>
+    <br>
+    <label>
+        Количество серий:
+        <input type="number" name="comments_amount" placeholder="Введите кол-во просмотров" th:value="${movie.series_amount}"/>
+    </label>
+    <br>
+    <button type="submit">Редактировать кино/сериал</button>
+</form>
+</body>
+</html>

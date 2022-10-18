@@ -21,10 +21,6 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-
-
-
     private String name, release_date;
     private double rating;
     private int series_amount, comments_amount;
@@ -67,6 +63,14 @@ public class Movie {
 
     public void setRelease_date(String release_date) {
         this.release_date = release_date;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
 
