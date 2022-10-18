@@ -7,6 +7,8 @@
     <title th:value="${user.nickname}"></title>
 </head>
 <body>
+<div th:insert="header">...</div>
+
 <h3 th:text="${user.nickname}"></h3>
 <p th:text="${user.birthdate}"></p>
 <p th:text="${user.views}"></p>

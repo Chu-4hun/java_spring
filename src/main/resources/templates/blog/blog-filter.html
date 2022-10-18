@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
 </head>
 <body>
+<div th:insert="header">...</div>
 <h2>Фильтрация</h2>
 <form method="post" th:action="${'/blog/filter/result'}">
     <input type="text" name="title">

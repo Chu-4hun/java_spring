@@ -1,18 +1,52 @@
 <!DOCTYPE html>
+
+<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Add movie</title>
 </head>
 <body>
-<form th:action="${'/movie/add'}" method="post">
-  <input type="text" name="name" placeholder="Введите имя"/>
-  <input type="date" name="release_date" placeholder="Введите дату выпуска"/>
-  <input type="number" name="rating" placeholder="Введите рейтинг"/>
-  <input type="number" name="series_amount" placeholder="Введите кол-во просмотров"/>
-  <input type="number" name="comments_amount" placeholder="Введите количество комметариев"/>
-  <br>
-  <button type="submit">Добавить кино/сериал</button>
-</form>
+<div th:insert="header">...</div>
+<div class="w-full max-w-xs">
+    <form th:action="${'/movie/add'}" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <label>
+            Название:
+            <input type="text" name="name" placeholder="Введите название кино"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </label>
+        <br>
+        <label>
+            Дата выпуска:
+            <input type="date" name="release_date" placeholder="Введите дату выпуска"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+        </label>
+        <br>
+        <label>
+            Рейтинг:
+            <input type="number" name="rating" placeholder="Введите рейтинг"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+        </label>
+        <br>
+        <label>
+            Количество комметариев:
+            <input type="number" name="series_amount" placeholder="Введите количество комметариев"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   />
+        </label>
+        <br>
+        <label>
+            Количество серий:
+            <input type="number" name="comments_amount" placeholder="Введите кол-во просмотров"
+
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+        </label>
+        <br>
+        <button type="submit"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Добавить кино/сериал
+        </button>
+    </form>
+</div>
 </body>
 </html>

@@ -1,12 +1,15 @@
 <!DOCTYPE html>
+
+<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Filtered movies</title>
     <meta charset="UTF-8">
 </head>
 <body>
+<div th:insert="header">...</div>
 <h2>Фильтрация</h2>
-<form >
+<form>
     <label>
         <input type="text" name="title">
     </label>
