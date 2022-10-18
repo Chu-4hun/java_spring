@@ -12,8 +12,9 @@
         <label>
             <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" name="title">
         </label>
-        <input class="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" formmethod="post" formaction="/user/filter/result" value="Найти">
-        <input class="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" formmethod="post" formaction="/user/filter_strict/result" value="Найти (строгий поиск)">
+        <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" formmethod="post" formaction="/user/filter/result" value="Найти">
+        <br>
+        <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" formmethod="post" formaction="/user/filter_strict/result" value="Найти (строгий поиск)">
         <div th:each="el : ${result}">
             <h3 th:text="${el.nickname}"></h3>
             <p th:text="${el.birthdate}"></p>
