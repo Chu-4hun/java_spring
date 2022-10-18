@@ -13,17 +13,20 @@
     <a href="/user/add" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Добавить
         пользователя</a>
     <div th:each="el : ${users}">
-        <h3 th:text="${el.nickname}" class="font-bold"></h3>
-        <p th:text="${el.birthdate}"></p>
-        <p>
-            <a th:href="'/user/edit/'+${el.getId()}" href="/user/filter"
-               class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Редактировать</a>
-            <a th:href="'/user/show/'+${el.getId()}" href="/user/filter"
-               class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Посмореть</a>
-            <a th:href="'/user/del/'+${el.getId()}" href="/user/filter"
-               class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Удалить</a>
-        </p>
+        <div class="inline-block align-baseline rounded w-full py-2 px-3 ">
+            <h3 th:text="${el.nickname}" class="font-bold"></h3>
+            <p th:text="${el.birthdate}"></p>
+            <p>
+                <a th:href="'/user/edit/'+${el.getId()}" href="/user/filter"
+                   class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Редактировать</a>
+                <a th:href="'/user/show/'+${el.getId()}" href="/user/filter"
+                   class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Посмореть</a>
+                <a th:href="'/user/del/'+${el.getId()}" href="/user/filter"
+                   class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Удалить</a>
+            </p>
+        </div>
         <br>
+
     </div>
 </div>
 </body>

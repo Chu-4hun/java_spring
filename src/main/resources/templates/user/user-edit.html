@@ -6,34 +6,45 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-
-<form th:action="${'/user/edit/'+user.getId()}" method="post">
-    <label>
-        Имя:
-        <input type="text" name="nickname" placeholder="Введите никнейм" th:value="${user.getNickname()}">
-    </label>
-    <br>
-    <label>
-        День рождения:
-        <input type="date" name="birthdate" placeholder="Введите дату рождения" th:value="${user.getNickname()}"/>
-    </label>
-    <br>
-    <label>
-        Количество просмотров:
-        <input type="number" name="views" placeholder="Введите количество просмотров" th:value="${user.views}"/>
-    </label>
-    <br>
-    <label>
-        Количество друзей:
-        <input type="number" name="friends" placeholder="Введите кол-во друзей" th:value="${user.friends}"/>
-    </label>
-    <br>
-    <label>
-        Дата регистрации:
-        <input type="date" name="register_date" placeholder="Введите дату регистрации" th:value="${user.register_date}"/>
-    </label>
-    <br>
-    <button type="submit">Редактировать пользователя</button>
-</form>
+<div class="w-full max-w-xs">
+    <form th:action="${'/user/edit/'+user.getId()}" method="post"
+          class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <label>
+            Имя:
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   type="text" name="nickname" placeholder="Введите никнейм" th:value="${user.getNickname()}">
+        </label>
+        <br>
+        <label>
+            День рождения:
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   type="date" name="birthdate" placeholder="Введите дату рождения" th:value="${user.getNickname()}"/>
+        </label>
+        <br>
+        <label>
+            Количество просмотров:
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   type="number" name="views" placeholder="Введите количество просмотров" th:value="${user.views}"/>
+        </label>
+        <br>
+        <label>
+            Количество друзей:
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   type="number" name="friends" placeholder="Введите кол-во друзей" th:value="${user.friends}"/>
+        </label>
+        <br>
+        <label>
+            Дата регистрации:
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   type="date" name="register_date" placeholder="Введите дату регистрации"
+                   th:value="${user.register_date}"/>
+        </label>
+        <br>
+        <button type="submit"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Редактировать пользователя
+        </button>
+    </form>
+</div>
 </body>
 </html>
