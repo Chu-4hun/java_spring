@@ -46,7 +46,7 @@ public class UsersController {
 
 
     @GetMapping("/user/edit/{user}")
-    public String movieEdit(
+    public String userEdit(
             User user,
             Model model) {
         model.addAttribute("user", user);
@@ -72,7 +72,7 @@ public class UsersController {
     }
 
     @GetMapping("/user/show/{user}")
-    public String movieShow(
+    public String userShow(
             User user,
             Model model) {
         model.addAttribute("user", user);
@@ -80,7 +80,7 @@ public class UsersController {
     }
 
     @GetMapping("/user/del/{user}")
-    public String movieDel(
+    public String userDel(
             User user) {
         usersRepository.delete(user);
         return "redirect:../";
