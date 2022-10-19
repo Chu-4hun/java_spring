@@ -9,14 +9,14 @@
 <body>
 <div th:insert="header">...</div>
 <div class="w-full max-w-xs">
-    <h1>Все кино/сериалы</h1>
+    <h1 class="font-bold">Все кино/сериалы</h1>
     <a href="/movie/filter" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Поиск
         кино/сериалов</a>
     <br>
     <a href="/movie/add" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Добавить
         кино/сериал</a>
     <div th:each="el : ${movie}">
-        <div class="inline-block align-baseline rounded w-full py-2 px-3 bg-transparent hover:bg-teal-200">
+        <div class="inline-block align-baseline rounded w-full py-2 px-3 bg-transparent hover:bg-teal-100 shadow">
             <h3 th:text="${el.name}" class="font-bold"></h3>
             <p th:text="${el.release_date}"></p>
             <p>

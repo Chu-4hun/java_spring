@@ -1,14 +1,18 @@
 package com.hludencov.java_spring.models;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.*;
+import java.sql.Date;
 
 @Entity
 public class User {
-     public User(String nickname, String birthdate,String register_date, int views,int friends) {
+    public User(String nickname, Date birthdate, Date register_date, int views, int friends) {
         this.nickname = nickname;
         this.birthdate = birthdate;
         this.views = views;
@@ -22,8 +26,17 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    private String nickname, birthdate, register_date;
+    @NotNull
+    @NotBlank
+    private String nickname;
+    @NotNull
+    @Past
+    private Date birthdate;
+    @NotNull
+    @PastOrPresent
+    private Date register_date;
+    @NotNull
+    @PositiveOrZero
     private int views, friends;
 
     public void setId(Long id) {
@@ -34,7 +47,7 @@ public class User {
         this.nickname = nickname;
     }
 
-    public void setBirthdate(String birthdate) {
+    public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
     }
 
@@ -50,7 +63,7 @@ public class User {
         return nickname;
     }
 
-    public String getBirthdate() {
+    public Date getBirthdate() {
         return birthdate;
     }
 
@@ -66,11 +79,11 @@ public class User {
         return id;
     }
 
-    public String getRegister_date() {
+    public Date getRegister_date() {
         return register_date;
     }
 
-    public void setRegister_date(String register_date) {
+    public void setRegister_date(Date register_date) {
         this.register_date = register_date;
     }
 }

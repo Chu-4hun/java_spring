@@ -8,43 +8,48 @@
 <body>
 <div th:insert="header">...</div>
 <div class="w-full max-w-xs">
-    <form th:action="${'/movie/edit/'+movie.getId()}" method="post"
+    <form th:object="${movie}"  th:action="${'/movie/edit/'+movie.getId()}" method="post"
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <label>
             Название:
-            <input type="text" name="name" placeholder="Введите название кино" th:value="${movie.name}"
+            <input th:field="*{name}" type="text" name="name" placeholder="Введите название кино"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </label>
+        <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
         <br>
         <label>
             Дата выпуска:
-            <input type="date" name="release_date" placeholder="Введите дату выпуска" th:value="${movie.release_date}"
+            <input th:field="*{release_date}" type="date" name="release_date" placeholder="Введите дату выпуска"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
         </label>
+        <div style="color: red" th:if="${#fields.hasErrors('release_date')}" th:errors="*{release_date}"></div>
         <br>
         <label>
             Рейтинг:
-            <input type="number" name="rating" placeholder="Введите рейтинг" th:value="${movie.rating}"
+            <input th:field="*{rating}" type="number" name="rating" placeholder="Введите рейтинг"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
         </label>
+        <div style="color: red" th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></div>
         <br>
         <label>
             Количество комметариев:
-            <input type="number" name="series_amount" placeholder="Введите количество комметариев"
+            <input th:field="*{series_amount}" type="number" name="series_amount" placeholder="Введите количество комметариев"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   th:value="${movie.comments_amount}"/>
+                   />
         </label>
+        <div style="color: red" th:if="${#fields.hasErrors('series_amount')}" th:errors="*{series_amount}"></div>
         <br>
         <label>
             Количество серий:
-            <input type="number" name="comments_amount" placeholder="Введите кол-во просмотров"
-                   th:value="${movie.series_amount}"
+            <input  th:field="*{comments_amount}" type="number" name="comments_amount" placeholder="Введите кол-во просмотров"
+
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
         </label>
+        <div style="color: red" th:if="${#fields.hasErrors('comments_amount')}" th:errors="*{comments_amount}"></div>
         <br>
         <button type="submit"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Редактировать кино/сериал
+            Добавить кино/сериал
         </button>
     </form>
 </div>

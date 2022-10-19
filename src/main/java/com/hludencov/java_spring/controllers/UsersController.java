@@ -1,15 +1,17 @@
 package com.hludencov.java_spring.controllers;
 
-
 import com.hludencov.java_spring.models.User;
 import com.hludencov.java_spring.repo.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -25,28 +27,22 @@ public class UsersController {
     }
 
     @GetMapping("/user/add")
-    public String userAdd(Model model)
+    public String userAdd(User user)
     {
         return "user/user-add";
     }
     @PostMapping("/user/add")
-    public String userPostAdd(@RequestParam String nickname,
-                              @RequestParam String birthdate,
-                              @RequestParam String register_date,
-                              @RequestParam int views,
-                              @RequestParam int friends,
-                              Model model) {
-        User user = new User(nickname,
-                birthdate,
-                register_date, views,
-                friends);
+    public String userPostAdd(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            return "user/user-add";
+        }
         usersRepository.save(user);
         return "redirect:/user";
     }
 
 
     @GetMapping("/user/edit/{user}")
-    public String movieEdit(
+    public String userEdit(
             User user,
             Model model) {
         model.addAttribute("user", user);
@@ -54,25 +50,16 @@ public class UsersController {
     }
 
     @PostMapping("/user/edit/{user}")
-    public String userPostEdit(
-            @RequestParam String nickname,
-            @RequestParam String birthdate,
-            @RequestParam String register_date,
-            @RequestParam int views,
-            @RequestParam int friends,
-            User user
-    ) {
-        user.setNickname(nickname);
-        user.setBirthdate(birthdate);
-        user.setRegister_date(register_date);
-        user.setViews(views);
-        user.setFriends(friends);
+    public String userPostEdit(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            return "user/user-edit";
+        }
         usersRepository.save(user);
         return "redirect:../";
     }
 
     @GetMapping("/user/show/{user}")
-    public String movieShow(
+    public String userShow(
             User user,
             Model model) {
         model.addAttribute("user", user);
@@ -80,7 +67,7 @@ public class UsersController {
     }
 
     @GetMapping("/user/del/{user}")
-    public String movieDel(
+    public String userDel(
             User user) {
         usersRepository.delete(user);
         return "redirect:../";

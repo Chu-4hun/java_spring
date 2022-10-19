@@ -4,11 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.*;
+import java.sql.Date;
 
 @Entity
 public class Movie {
 
-    public Movie(String name,String release_date,double rating,int series_amount, int comments_amount){
+    public Movie(String name,Date release_date,double rating,int series_amount, int comments_amount){
         this.name=name;
         this.release_date=release_date;
         this.rating=rating;
@@ -21,8 +23,17 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name, release_date;
+    @NotNull
+    @NotBlank
+    private String name;
+    @NotNull(message = "ыыыыедите корректную дату")
+    private Date release_date;
+
+    @NotNull
+    @PositiveOrZero
     private double rating;
+    @NotNull
+    @PositiveOrZero
     private int series_amount, comments_amount;
 
     public int getSeries_amount() {
@@ -57,11 +68,11 @@ public class Movie {
         this.name = name;
     }
 
-    public String getRelease_date() {
+    public Date getRelease_date() {
         return release_date;
     }
 
-    public void setRelease_date(String release_date) {
+    public void setRelease_date(Date release_date) {
         this.release_date = release_date;
     }
 

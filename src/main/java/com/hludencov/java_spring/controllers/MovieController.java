@@ -5,11 +5,10 @@ import com.hludencov.java_spring.repo.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -18,27 +17,24 @@ public class MovieController {
     MovieRepository movieRepository;
 
     @GetMapping("/movie")
-    public String blogMain(Model model) {
+    public String movieMain(Model model) {
         Iterable<Movie> movie = movieRepository.findAll();
         model.addAttribute("movie", movie);
         return "movie/movie-main";
     }
 
     @GetMapping("/movie/add")
-    public String blogAdd(Model model) {
+    public String movieAdd(Movie movie) {
         return "movie/movie-add";
     }
 
     @PostMapping("/movie/add")
-    public String blogPostAdd(@RequestParam String name,
-                              @RequestParam String release_date,
-                              @RequestParam double rating,
-                              @RequestParam int comments_amount,
-                              @RequestParam int series_amount) {
-
-        Movie movie = new Movie(name, release_date, rating, series_amount, comments_amount);
+    public String moviePostAdd(@ModelAttribute("movie") @Valid Movie movie, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            return "movie/movie-add";
+        }
         movieRepository.save(movie);
-        return "redirect:../";
+        return "redirect:/movie";
     }
 
     @GetMapping("/movie/edit/{movie}")
@@ -48,23 +44,13 @@ public class MovieController {
         model.addAttribute("movie", movie);
         return "movie/movie-edit";
     }
-
     @PostMapping("/movie/edit/{movie}")
-    public String moviePostEdit(
-            @RequestParam String name,
-            @RequestParam String release_date,
-            @RequestParam double rating,
-            @RequestParam int comments_amount,
-            @RequestParam int series_amount,
-            Movie movie
-    ) {
-        movie.setName(name);
-        movie.setRelease_date(release_date);
-        movie.setRating(rating);
-        movie.setComments_amount(comments_amount);
-        movie.setSeries_amount(series_amount);
+    public String moviePostEdit(@ModelAttribute("movie") @Valid Movie movie, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            return "movie/movie-edit";
+        }
         movieRepository.save(movie);
-        return "redirect:../";
+        return "redirect:/movie";
     }
 
     @GetMapping("/movie/show/{movie}")

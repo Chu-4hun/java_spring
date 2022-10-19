@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Movie</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -8,43 +8,55 @@
 <body>
 <div th:insert="header">...</div>
 <div class="w-full max-w-xs">
-    <form th:action="${'/user/edit/'+user.getId()}" method="post"
+    <form th:object="${user}" th:action="${'/user/edit/'+user.getId()}" method="post"
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <label>
-            Имя:
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   type="text" name="nickname" placeholder="Введите никнейм" th:value="${user.getNickname()}">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+            Введите имя
+            <input required th:field="*{nickname}" type="text" name="nickname" placeholder="Имя"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   th:value="${user.getNickname()}"/>
         </label>
+        <div style="color: red" th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}"></div>
         <br>
-        <label>
-            День рождения:
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   type="date" name="birthdate" placeholder="Введите дату рождения" th:value="${user.getNickname()}"/>
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+            Дата рождения
+            <input required th:field="*{birthdate}" type="date" name="birthdate" placeholder="Введите дату рождения"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   th:value="${user.getBirthdate()}"/>
         </label>
+        <div style="color: red" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></div>
         <br>
-        <label>
-            Количество просмотров:
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   type="number" name="views" placeholder="Введите количество просмотров" th:value="${user.views}"/>
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+            Введите кол-во просмотров
+            <input required th:field="*{views}" type="number" name="views" placeholder="Кол-во просмотров"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   th:value="${user.views}"/>
         </label>
+        <div style="color: red" th:if="${#fields.hasErrors('views')}" th:errors="*{views}"></div>
         <br>
-        <label>
-            Количество друзей:
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   type="number" name="friends" placeholder="Введите кол-во друзей" th:value="${user.friends}"/>
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+            Введите кол-во друзей
+            <input required th:field="*{friends}" type="number" name="friends" placeholder="Кол-во друзей"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   th:value="${user.friends}"/>
         </label>
+        <div style="color: red" th:if="${#fields.hasErrors('friends')}" th:errors="*{friends}"></div>
+
         <br>
-        <label>
-            Дата регистрации:
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   type="date" name="register_date" placeholder="Введите дату регистрации"
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+            Введите дату регистрации
+            <input required th:field="*{register_date}" type="date" name="register_date" placeholder="Дата регистрации"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                    th:value="${user.register_date}"/>
         </label>
+        <div style="color: red" th:if="${#fields.hasErrors('register_date')}" th:errors="*{register_date}"></div>
         <br>
-        <button type="submit"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Редактировать пользователя
-        </button>
+        <div class="flex items-center justify-between">
+            <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Редактировать пользователя
+            </button>
+        </div>
     </form>
 </div>
 </body>
