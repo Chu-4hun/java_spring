@@ -1,13 +1,12 @@
 package com.hludencov.java_spring.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
+@Table (name = "movies")
 public class Movie {
 
     public Movie(String name,Date release_date,double rating,int series_amount, int comments_amount){
@@ -21,7 +20,7 @@ public class Movie {
     public Movie(){}
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
     @NotBlank
@@ -35,6 +34,16 @@ public class Movie {
     @NotNull
     @PositiveOrZero
     private int series_amount, comments_amount;
+
+    @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
+    private List<Post> post;
+
+    @ManyToMany()
+    @JoinTable(name = "genres_movie",
+            joinColumns = @JoinColumn (name = "movie_id"),
+            inverseJoinColumns = @JoinColumn (name = "genre_id")
+    )
+    private List<Post> genres;
 
     public int getSeries_amount() {
         return series_amount;

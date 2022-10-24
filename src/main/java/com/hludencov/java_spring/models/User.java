@@ -3,14 +3,13 @@ package com.hludencov.java_spring.models;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
+@Table(name = "user")
 public class User {
     public User(String nickname, Date birthdate, Date register_date, int views, int friends) {
         this.nickname = nickname;
@@ -24,7 +23,7 @@ public class User {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
     @NotBlank
@@ -38,6 +37,9 @@ public class User {
     @NotNull
     @PositiveOrZero
     private int views, friends;
+
+    @OneToOne(mappedBy = "user")
+    private Post post;
 
     public void setId(Long id) {
         this.id = id;
