@@ -41,6 +41,14 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Post post;
 
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

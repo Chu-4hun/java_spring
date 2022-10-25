@@ -40,10 +40,10 @@ public class Movie {
 
     @ManyToMany()
     @JoinTable(name = "genres_movie",
-            joinColumns = @JoinColumn (name = "movie_id"),
-            inverseJoinColumns = @JoinColumn (name = "genre_id")
+            joinColumns = @JoinColumn (name = "genre_id"),
+            inverseJoinColumns = @JoinColumn (name = "movie_id")
     )
-    private List<Post> genres;
+    public List<Genre> genres;
 
     public int getSeries_amount() {
         return series_amount;

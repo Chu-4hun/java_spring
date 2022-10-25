@@ -19,9 +19,9 @@ public class Genre {
 
     @ManyToMany
     @JoinTable (name="genres_movie",
-            joinColumns=@JoinColumn (name="genre_id"),
-            inverseJoinColumns=@JoinColumn(name="movie_id"))
-    private List<Movie> movie;
+            joinColumns=@JoinColumn (name="movie_id"),
+            inverseJoinColumns=@JoinColumn(name="genre_id"))
+    public List<Movie> movie;
 
     public Long getId() {
         return id;

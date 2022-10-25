@@ -12,7 +12,9 @@
 <div class="max-w-sm rounded overflow-hidden shadow-lg">
     <div class="px-6 py-4">
         <div class="font-bold text-xl mb-2" th:text="${genre.name}"/>
-        <div class="font-bold text-xl mb-2" th:text="${genre.author.name}"/>
+        <div th:each="mov : ${genre.movie}">
+            <label th:text="${mov.name}" class="block text-gray-700 text-sm font-bold mb-2"></label>
+        </div>
     </div>
 </div>
 </body>

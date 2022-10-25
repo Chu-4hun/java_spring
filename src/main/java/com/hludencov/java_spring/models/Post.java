@@ -21,6 +21,13 @@ public class Post {
     private String title, anons, full_text;
     private int views;
 
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    public User user;
+
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    public Movie movie;
     public User getUser() {
         return user;
     }
@@ -36,13 +43,6 @@ public class Post {
     public void setMovie(Movie movie) {
         this.movie = movie;
     }
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne(optional = true, cascade = CascadeType.ALL)
-    private Movie movie;
 
     public Long getId() {
         return id;

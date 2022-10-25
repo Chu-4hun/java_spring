@@ -44,13 +44,39 @@ public class BlogController {
         return "blog/blog-add";
     }
 
-     @PostMapping("/blog/add")
+    @PostMapping("/blog/add")
     public String moviePostAdd(@ModelAttribute("post") @Valid Post post, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "blog/blog-add";
         }
         postRepository.save(post);
         return "redirect:/blog";
+    }
+
+    @GetMapping("blog/edit/{post}")
+    public String postEdit(Post post, Model model) {
+        Iterable<User> users = usersRepository.findAll();
+        Iterable<Movie> movie = movieRepository.findAll();
+        model.addAttribute("users", users);
+        model.addAttribute("movie", movie);
+        return "blog/blog-edit";
+    }
+
+    @PostMapping("blog/edit/{post}")
+    public String postPostEdit(
+            @ModelAttribute("post") @Valid Post post,
+            BindingResult bindingResult,
+            Model model
+    ) {
+        if (bindingResult.hasErrors()) {
+            Iterable<User> users = usersRepository.findAll();
+            Iterable<Movie> movie = movieRepository.findAll();
+            model.addAttribute("users", users);
+            model.addAttribute("movie", movie);
+            return "blog/blog-edit";
+        }
+        postRepository.save(post);
+        return "redirect:../";
     }
 
     @GetMapping("/blog/filter")
@@ -65,13 +91,21 @@ public class BlogController {
         model.addAttribute("result", result);
         return "blog/blog-filter";
     }
+
     @GetMapping("/blog/show/{post}")
     public String postShow(
             Post post,
             Model model) {
+
         model.addAttribute("post", post);
         return "blog/blog-show";
     }
 
 
+    @GetMapping("/del/{post}")
+    public String postDel(
+            Post post) {
+        postRepository.delete(post);
+        return "redirect:../";
+    }
 }

@@ -78,7 +78,8 @@ public class GenreController {
 
     @GetMapping("/show/{genre}")
     public String genreShow(
-            Genre genre) {
+            Genre genre, Model model) {
+        model.addAttribute("genre", genre);
         return "genre/genre-show";
     }
 
