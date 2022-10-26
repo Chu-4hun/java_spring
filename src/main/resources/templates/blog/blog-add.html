@@ -11,7 +11,7 @@
     <input type="text" name="anons" placeholder="Введите анос статьи">
     <br>
     <select th:field="*{user}">
-        <option th:each="element : ${users}" th:text="${element.nickname}" th:value="${element.id}"></option>
+        <option th:each="element : ${users}" th:text="${element.username}" th:value="${element.id}"></option>
     </select>
     <select th:field="*{movie}">
         <option th:each="element : ${movie}" th:text="${element.name}" th:value="${element.id}"></option>

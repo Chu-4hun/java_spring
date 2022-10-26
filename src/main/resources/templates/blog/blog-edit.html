@@ -13,7 +13,7 @@
         <option th:each="user : ${users}"
                         th:if="${(post.user != null && user.id == post.user.id) || user.post==null}"
                         th:value="${user.id}"
-                        th:text="${user.nickname}">
+                        th:text="${user.username}">
     </select>
     <select th:field="*{movie}">
         <option th:each="element : ${movie}" th:text="${element.name}" th:value="${element.id}"></option>

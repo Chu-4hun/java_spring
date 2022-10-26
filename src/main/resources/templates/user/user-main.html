@@ -16,7 +16,7 @@
         пользователя</a>
     <div th:each="el : ${users}">
         <div class="inline-block align-baseline rounded w-full py-2 px-3 bg-transparent hover:bg-teal-100 shadow">
-            <h3 th:text="${el.nickname}" class="font-bold"></h3>
+            <h3 th:text="${el.username}" class="font-bold"></h3>
             <p th:text="${el.birthdate}"></p>
             <p>
                 <a th:href="'/user/edit/'+${el.getId()}" href="/user/filter"
