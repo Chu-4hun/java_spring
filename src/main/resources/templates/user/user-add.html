@@ -12,10 +12,10 @@
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2">
             Введите имя
-            <input required th:field="*{username}" type="text" name="nickname" placeholder="Имя"
+            <input required th:field="*{username}" type="text" name="username" placeholder="Имя"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
         </label>
-        <div style="color: red" th:if="${#fields.hasErrors('nickname')}" th:errors="*{username}"></div>
+        <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
         <br>
         <label class="block text-gray-700 text-sm font-bold mb-2">
             Дата рождения
@@ -33,7 +33,7 @@
         <br>
         <label class="block text-gray-700 text-sm font-bold mb-2">
             Введите кол-во друзей
-            <input required th:field="*{friends}"  type="number" name="friends" placeholder="Кол-во друзей"
+            <input required th:field="*{friends}" type="number" name="friends" placeholder="Кол-во друзей"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
         </label>
         <div style="color: red" th:if="${#fields.hasErrors('friends')}" th:errors="*{friends}"></div>
@@ -46,6 +46,16 @@
         </label>
         <div style="color: red" th:if="${#fields.hasErrors('register_date')}" th:errors="*{register_date}"></div>
         <br>
+        <div th:each="role : ${roles}">
+
+            <label>
+                <input th:id="${role}" type="checkbox" th:name="${'roles[]'}" th:value="${role}"
+                />
+            </label>
+            <label th:text="${role}"/>
+            
+            <br>
+        </div>
         <div class="flex items-center justify-between">
             <button type="submit"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">

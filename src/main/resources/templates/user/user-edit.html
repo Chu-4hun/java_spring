@@ -12,11 +12,11 @@
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2">
             Введите имя
-            <input required th:field="*{username}" type="text" name="nickname" placeholder="Имя"
+            <input required th:field="*{username}" type="text" name="username" placeholder="Имя"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                    th:value="${user.getUsername()}"/>
         </label>
-        <div style="color: red" th:if="${#fields.hasErrors('nickname')}" th:errors="*{username}"></div>
+        <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
         <br>
         <label class="block text-gray-700 text-sm font-bold mb-2">
             Дата рождения
@@ -51,19 +51,20 @@
         </label>
         <div style="color: red" th:if="${#fields.hasErrors('register_date')}" th:errors="*{register_date}"></div>
         <br>
-        <div th:each="role : ${user.getRoles()}">
+        <div th:each="role : ${roles}">
             <div th:each="el : ${user}">
                 <input th:id="${role}" type="checkbox" th:name="${'roles[]'}" th:value="${role}"
                        th:checked="${#lists.contains(el.roles, role)}"/>
                 <label th:text="${role}"/></label>
             </div>
             <br>
-            <div class="flex items-center justify-between">
-                <button type="submit"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    Редактировать пользователя
-                </button>
-            </div>
+        </div>
+        <div class="flex items-center justify-between">
+            <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Редактировать пользователя
+            </button>
+        </div>
     </form>
 </div>
 </body>

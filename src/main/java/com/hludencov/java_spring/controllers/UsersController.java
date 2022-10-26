@@ -1,5 +1,6 @@
 package com.hludencov.java_spring.controllers;
 
+import com.hludencov.java_spring.models.Role;
 import com.hludencov.java_spring.models.User;
 import com.hludencov.java_spring.repo.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +31,14 @@ public class UsersController {
     }
 
     @GetMapping("/user/add")
-    public String userAdd(User user)
-    {
+    public String userAdd(User user, Model model) {
+        model.addAttribute("roles", Role.values());
         return "user/user-add";
     }
+
     @PostMapping("/user/add")
     public String userPostAdd(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "user/user-add";
         }
         usersRepository.save(user);
@@ -49,12 +51,13 @@ public class UsersController {
             User user,
             Model model) {
         model.addAttribute("user", user);
+        model.addAttribute("roles", Role.values());
         return "user/user-edit";
     }
 
     @PostMapping("/user/edit/{user}")
     public String userPostEdit(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "user/user-edit";
         }
         usersRepository.save(user);
@@ -87,6 +90,7 @@ public class UsersController {
         model.addAttribute("result", result);
         return "user/user-filter";
     }
+
     @PostMapping("/user/filter_strict/result")
     public String userStrictResult(@RequestParam String title, Model model) {
         List<User> result = usersRepository.findByUsername(title);

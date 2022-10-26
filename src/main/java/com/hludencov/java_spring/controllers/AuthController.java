@@ -4,6 +4,7 @@ import com.hludencov.java_spring.models.Role;
 import com.hludencov.java_spring.models.User;
 import com.hludencov.java_spring.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +18,8 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/registration")
     public String registration(){
@@ -35,7 +36,7 @@ public class AuthController {
         }
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
-        //user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return "redirect:/login";
     }
