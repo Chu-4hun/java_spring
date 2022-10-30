@@ -38,7 +38,7 @@ public class AdminController {
     @PostMapping
     public String userSave(@RequestParam String username, @RequestParam(name="roles[]", required = false) String[] roles,
                            @RequestParam("userId") User user){
-        user.setUsername(username);
+        user.setLogin(username);
         user.getRoles().clear();
         if(roles!=null)
         {

@@ -8,17 +8,17 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.sql.Date;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "user")
 public class User implements UserDetails {
-    public User(String nickname, Date birthdate, Date register_date, int views, int friends) {
-        this.username = nickname;
+    public User(String nickname, Date birthdate, Date register_date, int views, int friends, List<Document> documents) {
+        this.login = nickname;
         this.birthdate = birthdate;
-        this.views = views;
-        this.friends = friends;
         this.register_date = register_date;
+        this.documents = documents;
     }
 
     public User() {
@@ -27,25 +27,24 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
     @NotBlank
-    private String username;
+    private String login;
 
-    @NotNull
+
     @NotBlank
     private String password;
 
+    //TODO delete birthdate from User
     @Past
     private Date birthdate;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Document> documents;
+
+    //TODO delete register_date from User
     @PastOrPresent
     private Date register_date;
 
-    @PositiveOrZero
-    private int views, friends;
-
-    @OneToOne(mappedBy = "user")
-    private Post post;
 
     private boolean active;
 
@@ -54,45 +53,97 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    public Post getPost() {
-        return post;
+    @ManyToMany
+    @JoinTable(name = "user_to_group",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private List<Group> groups;
+
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
+
+    @ManyToOne
+    @JoinColumn(name = "personal_info_id")
+    private Personal_info personal_info;
+
+    @ManyToOne
+    @JoinColumn(name = "candidate_info_id")
+    private Candidate_info candidate_info;
+
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_info_id")
+    private Teacher_info teacher_info;
+
+    @OneToMany(mappedBy = "teacher_organizer", fetch = FetchType.EAGER)
+    private List<Group> teacher_org_groups;
+
+
+    //______________________________BOILERPLATE LINE__________________________________
+
+    public Teacher_info getTeacher_info() {
+        return teacher_info;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setTeacher_info(Teacher_info teacher_info) {
+        this.teacher_info = teacher_info;
+    }
+
+    public Candidate_info getCandidate_info() {
+        return candidate_info;
+    }
+
+    public void setCandidate_info(Candidate_info candidate_info) {
+        this.candidate_info = candidate_info;
+    }
+
+    public Personal_info getPersonal_info() {
+        return personal_info;
+    }
+
+    public void setPersonal_info(Personal_info personal_info) {
+        this.personal_info = personal_info;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
+
+    public List<Document> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setUsername(String nickname) {
-        this.username = nickname;
+    public void setLogin(String nickname) {
+        this.login = nickname;
     }
 
     public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
     }
 
-    public void setViews(int views) {
-        this.views = views;
-    }
-
-    public void setFriends(int friends) {
-        this.friends = friends;
-    }
-
-
     public Date getBirthdate() {
         return birthdate;
-    }
-
-    public int getViews() {
-        return views;
-    }
-
-    public int getFriends() {
-        return friends;
     }
 
     public Long getId() {
@@ -134,7 +185,11 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return getLogin();
+    }
+
+    public String getLogin() {
+        return this.login;
     }
 
     @Override

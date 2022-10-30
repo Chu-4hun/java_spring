@@ -86,14 +86,14 @@ public class UsersController {
 
     @PostMapping("/user/filter/result")
     public String userResult(@RequestParam String title, Model model) {
-        List<User> result = usersRepository.findByUsernameContains(title);
+        List<User> result = usersRepository.findByLoginContains(title);
         model.addAttribute("result", result);
         return "user/user-filter";
     }
 
     @PostMapping("/user/filter_strict/result")
     public String userStrictResult(@RequestParam String title, Model model) {
-        List<User> result = usersRepository.findByUsername(title);
+        List<User> result = usersRepository.findByLogin(title);
         model.addAttribute("result", result);
         return "user/user-filter";
     }

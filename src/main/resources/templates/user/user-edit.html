@@ -14,7 +14,7 @@
             Введите имя
             <input required th:field="*{username}" type="text" name="username" placeholder="Имя"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   th:value="${user.getUsername()}"/>
+                   th:value="${user.getLogin()}"/>
         </label>
         <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
         <br>
