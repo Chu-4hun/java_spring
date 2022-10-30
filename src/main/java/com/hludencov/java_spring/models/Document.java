@@ -3,12 +3,12 @@ package com.hludencov.java_spring.models;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.sql.Date;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Document {
 
-    public Document(Long id, User user, String file_name, Date date, Date archive_date, List<Summary> summaries) {
+    public Document(Long id, User user, String file_name, Date date, Date archive_date, Set<Summary> summaries) {
         this.id = id;
         this.user = user;
         this.file_name = file_name;
@@ -39,17 +39,17 @@ public class Document {
 
 
     @OneToMany(mappedBy = "document", fetch = FetchType.EAGER)
-    private List<Summary> summaries;
+    private Set<Summary> summaries;
 
 
     //______________________________BOILERPLATE LINE__________________________________
 
 
-    public List<Summary> getSummaries() {
+    public Set<Summary> getSummaries() {
         return summaries;
     }
 
-    public void setSummaries(List<Summary> summaries) {
+    public void setSummaries(Set<Summary> summaries) {
         this.summaries = summaries;
     }
 

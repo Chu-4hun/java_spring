@@ -1,7 +1,7 @@
 package com.hludencov.java_spring.models;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "subject")
@@ -15,15 +15,15 @@ public class Education_institution {
     private String institution_name, address;
 
     @OneToMany(mappedBy = "education_institution", fetch = FetchType.EAGER)
-    private List<Summary> summaries;
+    private Set<Summary> summaries;
 
     //______________________________BOILERPLATE LINE__________________________________
 
-    public List<Summary> getSummaries() {
+    public Set<Summary> getSummaries() {
         return summaries;
     }
 
-    public void setSummaries(List<Summary> summaries) {
+    public void setSummaries(Set<Summary> summaries) {
         this.summaries = summaries;
     }
 

@@ -8,22 +8,11 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.sql.Date;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "user")
 public class User implements UserDetails {
-    public User(String nickname, Date birthdate, Date register_date, int views, int friends, List<Document> documents) {
-        this.login = nickname;
-        this.birthdate = birthdate;
-        this.register_date = register_date;
-        this.documents = documents;
-    }
-
-    public User() {
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,7 +28,7 @@ public class User implements UserDetails {
     private Date birthdate;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private List<Document> documents;
+    private Set<Document> documents;
 
     //TODO delete register_date from User
     @PastOrPresent
@@ -56,8 +45,8 @@ public class User implements UserDetails {
     @ManyToMany
     @JoinTable(name = "user_to_group",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "group_id"))
-    private List<Group> groups;
+            inverseJoinColumns = @JoinColumn(name = "groups_id"))
+    private Set<Group> groups;
 
     @ManyToOne
     @JoinColumn(name = "department_id")
@@ -77,17 +66,17 @@ public class User implements UserDetails {
     private Teacher_info teacher_info;
 
     @OneToMany(mappedBy = "teacher_organizer", fetch = FetchType.EAGER)
-    private List<Group> teacher_org_groups;
+    private Set<Group> teacher_org_groups;
 
 
     //______________________________BOILERPLATE LINE__________________________________
 
 
-    public List<Group> getTeacher_org_groups() {
+    public Set<Group> getTeacher_org_groups() {
         return teacher_org_groups;
     }
 
-    public void setTeacher_org_groups(List<Group> teacher_org_groups) {
+    public void setTeacher_org_groups(Set<Group> teacher_org_groups) {
         this.teacher_org_groups = teacher_org_groups;
     }
 
@@ -123,19 +112,19 @@ public class User implements UserDetails {
         this.department = department;
     }
 
-    public List<Group> getGroups() {
+    public Set<Group> getGroups() {
         return groups;
     }
 
-    public void setGroups(List<Group> groups) {
+    public void setGroups(Set<Group> groups) {
         this.groups = groups;
     }
 
-    public List<Document> getDocuments() {
+    public Set<Document> getDocuments() {
         return documents;
     }
 
-    public void setDocuments(List<Document> documents) {
+    public void setDocuments(Set<Document> documents) {
         this.documents = documents;
     }
 

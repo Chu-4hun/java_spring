@@ -1,19 +1,11 @@
 package com.hludencov.java_spring.models;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
+@Table(name = "groups")
 public class Group {
-    public Group(Long id, List<User> users, User teacher_organizer, Preparation_program preparation_program) {
-        this.id = id;
-        this.users = users;
-        this.teacher_organizer = teacher_organizer;
-        this.preparation_program = preparation_program;
-    }
-
-    public Group() {
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +14,10 @@ public class Group {
 
     @ManyToMany
     @JoinTable(name = "user_to_group",
-            joinColumns = @JoinColumn(name = "group_id"),
+            joinColumns = @JoinColumn(name = "groups_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users;
-    @ManyToOne(optional = true)
+    private Set<User> users;
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User teacher_organizer;
 
@@ -45,11 +37,11 @@ public class Group {
         this.id = id;
     }
 
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 

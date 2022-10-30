@@ -3,7 +3,7 @@ package com.hludencov.java_spring.models;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.sql.Date;
-import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -37,16 +37,16 @@ public class Candidate_info {
     private Summary summary;
 
     @OneToMany(mappedBy = "candidate_info", fetch = FetchType.EAGER)
-    private List<User> user_candidate_info;
+    private Set<User> user_candidate_info;
 
     //______________________________BOILERPLATE LINE__________________________________
 
 
-    public List<User> getUser_candidate_info() {
+    public Set<User> getUser_candidate_info() {
         return user_candidate_info;
     }
 
-    public void setUser_candidate_info(List<User> user_candidate_info) {
+    public void setUser_candidate_info(Set<User> user_candidate_info) {
         this.user_candidate_info = user_candidate_info;
     }
 

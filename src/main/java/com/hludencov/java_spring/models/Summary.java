@@ -4,7 +4,6 @@ package com.hludencov.java_spring.models;
 import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.List;
 
 @Entity
 public class Summary {

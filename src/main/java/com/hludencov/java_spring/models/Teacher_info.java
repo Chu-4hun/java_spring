@@ -4,20 +4,12 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
 @Table(name = "teacher_info")
 public class Teacher_info {
-    public Teacher_info(Long id, Date teach_since, List<Subject> subjectList, List<User> user_teacher_info) {
-        this.id = id;
-        this.teach_since = teach_since;
-        this.subjectList = subjectList;
-        this.user_teacher_info = user_teacher_info;
-    }
-
-    public Teacher_info() {
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,29 +22,29 @@ public class Teacher_info {
     @JoinTable(name = "teacher_to_subject",
             joinColumns = @JoinColumn(name = "subject_id"),
             inverseJoinColumns = @JoinColumn(name = "teacher_info_id"))
-    public List<Subject> subjectList;
+    public Set<Subject> subjectList;
 
 
     @OneToMany(mappedBy = "teacher_info", fetch = FetchType.EAGER)
-    private List<User> user_teacher_info;
+    private Set<User> user_teacher_info;
 
 
     //______________________________BOILERPLATE LINE__________________________________
 
 
-    public List<User> getUser_teacher_info() {
+    public Set<User> getUser_teacher_info() {
         return user_teacher_info;
     }
 
-    public void setUser_teacher_info(List<User> user_teacher_info) {
+    public void setUser_teacher_info(Set<User> user_teacher_info) {
         this.user_teacher_info = user_teacher_info;
     }
 
-    public List<Subject> getSubjectList() {
+    public Set<Subject> getSubjectList() {
         return subjectList;
     }
 
-    public void setSubjectList(List<Subject> subjectList) {
+    public void setSubjectList(Set<Subject> subjectList) {
         this.subjectList = subjectList;
     }
 

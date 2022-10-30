@@ -5,7 +5,7 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.sql.Date;
-import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -43,16 +43,16 @@ public class Personal_info {
     private boolean is_male;
 
     @OneToMany(mappedBy = "personal_info", fetch = FetchType.EAGER)
-    private List<User> user_personal_info;
+    private Set<User> user_personal_info;
 
     //______________________________BOILERPLATE LINE__________________________________
 
 
-    public List<User> getUser_personal_info() {
+    public Set<User> getUser_personal_info() {
         return user_personal_info;
     }
 
-    public void setUser_personal_info(List<User> user_personal_info) {
+    public void setUser_personal_info(Set<User> user_personal_info) {
         this.user_personal_info = user_personal_info;
     }
 

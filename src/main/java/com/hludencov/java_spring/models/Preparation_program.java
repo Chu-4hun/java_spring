@@ -3,16 +3,16 @@ package com.hludencov.java_spring.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.List;
+import java.util.Set;
 
 
 @Entity
 @Table(name = "preparation_program")
 public class Preparation_program {
-    public Preparation_program(Long id, String name, List<Subject> subjectList) {
+    public Preparation_program(Long id, String name, Set<Subject> subjectSet) {
         this.id = id;
         this.name = name;
-        this.subjectList = subjectList;
+        this.subjectSet = subjectSet;
     }
 
     public Preparation_program() {
@@ -29,20 +29,20 @@ public class Preparation_program {
     @JoinTable(name = "prep_to_subject",
             joinColumns = @JoinColumn(name = "subject_id"),
             inverseJoinColumns = @JoinColumn(name = "preparation_program_id"))
-    public List<Subject> subjectList;
+    public Set<Subject> subjectSet;
 
     @OneToMany(mappedBy = "preparation_program", fetch = FetchType.EAGER)
-    private List<Group> groups;
+    private Set<Group> groups;
 
 
     //______________________________BOILERPLATE LINE__________________________________
 
 
-    public List<Group> getGroups() {
+    public Set<Group> getGroups() {
         return groups;
     }
 
-    public void setGroups(List<Group> groups) {
+    public void setGroups(Set<Group> groups) {
         this.groups = groups;
     }
 
@@ -62,11 +62,11 @@ public class Preparation_program {
         this.name = name;
     }
 
-    public List<Subject> getSubjectList() {
-        return subjectList;
+    public Set<Subject> getSubjectSet() {
+        return subjectSet;
     }
 
-    public void setSubjectList(List<Subject> subjectList) {
-        this.subjectList = subjectList;
+    public void setSubjectSet(Set<Subject> subjectSet) {
+        this.subjectSet = subjectSet;
     }
 }
