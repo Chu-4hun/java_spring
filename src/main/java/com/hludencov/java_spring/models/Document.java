@@ -8,12 +8,13 @@ import java.util.List;
 @Entity
 public class Document {
 
-    public Document(Long id, User user, String file_name, Date date, Date archive_date) {
+    public Document(Long id, User user, String file_name, Date date, Date archive_date, List<Summary> summaries) {
         this.id = id;
         this.user = user;
         this.file_name = file_name;
         this.date = date;
         this.archive_date = archive_date;
+        this.summaries = summaries;
     }
 
     public Document() {
@@ -23,7 +24,7 @@ public class Document {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     @JoinColumn(name = "user_id")
     private User user;
 

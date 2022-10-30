@@ -9,9 +9,11 @@ import java.util.List;
 @Entity
 @Table(name = "teacher_info")
 public class Teacher_info {
-    public Teacher_info(Long id, Date teach_since) {
+    public Teacher_info(Long id, Date teach_since, List<Subject> subjectList, List<User> user_teacher_info) {
         this.id = id;
         this.teach_since = teach_since;
+        this.subjectList = subjectList;
+        this.user_teacher_info = user_teacher_info;
     }
 
     public Teacher_info() {

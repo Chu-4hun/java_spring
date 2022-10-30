@@ -25,8 +25,8 @@ public class Group {
             joinColumns = @JoinColumn(name = "group_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
-    @ManyToOne
-    @JoinColumn(name = "teacher_organizer_id")
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "user_id")
     private User teacher_organizer;
 
     @ManyToOne

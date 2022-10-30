@@ -7,9 +7,11 @@ import java.util.List;
 @Entity
 @Table(name = "Department")
 public class Department {
-    public Department(Long id, String name) {
+    public Department(Long id, String name, List<Candidate_info> candidate_infos, List<User> department_users) {
         this.id = id;
         this.name = name;
+        this.candidate_infos = candidate_infos;
+        this.department_users = department_users;
     }
 
     public Department() {
