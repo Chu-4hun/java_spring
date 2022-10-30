@@ -82,6 +82,15 @@ public class User implements UserDetails {
 
     //______________________________BOILERPLATE LINE__________________________________
 
+
+    public List<Group> getTeacher_org_groups() {
+        return teacher_org_groups;
+    }
+
+    public void setTeacher_org_groups(List<Group> teacher_org_groups) {
+        this.teacher_org_groups = teacher_org_groups;
+    }
+
     public Teacher_info getTeacher_info() {
         return teacher_info;
     }
