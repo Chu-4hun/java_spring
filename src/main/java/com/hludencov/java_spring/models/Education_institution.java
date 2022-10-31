@@ -1,10 +1,11 @@
 package com.hludencov.java_spring.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Entity
-@Table(name = "subject")
+@Table(name = "education_institution")
 public class Education_institution {
 
 
@@ -12,20 +13,14 @@ public class Education_institution {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String institution_name, address;
+    @NotBlank
+    public String name, address;
 
     @OneToMany(mappedBy = "education_institution", fetch = FetchType.EAGER)
     private Set<Summary> summaries;
 
     //______________________________BOILERPLATE LINE__________________________________
 
-    public Set<Summary> getSummaries() {
-        return summaries;
-    }
-
-    public void setSummaries(Set<Summary> summaries) {
-        this.summaries = summaries;
-    }
 
     public Long getId() {
         return id;
@@ -35,19 +30,27 @@ public class Education_institution {
         this.id = id;
     }
 
-    public String getInstitution_name() {
-        return institution_name;
+    public String getName() {
+        return name;
     }
 
-    public void setInstitution_name(String institution_name) {
-        this.institution_name = institution_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String institution_address) {
-        this.address = institution_address;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Set<Summary> getSummaries() {
+        return summaries;
+    }
+
+    public void setSummaries(Set<Summary> summaries) {
+        this.summaries = summaries;
     }
 }
