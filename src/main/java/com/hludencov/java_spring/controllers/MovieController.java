@@ -76,7 +76,7 @@ public class MovieController {
     public String blogResult(@RequestParam String title, Model model) {
         List<Movie> result = movieRepository.findByNameContains(title);
         model.addAttribute("result", result);
-        return "movie-filter";
+        return "movie/movie-filter";
     }
 
     @PostMapping("/movie/filter_strict/result")

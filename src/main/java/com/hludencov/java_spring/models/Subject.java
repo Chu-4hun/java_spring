@@ -2,16 +2,17 @@ package com.hludencov.java_spring.models;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Entity
 @Table(name = "subject")
 public class Subject {
 
-    public Subject(Long id, String subject_code, int subject_name, Set<Teacher_info> teacher_infoList) {
+    public Subject(Long id, String subject_code, String name, Set<Teacher_info> teacher_infoList) {
         this.id = id;
         this.subject_code = subject_code;
-        this.subject_name = subject_name;
+        this.name = name;
         this.teacher_infoList = teacher_infoList;
     }
 
@@ -22,8 +23,10 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String subject_code;
-    private int subject_name;
+    @NotBlank
+    public String subject_code;
+    @NotBlank
+    public String name;
 
     @ManyToMany
     @JoinTable(name = "teacher_to_subject",
@@ -83,11 +86,11 @@ public class Subject {
         this.subject_code = subject_code;
     }
 
-    public int getSubject_name() {
-        return subject_name;
+    public String getName() {
+        return name;
     }
 
-    public void setSubject_name(int subject_name) {
-        this.subject_name = subject_name;
+    public void setName(String name) {
+        this.name = name;
     }
 }

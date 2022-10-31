@@ -12,11 +12,11 @@
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2">
             Введите имя
-            <input required th:field="*{username}" type="text" name="username" placeholder="Имя"
+            <input required th:field="*{login}" type="text" name="login" placeholder="Имя"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                    th:value="${user.getLogin()}"/>
         </label>
-        <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+        <div style="color: red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
         <br>
         <label class="block text-gray-700 text-sm font-bold mb-2">
             Дата рождения
