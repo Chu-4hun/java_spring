@@ -6,15 +6,6 @@ import java.util.List;
 @Entity
 @Table(name = "post")
 public class Post {
-    public Post(String title, String anons, String full_text) {
-        this.title = title;
-        this.anons = anons;
-        this.full_text = full_text;
-    }
-
-    public Post() {
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

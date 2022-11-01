@@ -9,15 +9,6 @@ import java.util.Set;
 @Entity
 @Table(name = "candidate_info")
 public class Candidate_info {
-    public Candidate_info(Long id, Date submission_date, Department target_department, Role target_role, Summary summary) {
-        this.id = id;
-        this.submission_date = submission_date;
-        this.target_department = target_department;
-        this.target_role = target_role;
-        this.summary = summary;
-    }
-
-    public Candidate_info(){}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,18 +27,24 @@ public class Candidate_info {
     @JoinColumn(name = "summary_id")
     private Summary summary;
 
+//    @OneToMany(mappedBy = "candidate_info", fetch = FetchType.EAGER)
+//    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @OneToMany(mappedBy = "candidate_info", fetch = FetchType.EAGER)
-    private Set<User> user_candidate_info;
+    private Set<Summary> summaries;
 
     //______________________________BOILERPLATE LINE__________________________________
 
 
-    public Set<User> getUser_candidate_info() {
-        return user_candidate_info;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser_candidate_info(Set<User> user_candidate_info) {
-        this.user_candidate_info = user_candidate_info;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Summary getSummary() {
@@ -88,5 +85,13 @@ public class Candidate_info {
 
     public void setTarget_role(Role target_role) {
         this.target_role = target_role;
+    }
+
+    public Set<Summary> getSummaries() {
+        return summaries;
+    }
+
+    public void setSummaries(Set<Summary> summaries) {
+        this.summaries = summaries;
     }
 }

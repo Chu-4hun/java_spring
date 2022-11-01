@@ -8,18 +8,6 @@ import java.util.Set;
 @Entity
 public class Document {
 
-    public Document(Long id, User user, String file_name, Date date, Date archive_date, Set<Summary> summaries) {
-        this.id = id;
-        this.user = user;
-        this.file_name = file_name;
-        this.date = date;
-        this.archive_date = archive_date;
-        this.summaries = summaries;
-    }
-
-    public Document() {
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

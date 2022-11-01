@@ -23,16 +23,10 @@ public class User implements UserDetails {
     @NotBlank
     private String password;
 
-    //TODO delete birthdate from User
-    @Past
-    private Date birthdate;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Document> documents;
 
-    //TODO delete register_date from User
-    @PastOrPresent
-    private Date register_date;
 
 
     private boolean active;
@@ -52,18 +46,17 @@ public class User implements UserDetails {
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @ManyToOne
-    @JoinColumn(name = "personal_info_id")
+    @OneToOne(mappedBy = "user")
     private Personal_info personal_info;
 
-    @ManyToOne
-    @JoinColumn(name = "candidate_info_id")
+    @OneToOne(mappedBy = "user")
     private Candidate_info candidate_info;
 
 
     @ManyToOne
     @JoinColumn(name = "teacher_info_id")
     private Teacher_info teacher_info;
+
 
     @OneToMany(mappedBy = "teacher_organizer", fetch = FetchType.EAGER)
     private Set<Group> teacher_org_groups;
@@ -136,24 +129,8 @@ public class User implements UserDetails {
         this.login = nickname;
     }
 
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
-    }
-
-    public Date getBirthdate() {
-        return birthdate;
-    }
-
     public Long getId() {
         return id;
-    }
-
-    public Date getRegister_date() {
-        return register_date;
-    }
-
-    public void setRegister_date(Date register_date) {
-        this.register_date = register_date;
     }
 
     public boolean isActive() {

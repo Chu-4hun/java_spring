@@ -25,10 +25,12 @@ public class Summary {
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
-    //TODO OneToMany
     @ManyToOne
     @JoinColumn(name = "education_institution_id")
     private Education_institution education_institution;
+    @ManyToOne
+    @JoinColumn(name = "candidate_info_id")
+    private Candidate_info candidate_info;
 
     //______________________________BOILERPLATE LINE__________________________________
 
@@ -57,4 +59,27 @@ public class Summary {
         this.document = document;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getMark() {
+        return mark;
+    }
+
+    public void setMark(int mark) {
+        this.mark = mark;
+    }
+
+    public Candidate_info getCandidate_info() {
+        return candidate_info;
+    }
+
+    public void setCandidate_info(Candidate_info candidate_info) {
+        this.candidate_info = candidate_info;
+    }
 }

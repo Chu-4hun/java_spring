@@ -3,7 +3,9 @@ package com.hludencov.java_spring.models;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import java.sql.Date;
 import java.util.Set;
 
@@ -11,18 +13,6 @@ import java.util.Set;
 @Entity
 @Table(name = "personal_info")
 public class Personal_info {
-    public Personal_info(Long id, String name, String surname, @Nullable String sec_name, Date birthdate, int pass_id, boolean is_male) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.sec_name = sec_name;
-        this.birthdate = birthdate;
-        this.pass_id = pass_id;
-        this.is_male = is_male;
-    }
-
-    public Personal_info() {
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,18 +32,19 @@ public class Personal_info {
     @NotNull
     private boolean is_male;
 
-    @OneToMany(mappedBy = "personal_info", fetch = FetchType.EAGER)
-    private Set<User> user_personal_info;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     //______________________________BOILERPLATE LINE__________________________________
 
 
-    public Set<User> getUser_personal_info() {
-        return user_personal_info;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser_personal_info(Set<User> user_personal_info) {
-        this.user_personal_info = user_personal_info;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getPass_id() {

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add preparation_program</title>
+</head>
+<body>
+<div th:insert="header">...</div>
+<div class="w-full max-w-xs">
+    <form th:object="${document}" th:action="${'/document/add'}" method="post"
+          class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <label>
+            Имя:
+            <input th:field="*{file_name}" type="text" name="file_name" placeholder="Введите оценку"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </label>
+        <div style="color: red" th:if="${#fields.hasErrors('file_name')}" th:errors="*{file_name}"></div>
+        <br>
+
+       <label>
+            Имя:
+            <input th:field="*{date}" type="date" name="date" placeholder="Введите оценку"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </label>
+        <div style="color: red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
+        <br>
+
+        <label>
+            Имя:
+            <input th:field="*{archive_date}" type="date" name="archive_date" placeholder="Введите оценку"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </label>
+        <div style="color: red" th:if="${#fields.hasErrors('archive_date')}" th:errors="*{archive_date}"></div>
+        <br>
+        <label> Кандидат:
+            TODO
+            <select th:field="*{candidate_info}">
+                <option th:each="can : ${candidate}" th:text="${can.getUser().getPersonal_info().name}" th:value="${can.getId()}"></option>
+            </select>
+        </label> <br>
+
+        <button type="submit"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Добавить отделение
+        </button>
+    </form>
+</div>
+</body>
+</html>
