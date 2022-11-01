@@ -17,6 +17,16 @@
         </label>
         <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
         <br>
+        <div class="mb-4">
+            <label>Предметы</label>
+            <div th:each="sub : ${subjectSet}">
+                <input th:name="${'subjectSet[]'}" th:value="${sub.id}"
+                       th:checked="${sub.id!=null && #lists.contains(sub.preparation_programs, preparation_program)}"
+                       class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                       type="checkbox">
+                <label th:text="${sub.name}"></label>
+            </div>
+        </div>
 
         <button type="submit"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">

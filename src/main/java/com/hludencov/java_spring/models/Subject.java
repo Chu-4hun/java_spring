@@ -36,8 +36,8 @@ public class Subject {
 
     @ManyToMany
     @JoinTable(name = "prep_to_subject",
-            joinColumns = @JoinColumn(name = "preparation_program_id"),
-            inverseJoinColumns = @JoinColumn(name = "subject_id"))
+            joinColumns = @JoinColumn(name = "subject_id"),
+            inverseJoinColumns = @JoinColumn(name = "preparation_program_id"))
     public Set<Preparation_program> preparation_programs;
 
     @OneToMany(mappedBy = "subject", fetch = FetchType.EAGER)
