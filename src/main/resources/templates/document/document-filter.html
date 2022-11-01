@@ -14,9 +14,9 @@
         <input type="text" name="title"
                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </label>
-    <input type="submit" formmethod="post" formaction="/preparation_program/filter/result" value="Найти"
+    <input type="submit" formmethod="post" formaction="/document/filter/result" value="Найти"
            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-    <input type="submit" formmethod="post" formaction="/preparation_program/filter_strict/result" value="Найти точно"
+    <input type="submit" formmethod="post" formaction="/document/filter_strict/result" value="Найти точно"
            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
 
     <input type="hidden"
@@ -25,7 +25,7 @@
 
     <div th:each="el : ${result}">
         <div class="inline-block align-baseline rounded w-full py-2 px-3 bg-transparent hover:bg-teal-100 shadow">
-            <h3 th:text="${el.name}" class="font-bold"></h3>
+            <h3 th:text="${el.fileName}" class="font-bold"></h3>
         </div>
     </div>
 </form>

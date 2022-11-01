@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 
 <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add preparation_program</title>
+    <title>Add document</title>
 </head>
 <body>
 <div th:insert="header">...</div>
@@ -13,37 +13,36 @@
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <label>
             Имя:
-            <input th:field="*{file_name}" type="text" name="file_name" placeholder="Введите оценку"
+            <input th:field="*{fileName}" type="text" name="fileName" placeholder="Введите имя"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </label>
-        <div style="color: red" th:if="${#fields.hasErrors('file_name')}" th:errors="*{file_name}"></div>
+        <div style="color: red" th:if="${#fields.hasErrors('fileName')}" th:errors="*{fileName}"></div>
         <br>
 
        <label>
-            Имя:
-            <input th:field="*{date}" type="date" name="date" placeholder="Введите оценку"
+            Дата загрузки:
+            <input th:field="*{date}" type="date" name="date" placeholder="Введите дату загрузки"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </label>
         <div style="color: red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
         <br>
 
         <label>
-            Имя:
-            <input th:field="*{archive_date}" type="date" name="archive_date" placeholder="Введите оценку"
+            Дата архивации:
+            <input th:field="*{archive_date}" type="date" name="archive_date" placeholder="Введите дату архивации"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </label>
         <div style="color: red" th:if="${#fields.hasErrors('archive_date')}" th:errors="*{archive_date}"></div>
         <br>
-        <label> Кандидат:
-            TODO
-            <select th:field="*{candidate_info}">
-                <option th:each="can : ${candidate}" th:text="${can.getUser().getPersonal_info().name}" th:value="${can.getId()}"></option>
+        <label> Пользователь:
+            <select th:field="*{user}">
+                <option  th:each="usr : ${users}" th:text="${usr.login}" th:value="${usr.id}"></option>
             </select>
         </label> <br>
 
         <button type="submit"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Добавить отделение
+            Добавить документ
         </button>
     </form>
 </div>

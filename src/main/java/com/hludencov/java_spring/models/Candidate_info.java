@@ -15,7 +15,7 @@ public class Candidate_info {
     private Long id;
 
     @PastOrPresent
-    private Date submission_date;
+    private Date submissionDate;
 
     @ManyToOne
     @JoinColumn(name = "target_department_id")
@@ -71,12 +71,12 @@ public class Candidate_info {
         this.id = id;
     }
 
-    public Date getSubmission_date() {
-        return submission_date;
+    public Date getSubmissionDate() {
+        return submissionDate;
     }
 
-    public void setSubmission_date(Date submission_date) {
-        this.submission_date = submission_date;
+    public void setSubmissionDate(Date submission_date) {
+        this.submissionDate = submission_date;
     }
 
     public Role getTarget_role() {

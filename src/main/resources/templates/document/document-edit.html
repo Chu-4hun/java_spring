@@ -8,29 +8,35 @@
 <body>
 <div th:insert="header">...</div>
 <div class="w-full max-w-xs">
-    <form th:object="${preparation_program}" th:action="${'/preparation_program/edit/'+preparation_program.getId()}" method="post"
+     <form th:object="${documents}" th:action="${'/document/edit/'+documents.id}" method="post"
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <label>
             Имя:
-            <input th:field="*{name}" type="text" name="name" placeholder="Введите имя"
+            <input th:field="*{fileName}" type="text" name="fileName" placeholder="Введите оценку"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </label>
-        <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        <div style="color: red" th:if="${#fields.hasErrors('fileName')}" th:errors="*{fileName}"></div>
         <br>
-        <div class="mb-4">
-            <label>Предметы</label>
-            <div th:each="sub : ${subjectSet}">
-                <input th:name="${'subjectSet[]'}" th:value="${sub.id}"
-                       th:checked="${sub.id!=null && #lists.contains(sub.preparation_programs, preparation_program)}"
-                       class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                       type="checkbox">
-                <label th:text="${sub.name}"></label>
-            </div>
-        </div>
+
+       <label>
+            Дата загрузки:
+            <input th:field="*{date}" type="date" name="date" placeholder="Введите оценку"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </label>
+        <div style="color: red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
+        <br>
+
+        <label>
+            Дата архивации:
+            <input th:field="*{archive_date}" type="date" name="archive_date" placeholder="Введите оценку"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </label>
+        <div style="color: red" th:if="${#fields.hasErrors('archive_date')}" th:errors="*{archive_date}"></div>
+        <br>
 
         <button type="submit"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Редактировать отделение
+            Редактировать документ
         </button>
     </form>
 </div>

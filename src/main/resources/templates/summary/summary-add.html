@@ -4,7 +4,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add preparation_program</title>
+    <title>Add summary</title>
 </head>
 <body>
 <div th:insert="header">...</div>
@@ -31,9 +31,8 @@
         </label>
         <br>
         <label> Кандидат:
-            TODO
             <select th:field="*{candidate_info}">
-                <option th:each="can : ${candidate}" th:text="${can.getUser().getPersonal_info().name}" th:value="${can.getId()}"></option>
+                <option th:each="can : ${candidate}" th:text="${can.getUser().login}" th:value="${can.getId()}"></option>
             </select>
         </label> <br>
 

@@ -10,20 +10,20 @@ public class Document {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "user_id")
-    private User user;
+    public User user;
 
     @NotBlank
-    private String file_name;
+    public String fileName;
 
     @PastOrPresent
-    private Date date;
+    public Date date;
 
     @FutureOrPresent
-    private Date archive_date;
+    public Date archive_date;
 
 
     @OneToMany(mappedBy = "document", fetch = FetchType.EAGER)
@@ -57,12 +57,12 @@ public class Document {
         this.user = user;
     }
 
-    public String getFile_name() {
-        return file_name;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setFile_name(String file_name) {
-        this.file_name = file_name;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public Date getDate() {

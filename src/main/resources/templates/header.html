@@ -50,6 +50,10 @@
                     <a class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
                        href="/genre" data-mdb-ripple="true" data-mdb-ripple-color="light">Жанр</a>
                 </li>
+                <li class="nav-item">
+                    <a class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+                       href="/document" data-mdb-ripple="true" data-mdb-ripple-color="light">Документ</a>
+                </li>
                 <li sec:authorize="hasAuthority('ADMIN')">
                     <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar"
                             class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
@@ -73,7 +77,8 @@
                             <li class="nav-item"
                                 sec:authorize="hasAuthority('ADMIN') or hasAuthority('TEACHER')">
                                 <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                   href="/department" data-mdb-ripple="true" data-mdb-ripple-color="light">Отделение</a>
+                                   href="/personal_info" data-mdb-ripple="true" data-mdb-ripple-color="light">Пресональная
+                                    информация</a>
                             </li>
                             <li class="nav-item"
                                 sec:authorize="hasAuthority('ADMIN') or hasAuthority('TEACHER')">
@@ -90,14 +95,13 @@
                             <li class="nav-item"
                                 sec:authorize="hasAuthority('ADMIN') or hasAuthority('TEACHER')">
                                 <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                   href="/education" data-mdb-ripple="true" data-mdb-ripple-color="light">Об.
-                                    учреждения</a>
+                                   href="/department" data-mdb-ripple="true" data-mdb-ripple-color="light">Отделение</a>
                             </li>
                             <li class="nav-item"
                                 sec:authorize="hasAuthority('ADMIN') or hasAuthority('TEACHER')">
                                 <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                   href="/personal_info" data-mdb-ripple="true" data-mdb-ripple-color="light">Пресональная
-                                    информация</a>
+                                   href="/education" data-mdb-ripple="true" data-mdb-ripple-color="light">Об.
+                                    учреждения</a>
                             </li>
                             <li class="nav-item"
                                 sec:authorize="hasAuthority('ADMIN') or hasAuthority('TEACHER')">
@@ -132,6 +136,17 @@
                             <li class="nav-item"
                                 sec:authorize="hasAuthority('ADMIN') or hasAuthority('TEACHER')">
                                 <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                   href="/education" data-mdb-ripple="true" data-mdb-ripple-color="light">Об.
+                                    учреждения</a>
+                            </li>
+                            <li class="nav-item"
+                                sec:authorize="hasAuthority('ADMIN') or hasAuthority('TEACHER')">
+                                <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                   href="/department" data-mdb-ripple="true" data-mdb-ripple-color="light">Отделение</a>
+                            </li>
+                            <li class="nav-item"
+                                sec:authorize="hasAuthority('ADMIN') or hasAuthority('TEACHER')">
+                                <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                    href="/preparation_program" data-mdb-ripple="true"
                                    data-mdb-ripple-color="light">Программа
                                     подготовки</a>
@@ -139,20 +154,10 @@
                             <li class="nav-item"
                                 sec:authorize="hasAuthority('ADMIN') or hasAuthority('TEACHER')">
                                 <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                   href="/education" data-mdb-ripple="true" data-mdb-ripple-color="light">Об.
-                                    учреждения</a>
-                            </li>
-                            <li class="nav-item"
-                                sec:authorize="hasAuthority('ADMIN') or hasAuthority('TEACHER')">
-                                <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                    href="/personal_info" data-mdb-ripple="true" data-mdb-ripple-color="light">Пресональная
                                     информация</a>
                             </li>
-                            <li class="nav-item"
-                                sec:authorize="hasAuthority('ADMIN') or hasAuthority('TEACHER')">
-                                <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                   href="/department" data-mdb-ripple="true" data-mdb-ripple-color="light">Отделение</a>
-                            </li>
+
                         </ul>
                     </div>
                 </li>
@@ -176,7 +181,8 @@
                             <li class="nav-item"
                                 sec:authorize="hasAuthority('TEACHER') or hasAuthority('User')">
                                 <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                   href="/summary" data-mdb-ripple="true" data-mdb-ripple-color="light">Информаиция о пользователе</a>
+                                   href="/summary" data-mdb-ripple="true" data-mdb-ripple-color="light">Информаиция о
+                                    пользователе</a>
                             </li>
 
                         </ul>

@@ -25,13 +25,13 @@ public class DocumentController {
 
     @GetMapping
     public String documentList(Model model) {
-        model.addAttribute("document", documentRepository.findAll());
+        model.addAttribute("documents", documentRepository.findAll());
         return "document/document-main";
     }
 
     @GetMapping("/add")
     public String documentAdd(Document document, Model model) {
-        model.addAttribute("document", documentRepository.findAll());
+        model.addAttribute("documents", documentRepository.findAll());
         model.addAttribute("users", userRepository.findAll());
         return "document/document-add";
     }
@@ -39,7 +39,7 @@ public class DocumentController {
     @PostMapping("/add")
     public String documentPostAdd(@ModelAttribute("document") @Valid Document document, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("document", documentRepository.findAll());
+            model.addAttribute("documents", documentRepository.findAll());
             model.addAttribute("users", userRepository.findAll());
             return "document/document-add";
         }
@@ -52,14 +52,15 @@ public class DocumentController {
     public String documentEdit(
             Document document,
             Model model) {
-        model.addAttribute("document", document);
+        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("documents", document);
         return "document/document-edit";
     }
 
     @PostMapping("/edit/{document}")
     public String documentPostEdit(@ModelAttribute("document") @Valid Document document, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("document", documentRepository.findAll());
+            model.addAttribute("documents", documentRepository.findAll());
             model.addAttribute("users", userRepository.findAll());
             return "document/document-edit";
         }
@@ -71,9 +72,8 @@ public class DocumentController {
     public String documentShow(
             Document document,
             Model model) {
-        model.addAttribute("document", documentRepository.findAll());
         model.addAttribute("users", userRepository.findAll());
-        model.addAttribute("document", document);
+        model.addAttribute("documents", document);
         return "document/document-show";
     }
 
@@ -91,14 +91,14 @@ public class DocumentController {
 
     @PostMapping("/filter/result")
     public String documentResult(@RequestParam String title, Model model) {
-        List<Document> result = documentRepository.findByFile_nameContains(title);
+        List<Document> result = documentRepository.findByFileNameContains(title);
         model.addAttribute("result", result);
         return "document/document-filter";
     }
 
     @PostMapping("/filter_strict/result")
     public String documentStrictResult(@RequestParam String title, Model model) {
-        List<Document> result = documentRepository.findByFile_name(title);
+        List<Document> result = documentRepository.findByFileName(title);
         model.addAttribute("result", result);
         return "document/document-filter";
     }

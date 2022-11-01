@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface DocumentRepository extends CrudRepository<Document, Long> {
-    List<Document> findByFile_nameContains(String name);
-    List<Document> findByFile_name(String name);
+    List<Document> findByFileNameContains(String name);
+    List<Document> findByFileName(String name);
 
 }
