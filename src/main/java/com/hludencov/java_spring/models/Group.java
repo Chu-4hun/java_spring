@@ -16,18 +16,17 @@ public class Group {
     @JoinTable(name = "user_to_group",
             joinColumns = @JoinColumn(name = "groups_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> users;
+    public Set<User> users;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User teacher_organizer;
+    public User teacher_organizer;
 
     @ManyToOne
     @JoinColumn(name = "preparation_program_id")
-    private Preparation_program preparation_program;
+    public Preparation_program preparation_program;
 
 
     //______________________________BOILERPLATE LINE__________________________________
-
 
     public Long getId() {
         return id;

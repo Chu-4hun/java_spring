@@ -17,7 +17,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-
 @PreAuthorize("hasAnyAuthority('ADMIN')")
 public class UsersController {
     @Autowired
