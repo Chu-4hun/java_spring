@@ -5,13 +5,13 @@
 <head>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title th:value="${education.name}"></title>
+    <title th:value="${education_institution.name}"></title>
 </head>
 <body>
 <div th:insert="header">...</div>
 <div class="w-full max-w-xs">
-    <h3 class="font-bold" th:text="Предмет + ${education.getName()}"></h3>
-    <p th:text="Код предмета + ${education.getAddress()}"></p>
+    <h3 class="font-bold" th:text="'Об. Учреждение ' + ${education_institution.getName()}"></h3>
+    <p th:text="${'Код предмета ' + education_institution.getAddress()}"></p>
 </div>
 </body>
 </html>

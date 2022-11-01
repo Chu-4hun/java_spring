@@ -21,56 +21,55 @@ public class EducationInstitutionController {
     private Education_institutionRepository education_institutionRepository;
 
     @GetMapping
-    public String educationList(Model model){
-        model.addAttribute("education", education_institutionRepository.findAll());
+    public String educationList(Education_institution education_institution,Model model){
+        model.addAttribute("education_institution", education_institutionRepository.findAll());
         return "education/education-main";
     }
 
     @GetMapping("/add")
-    public String educationAdd(Education_institution education, Model model) {
-        model.addAttribute("education", education_institutionRepository.findAll());
+    public String educationAdd(Education_institution education_institution) {
         return "education/education-add";
     }
 
     @PostMapping("/add")
-    public String educationPostAdd(@ModelAttribute("education") @Valid Education_institution education, BindingResult bindingResult) {
+    public String educationPostAdd(@ModelAttribute("education_institution") @Valid Education_institution education_institution, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "education/education-add";
         }
-        education_institutionRepository.save(education);
+        education_institutionRepository.save(education_institution);
         return "redirect:/education";
     }
 
 
-    @GetMapping("/edit/{education}")
+    @GetMapping("/edit/{education_institution}")
     public String educationEdit(
-            Education_institution education,
+            Education_institution education_institution,
             Model model) {
-        model.addAttribute("education", education);
+        model.addAttribute("education_institution", education_institution);
         return "education/education-edit";
     }
 
-    @PostMapping("/edit/{education}")
-    public String educationPostEdit(@ModelAttribute("education") @Valid Education_institution education, BindingResult bindingResult) {
+    @PostMapping("/edit/{education_institution}")
+    public String educationPostEdit(@ModelAttribute("education_institution") @Valid Education_institution education_institution, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "education/education-edit";
         }
-        education_institutionRepository.save(education);
+        education_institutionRepository.save(education_institution);
         return "redirect:../";
     }
 
-    @GetMapping("/show/{education}")
+    @GetMapping("/show/{education_institution}")
     public String educationShow(
-            Education_institution education,
+            Education_institution education_institution,
             Model model) {
-        model.addAttribute("education", education);
+        model.addAttribute("education_institution", education_institution);
         return "education/education-show";
     }
 
-    @GetMapping("/del/{education}")
+    @GetMapping("/del/{education_institution}")
     public String educationDel(
-            Education_institution education) {
-        education_institutionRepository.delete(education);
+            Education_institution education_institution) {
+        education_institutionRepository.delete(education_institution);
         return "redirect:../";
     }
 

@@ -7,8 +7,6 @@ import java.util.Set;
 @Entity
 @Table(name = "education_institution")
 public class Education_institution {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

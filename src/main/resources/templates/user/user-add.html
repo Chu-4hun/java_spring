@@ -24,27 +24,7 @@
         </label>
         <div style="color: red" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></div>
         <br>
-        <label class="block text-gray-700 text-sm font-bold mb-2">
-            Введите кол-во просмотров
-            <input required th:field="*{views}" type="number" name="views" placeholder="Кол-во просмотров"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-        </label>
-        <div style="color: red" th:if="${#fields.hasErrors('views')}" th:errors="*{views}"></div>
-        <br>
-        <label class="block text-gray-700 text-sm font-bold mb-2">
-            Введите кол-во друзей
-            <input required th:field="*{friends}" type="number" name="friends" placeholder="Кол-во друзей"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-        </label>
-        <div style="color: red" th:if="${#fields.hasErrors('friends')}" th:errors="*{friends}"></div>
 
-        <br>
-        <label class="block text-gray-700 text-sm font-bold mb-2">
-            Введите дату регистрации
-            <input required th:field="*{register_date}" type="date" name="register_date" placeholder="Дата регистрации"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-        </label>
-        <div style="color: red" th:if="${#fields.hasErrors('register_date')}" th:errors="*{register_date}"></div>
         <br>
         <div th:each="role : ${roles}">
 

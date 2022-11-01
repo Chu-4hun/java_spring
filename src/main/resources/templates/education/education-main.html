@@ -11,11 +11,11 @@
 <div class="w-full max-w-xs">
     <h1 class="font-bold">Все предметы</h1>
     <a href="/education/filter" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Поиск
-        предметов</a>
+        об. Учеоеждений</a>
     <br>
     <a href="/education/add" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Добавить
-        предмет</a>
-    <div th:each="el : ${education}">
+        об. Учеоеждение</a>
+    <div th:each="el : ${education_institution}">
         <div class="inline-block align-baseline rounded w-full py-2 px-3 bg-transparent hover:bg-teal-100 shadow">
             <h3 th:text="${el.name}" class="font-bold"></h3>
             <p th:text="${el.address}"></p>
