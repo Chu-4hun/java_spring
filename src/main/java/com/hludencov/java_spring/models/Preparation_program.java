@@ -9,15 +9,6 @@ import java.util.Set;
 @Entity
 @Table(name = "preparation_program")
 public class Preparation_program {
-    public Preparation_program(Long id, String name, Set<Subject> subjectSet) {
-        this.id = id;
-        this.name = name;
-        this.subjectSet = subjectSet;
-    }
-
-    public Preparation_program() {
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
