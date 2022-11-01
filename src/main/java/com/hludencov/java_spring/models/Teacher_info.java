@@ -3,7 +3,6 @@ package com.hludencov.java_spring.models;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.sql.Date;
-import java.util.List;
 import java.util.Set;
 
 
@@ -16,7 +15,7 @@ public class Teacher_info {
     private Long id;
 
     @PastOrPresent
-    private Date teach_since;
+    public Date teachSince;
 
     @ManyToMany
     @JoinTable(name = "teacher_to_subject",
@@ -26,7 +25,7 @@ public class Teacher_info {
 
 
     @OneToMany(mappedBy = "teacher_info", fetch = FetchType.EAGER)
-    private Set<User> user_teacher_info;
+    public Set<User> user_teacher_info;
 
 
     //______________________________BOILERPLATE LINE__________________________________
@@ -56,11 +55,11 @@ public class Teacher_info {
         this.id = id;
     }
 
-    public Date getTeach_since() {
-        return teach_since;
+    public Date getTeachSince() {
+        return teachSince;
     }
 
-    public void setTeach_since(Date teach_since) {
-        this.teach_since = teach_since;
+    public void setTeachSince(Date teachSince) {
+        this.teachSince = teachSince;
     }
 }
