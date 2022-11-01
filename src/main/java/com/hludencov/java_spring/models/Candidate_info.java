@@ -12,29 +12,21 @@ public class Candidate_info {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
 
     @PastOrPresent
-    private Date submissionDate;
+    public Date submissionDate;
 
     @ManyToOne
     @JoinColumn(name = "target_department_id")
-    private Department target_department;
+    public Department target_department;
 
-    private Role target_role;
-
-    @ManyToOne
-    @JoinColumn(name = "summary_id")
-    private Summary summary;
-
-//    @OneToMany(mappedBy = "candidate_info", fetch = FetchType.EAGER)
-//    @OneToOne()
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private User user;
+    public User user;
 
     @OneToMany(mappedBy = "candidate_info", fetch = FetchType.EAGER)
-    private Set<Summary> summaries;
+    public Set<Summary> summaries;
 
     //______________________________BOILERPLATE LINE__________________________________
 
@@ -47,13 +39,6 @@ public class Candidate_info {
         this.user = user;
     }
 
-    public Summary getSummary() {
-        return summary;
-    }
-
-    public void setSummary(Summary summary) {
-        this.summary = summary;
-    }
 
     public Department getTarget_department() {
         return target_department;
@@ -79,13 +64,6 @@ public class Candidate_info {
         this.submissionDate = submission_date;
     }
 
-    public Role getTarget_role() {
-        return target_role;
-    }
-
-    public void setTarget_role(Role target_role) {
-        this.target_role = target_role;
-    }
 
     public Set<Summary> getSummaries() {
         return summaries;
