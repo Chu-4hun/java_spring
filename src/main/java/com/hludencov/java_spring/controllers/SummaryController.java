@@ -42,7 +42,7 @@ public class SummaryController {
     @GetMapping("/add")
     public String summaryAdd(Summary summary, Model model) {
         model.addAttribute("candidate", candidateRepository.findAll());
-        model.addAttribute("education_institution", education_institutionRepository.findAll());
+        model.addAttribute("education_institutions", education_institutionRepository.findAll());
         model.addAttribute("subjects", subjectRepository.findAll());
         model.addAttribute("candidate", candidateRepository.findAll());
         return "summary/summary-add";
@@ -52,7 +52,7 @@ public class SummaryController {
     public String summaryPostAdd(@ModelAttribute("summary") @Valid Summary summary, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("candidate", candidateRepository.findAll());
-            model.addAttribute("education_institution", education_institutionRepository.findAll());
+            model.addAttribute("education_institutions", education_institutionRepository.findAll());
             model.addAttribute("subjects", subjectRepository.findAll());
             model.addAttribute("candidate", candidateRepository.findAll());
             return "summary/summary-add";
@@ -67,7 +67,7 @@ public class SummaryController {
             Summary summary,
             Model model) {
         model.addAttribute("candidate", candidateRepository.findAll());
-        model.addAttribute("education_institution", education_institutionRepository.findAll());
+        model.addAttribute("education_institutions", education_institutionRepository.findAll());
         model.addAttribute("subjects", subjectRepository.findAll());
         model.addAttribute("candidate", candidateRepository.findAll());
         model.addAttribute("summary", summary);
@@ -78,7 +78,7 @@ public class SummaryController {
     public String summaryPostEdit(@ModelAttribute("summary") @Valid Summary summary, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("candidate", candidateRepository.findAll());
-            model.addAttribute("education_institution", education_institutionRepository.findAll());
+            model.addAttribute("education_institutions", education_institutionRepository.findAll());
             model.addAttribute("subjects", subjectRepository.findAll());
             model.addAttribute("candidate", candidateRepository.findAll());
             return "summary/summary-edit";
@@ -91,7 +91,7 @@ public class SummaryController {
     public String summaryShow(
             Summary summary,
             Model model) {
-        model.addAttribute("summary", summary);
+        model.addAttribute("summ", summary);
         return "summary/summary-show";
     }
 
@@ -109,7 +109,7 @@ public class SummaryController {
 
     @PostMapping("/filter/result")
     public String summaryResult(@RequestParam String title, Model model) {
-        List<Summary> result = summaryRepository.findByMarkContains(title);
+        List<Summary> result = summaryRepository.findByMark(Integer.parseInt(title));
         model.addAttribute("result", result);
         return "summary/summary-filter";
     }

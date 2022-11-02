@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface SummaryRepository extends CrudRepository<Summary, Long> {
-    List<Summary> findByMarkContains(String title);
+    List<Summary> findByMark(int title);
 }

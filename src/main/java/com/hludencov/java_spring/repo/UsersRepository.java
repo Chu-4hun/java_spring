@@ -10,4 +10,10 @@ public interface UsersRepository extends CrudRepository<User, Long> {
     List<User> findByLogin(String title);
 
 
+    default List<User> findActive() {
+        return this.findByActive(true);
+    }
+    List<User> findByActive(boolean active);
+
+
 }

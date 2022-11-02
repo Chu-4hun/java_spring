@@ -11,12 +11,10 @@
 <h2>Фильтрация</h2>
 <form>
     <label>
-        <input type="text" name="title"
+        <input type="number" name="title"
                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </label>
-    <input type="submit" formmethod="post" formaction="/preparation_program/filter/result" value="Найти"
-           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-    <input type="submit" formmethod="post" formaction="/preparation_program/filter_strict/result" value="Найти точно"
+    <input type="submit" formmethod="post" formaction="/summary/filter/result" value="Найти"
            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
 
     <input type="hidden"
@@ -25,7 +23,8 @@
 
     <div th:each="el : ${result}">
         <div class="inline-block align-baseline rounded w-full py-2 px-3 bg-transparent hover:bg-teal-100 shadow">
-            <h3 th:text="${el.name}" class="font-bold"></h3>
+            <h3 th:text="${el.mark}" class="font-bold"></h3>
+            <h3 th:text="${el.candidate_info.user.login}"></h3>
         </div>
     </div>
 </form>

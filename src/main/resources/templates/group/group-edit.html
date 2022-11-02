@@ -13,7 +13,7 @@
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">Пользователи</label>
             <div th:each="user : ${users}">
-                <input th:name="${'users[]'}" th:value="${user.id}" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                <input th:name="${'users[]'}" th:value="${user.id}" th:checked="${user.id!=null && #lists.contains(user.groups, group)}" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                    type="checkbox">
                 <label th:text="${user.login}"></label>
             </div>

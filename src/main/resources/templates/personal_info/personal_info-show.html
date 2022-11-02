@@ -10,12 +10,11 @@
 <body>
 <div th:insert="header">...</div>
 <div class="w-full max-w-xs">
-    <h3 class="font-bold" th:text="'Об. Учреждение ' + ${personal_info.getName()}"></h3>
-    <p th:text="${'Код предмета ' + personal_info.getAddress()}"></p>
-    <p th:text="${personal_info.surname}"></p>
-    <p th:text="${personal_info.sec_name}"></p>
-    <p th:text="${personal_info.birthdate}"></p>
-    <p th:text="${personal_info.pass_id}"></p>
+    <h3 class="font-bold" th:text="'Имя ' + ${personal_info.getName()}"></h3>
+    <p th:text="'фамилия ' +${personal_info.surname}"></p>
+    <p th:text="'отчество ' +${personal_info.sec_name}"></p>
+    <p th:text="'день рождения ' +${personal_info.birthdate}"></p>
+    <p th:text="'номер пасспорта ' +${personal_info.pass_id}"></p>
 </div>
 </body>
 </html>

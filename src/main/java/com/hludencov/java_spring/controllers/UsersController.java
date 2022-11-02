@@ -28,7 +28,7 @@ public class UsersController {
 
     @GetMapping("/user")
     public String userMain(Model model) {
-        Iterable<User> users = usersRepository.findAll();
+        Iterable<User> users = usersRepository.findActive();
         model.addAttribute("users", users);
         return "user/user-main";
     }
@@ -82,7 +82,8 @@ public class UsersController {
     @GetMapping("/user/del/{user}")
     public String userDel(
             User user) {
-        usersRepository.delete(user);
+        user.setActive(false);
+        usersRepository.save(user);
         return "redirect:../";
     }
 

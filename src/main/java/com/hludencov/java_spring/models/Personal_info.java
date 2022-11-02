@@ -19,18 +19,18 @@ public class Personal_info {
     private Long id;
 
     @NotBlank
-    private String name, surname;
+    public String name, surname;
 
     @Nullable
-    private String sec_name;
+    public String sec_name;
 
     @PastOrPresent
-    private Date birthdate;
+    public Date birthdate;
 
     @NotNull
-    private int pass_id;
+    public int pass_id;
     @NotNull
-    private boolean is_male;
+    public boolean is_male;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")

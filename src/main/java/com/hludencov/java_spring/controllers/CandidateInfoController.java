@@ -5,6 +5,7 @@ import com.hludencov.java_spring.models.Candidate_info;
 import com.hludencov.java_spring.repo.CandidateRepository;
 import com.hludencov.java_spring.repo.DepartmentRepository;
 import com.hludencov.java_spring.repo.UserRepository;
+import com.hludencov.java_spring.repo.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +24,7 @@ public class CandidateInfoController {
     private DepartmentRepository departmentRepository;
 
      @Autowired
-    private UserRepository userRepository;
+    private UsersRepository userRepository;
 
     @GetMapping
     public String candidateList(Model model) {
@@ -35,7 +36,7 @@ public class CandidateInfoController {
     public String candidateAdd(Candidate_info candidate, Model model) {
         model.addAttribute("candidates", candidateRepository.findAll());
         model.addAttribute("departments", departmentRepository.findAll());
-        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("users", userRepository.findActive());
         return "candidate/candidate-add";
     }
 
@@ -44,7 +45,7 @@ public class CandidateInfoController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("candidates", candidateRepository.findAll());
             model.addAttribute("departments", departmentRepository.findAll());
-            model.addAttribute("users", userRepository.findAll());
+            model.addAttribute("users", userRepository.findActive());
             return "candidate/candidate-add";
         }
         candidateRepository.save(candidate);
@@ -57,7 +58,7 @@ public class CandidateInfoController {
             Candidate_info candidate,
             Model model) {
         model.addAttribute("departments", departmentRepository.findAll());
-        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("users", userRepository.findActive());
         model.addAttribute("candidates", candidate);
         return "candidate/candidate-edit";
     }
@@ -67,7 +68,7 @@ public class CandidateInfoController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("candidates", candidateRepository.findAll());
             model.addAttribute("departments", departmentRepository.findAll());
-            model.addAttribute("users", userRepository.findAll());
+            model.addAttribute("users", userRepository.findActive());
             return "candidate/candidate-edit";
         }
         candidateRepository.save(candidate);
@@ -79,7 +80,7 @@ public class CandidateInfoController {
             Candidate_info candidate,
             Model model) {
         model.addAttribute("departments", departmentRepository.findAll());
-        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("users", userRepository.findActive());
         model.addAttribute("candidates", candidate);
         return "candidate/candidate-show";
     }

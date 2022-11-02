@@ -5,12 +5,14 @@
 <head>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title th:value="${summary.name}"></title>
+    <title th:value="${summ.subject.name}"></title>
 </head>
 <body>
 <div th:insert="header">...</div>
 <div class="w-full max-w-xs">
-    <h3 class="font-bold" th:text="'Имя пользователя ' + ${summary.getName()}"></h3>
+    <h3 class="font-bold" th:text="'Предмет ' + ${summ.subject.name}"></h3>
+    <h3 th:text="'Оценка ' + ${summ.mark}"></h3>
+    <h3 th:text="'Пользователь ' + ${summ.candidate_info.user.login}"></h3>
 </div>
 </body>
 </html>
