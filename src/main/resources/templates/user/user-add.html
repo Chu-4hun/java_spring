@@ -10,19 +10,19 @@
 <div class="w-full max-w-xs">
     <form th:object="${user}" th:action="${'/user/add'}" method="post"
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2">
+        <label >
             Введите имя
             <input required th:field="*{login}" type="text" name="login" placeholder="Имя"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
         </label>
         <div style="color: red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
         <br>
-        <label class="block text-gray-700 text-sm font-bold mb-2">
-            Дата рождения
-            <input required th:field="*{birthdate}" type="date" name="birthdate" placeholder="Введите дату рождения"
+        <label >
+            Введите пароль
+            <input required th:field="*{password}" type="password" name="password" placeholder="Имя"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
         </label>
-        <div style="color: red" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></div>
+        <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
         <br>
 
         <br>

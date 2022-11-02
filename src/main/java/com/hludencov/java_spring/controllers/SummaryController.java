@@ -41,6 +41,7 @@ public class SummaryController {
 
     @GetMapping("/add")
     public String summaryAdd(Summary summary, Model model) {
+        model.addAttribute("candidate", candidateRepository.findAll());
         model.addAttribute("education_institution", education_institutionRepository.findAll());
         model.addAttribute("subjects", subjectRepository.findAll());
         model.addAttribute("candidate", candidateRepository.findAll());
@@ -50,6 +51,7 @@ public class SummaryController {
     @PostMapping("/add")
     public String summaryPostAdd(@ModelAttribute("summary") @Valid Summary summary, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("candidate", candidateRepository.findAll());
             model.addAttribute("education_institution", education_institutionRepository.findAll());
             model.addAttribute("subjects", subjectRepository.findAll());
             model.addAttribute("candidate", candidateRepository.findAll());
@@ -75,8 +77,10 @@ public class SummaryController {
     @PostMapping("/edit/{summary}")
     public String summaryPostEdit(@ModelAttribute("summary") @Valid Summary summary, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("candidate", candidateRepository.findAll());
             model.addAttribute("education_institution", education_institutionRepository.findAll());
             model.addAttribute("subjects", subjectRepository.findAll());
+            model.addAttribute("candidate", candidateRepository.findAll());
             return "summary/summary-edit";
         }
         summaryRepository.save(summary);

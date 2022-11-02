@@ -2,17 +2,12 @@
 <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title th:value="${user.nickname}"></title>
+    <title th:value="${user.login}"></title>
 </head>
 <body>
 <div th:insert="header">...</div>
 
-<h3 th:text="${user.nickname}"></h3>
-<p th:text="${user.birthdate}"></p>
-<p th:text="${user.views}"></p>
-<p th:text="${user.friends}"></p>
-<p th:text="${user.register_date}"></p>
+<h3 th:text="'Логин пользователя '${user.login}"></h3>
 </body>
 </html>

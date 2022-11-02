@@ -10,53 +10,30 @@
 <div class="w-full max-w-xs">
     <form th:object="${user}" th:action="${'/user/edit/'+user.getId()}" method="post"
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2">
+         <label >
             Введите имя
             <input required th:field="*{login}" type="text" name="login" placeholder="Имя"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   th:value="${user.getLogin()}"/>
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
         </label>
         <div style="color: red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
         <br>
-        <label class="block text-gray-700 text-sm font-bold mb-2">
-            Дата рождения
-            <input required th:field="*{birthdate}" type="date" name="birthdate" placeholder="Введите дату рождения"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   th:value="${user.getBirthdate()}"/>
+        <label >
+            Введите пароль
+            <input required th:field="*{password}" type="password" name="password" placeholder="Имя"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
         </label>
-        <div style="color: red" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></div>
+        <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
         <br>
-        <label class="block text-gray-700 text-sm font-bold mb-2">
-            Введите кол-во просмотров
-            <input required th:field="*{views}" type="number" name="views" placeholder="Кол-во просмотров"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   th:value="${user.views}"/>
-        </label>
-        <div style="color: red" th:if="${#fields.hasErrors('views')}" th:errors="*{views}"></div>
-        <br>
-        <label class="block text-gray-700 text-sm font-bold mb-2">
-            Введите кол-во друзей
-            <input required th:field="*{friends}" type="number" name="friends" placeholder="Кол-во друзей"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   th:value="${user.friends}"/>
-        </label>
-        <div style="color: red" th:if="${#fields.hasErrors('friends')}" th:errors="*{friends}"></div>
 
         <br>
-        <label class="block text-gray-700 text-sm font-bold mb-2">
-            Введите дату регистрации
-            <input required th:field="*{register_date}" type="date" name="register_date" placeholder="Дата регистрации"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   th:value="${user.register_date}"/>
-        </label>
-        <div style="color: red" th:if="${#fields.hasErrors('register_date')}" th:errors="*{register_date}"></div>
-        <br>
         <div th:each="role : ${roles}">
-            <div th:each="el : ${user}">
+
+            <label>
                 <input th:id="${role}" type="checkbox" th:name="${'roles[]'}" th:value="${role}"
-                       th:checked="${#lists.contains(el.roles, role)}"/>
-                <label th:text="${role}"/></label>
-            </div>
+                />
+            </label>
+            <label th:text="${role}"/>
+
             <br>
         </div>
         <div class="flex items-center justify-between">

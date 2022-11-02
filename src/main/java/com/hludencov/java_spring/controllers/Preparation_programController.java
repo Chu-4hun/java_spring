@@ -16,7 +16,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/preparation_program")
-@PreAuthorize("hasAnyAuthority('ADMIN')")
+@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('TEACHER')")
 public class Preparation_programController {
     
     @Autowired

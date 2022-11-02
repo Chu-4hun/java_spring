@@ -5,6 +5,7 @@ import com.hludencov.java_spring.models.User;
 import com.hludencov.java_spring.repo.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,9 @@ import java.util.List;
 public class UsersController {
     @Autowired
     UsersRepository usersRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/user")
     public String userMain(Model model) {
@@ -40,6 +44,8 @@ public class UsersController {
         if (bindingResult.hasErrors()) {
             return "user/user-add";
         }
+        user.setActive(true);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         usersRepository.save(user);
         return "redirect:/user";
     }
@@ -59,6 +65,8 @@ public class UsersController {
         if (bindingResult.hasErrors()) {
             return "user/user-edit";
         }
+        user.setActive(true);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         usersRepository.save(user);
         return "redirect:../";
     }
