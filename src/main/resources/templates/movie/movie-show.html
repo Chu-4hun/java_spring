@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title th:value="${movie.name}"></title>
+</head>
+<body>
+<div th:insert="header">...</div>
+<h3 th:text="${movie.getName()}"></h3>
+<label>
+    Количество серий
+    <p th:text="${movie.getSeries_amount()}"></p>
+</label>
+<p th:text="${movie.getComments_amount()}"></p>
+<p th:text="${movie.getRating()}"></p>
+<p th:text="${movie.getRelease_date()}"></p>
+</body>
+</html>

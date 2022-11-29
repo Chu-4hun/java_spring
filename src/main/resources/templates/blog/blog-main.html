@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:insert="header">...</div>
+<h1>Все статьи</h1>
+<div class="w-full max-w-xs">
+    <a href="/blog/filter" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Поиск
+        статей</a>
+    <a href="/blog/add" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Добавить
+        статью</a>
+    <div th:each="el : ${posts}">
+        <div class="inline-block align-baseline rounded w-full py-2 px-3 bg-transparent hover:bg-teal-100 shadow">
+            <h3 class="font-bold" th:text="${el.title}"></h3>
+            <p th:text="${el.anons}"></p>
+            <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" th:href="'/blog/edit/'+${el.id}">Редактировать</a>
+            <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+               th:href="'/movie/del/'+${el.getId()}">Удалить</a>
+            <a th:href="'/blog/show/' + ${el.id}"
+               class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Подробнее</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
