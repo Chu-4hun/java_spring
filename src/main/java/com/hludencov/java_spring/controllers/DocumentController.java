@@ -2,9 +2,11 @@ package com.hludencov.java_spring.controllers;
 
 
 import com.hludencov.java_spring.models.Document;
+import com.hludencov.java_spring.models.User;
 import com.hludencov.java_spring.repo.DocumentRepository;
 import com.hludencov.java_spring.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,7 +27,10 @@ public class DocumentController {
 
     @GetMapping
     public String documentList(Model model) {
-        model.addAttribute("documents", documentRepository.findAll());
+        User user = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        model.addAttribute("user", user);
+        model.addAttribute("documents", documentRepository.findByUser_id(user.getId()));
         return "document/document-main";
     }
 
