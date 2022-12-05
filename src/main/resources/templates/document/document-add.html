@@ -9,36 +9,43 @@
 <body>
 <div th:insert="header">...</div>
 <div class="w-full max-w-xs">
-    <form th:object="${document}" th:action="${'/document/add'}" method="post"
+<!--        <p th:text="'Здавствуйте, ' + ${user.getPersonal_info().getName()}"></p>-->
+    <form th:object="${document}" th:action="${'/document/add'}" enctype="multipart/form-data" method="post"
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+
+        <br>
         <label>
-            Имя:
-            <input th:field="*{fileName}" type="text" name="fileName" placeholder="Введите имя"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-        </label>
+            Прикрепите файл:
+            <input type="file" name="file" accept=".pdf"
+                   class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
         <div style="color: red" th:if="${#fields.hasErrors('fileName')}" th:errors="*{fileName}"></div>
+        </label>
         <br>
 
-       <label>
-            Дата загрузки:
-            <input th:field="*{date}" type="date" name="date" placeholder="Введите дату загрузки"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-        </label>
-        <div style="color: red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
-        <br>
+        <input th:field="*{fileName}" th:value="file" type="hidden">
 
-        <label>
-            Дата архивации:
-            <input th:field="*{archive_date}" type="date" name="archive_date" placeholder="Введите дату архивации"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-        </label>
-        <div style="color: red" th:if="${#fields.hasErrors('archive_date')}" th:errors="*{archive_date}"></div>
-        <br>
-        <label> Пользователь:
-            <select th:field="*{user}">
-                <option  th:each="usr : ${users}" th:text="${usr.login}" th:value="${usr.id}"></option>
-            </select>
-        </label> <br>
+<!--       <label>-->
+<!--            Дата загрузки:-->
+<!--            <input th:field="*{date}" type="date" name="date" placeholder="Введите дату загрузки"-->
+<!--                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">-->
+<!--        </label>-->
+<!--        <div style="color: red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>-->
+<!--        <br>-->
+
+<!--        <label>-->
+<!--            Дата архивации:-->
+<!--            <input th:field="*{archive_date}" type="date" name="archive_date" placeholder="Введите дату архивации"-->
+<!--                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">-->
+<!--        </label>-->
+<!--        <div style="color: red" th:if="${#fields.hasErrors('archive_date')}" th:errors="*{archive_date}"></div>-->
+<!--        <br>-->
+
+<!--        <label> Пользователь:-->
+<!--            <select th:field="*{user}">-->
+<!--                <option  th:each="usr : ${users}" th:text="${usr.login}" th:value="${usr.id}"></option>-->
+<!--            </select>-->
+<!--        </label> <br>-->
 
         <button type="submit"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">

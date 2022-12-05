@@ -42,7 +42,7 @@
 <!--                    <a class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"-->
 <!--                       href="/candidate" data-mdb-ripple="true" data-mdb-ripple-color="light">Кандидат</a>-->
 <!--                </li>-->
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="hasAuthority('USER')">
                     <a class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
                        href="/document" data-mdb-ripple="true" data-mdb-ripple-color="light">Мои документы</a>
                 </li>

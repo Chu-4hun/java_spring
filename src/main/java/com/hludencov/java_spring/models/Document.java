@@ -16,7 +16,6 @@ public class Document {
     @JoinColumn(name = "user_id")
     public User user;
 
-    @NotBlank
     public String fileName;
 
     @PastOrPresent
