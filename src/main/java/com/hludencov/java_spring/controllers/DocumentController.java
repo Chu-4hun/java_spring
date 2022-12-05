@@ -7,14 +7,19 @@ import com.hludencov.java_spring.repo.DocumentRepository;
 import com.hludencov.java_spring.repo.UserRepository;
 import com.hludencov.java_spring.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 
@@ -53,7 +58,8 @@ public class DocumentController {
     }
 
     @PostMapping("/add")
-    public String documentPostAdd(@ModelAttribute("document") @Valid Document document, BindingResult bindingResult, Model model, @RequestParam("file") MultipartFile file) {
+    public String documentPostAdd(@ModelAttribute("document") @Valid Document document, BindingResult bindingResult,
+                                  Model model, @RequestParam("file") MultipartFile file) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("documents", documentRepository.findAll());
             model.addAttribute("users", userRepository.findAll());
@@ -75,18 +81,19 @@ public class DocumentController {
     public String documentEdit(
             Document document,
             Model model) {
-        model.addAttribute("users", userRepository.findAll());
         model.addAttribute("documents", document);
         return "document/document-edit";
     }
 
     @PostMapping("/edit/{document}")
-    public String documentPostEdit(@ModelAttribute("document") @Valid Document document, BindingResult bindingResult, Model model) {
+    public String documentPostEdit(@ModelAttribute("document") @Valid Document document, BindingResult bindingResult,
+                                   Model model, @RequestParam("file") MultipartFile file) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("documents", documentRepository.findAll());
-            model.addAttribute("users", userRepository.findAll());
             return "document/document-edit";
         }
+        document.fileName = file.getOriginalFilename();
+        storageService.store(file);
         documentRepository.save(document);
         return "redirect:../";
     }
@@ -94,7 +101,8 @@ public class DocumentController {
     @GetMapping("/show/{document}")
     public String documentShow(
             Document document,
-            Model model) {
+            Model model) throws IOException {
+        model.addAttribute("path", storageService.loadAsResource(document.fileName).getURI().toString());
         model.addAttribute("users", userRepository.findAll());
         model.addAttribute("documents", document);
         return "document/document-show";
@@ -105,6 +113,26 @@ public class DocumentController {
             Document document) {
         documentRepository.delete(document);
         return "redirect:../";
+    }
+
+    //    @GetMapping("/")
+//	public String listUploadedFiles(Model model) throws IOException {
+//
+//		model.addAttribute("files", storageService.loadAll().map(
+//				path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
+//						"serveFile", path.getFileName().toString()).build().toUri().toString())
+//				.collect(Collectors.toList()));
+//
+//		return "uploadForm";
+//	}
+//
+    @GetMapping("/files/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+
+        Resource file = storageService.loadAsResource(filename);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
     @GetMapping("/filter")
@@ -125,4 +153,5 @@ public class DocumentController {
         model.addAttribute("result", result);
         return "document/document-filter";
     }
+
 }
