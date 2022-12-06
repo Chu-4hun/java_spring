@@ -1,5 +1,9 @@
 package com.hludencov.java_spring.models;
 
+import net.bytebuddy.implementation.bind.annotation.Default;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.sql.Date;
@@ -24,7 +28,8 @@ public class Document {
     @FutureOrPresent
     public Date archive_date;
 
-    public boolean isToAdmission;
+    @Value("false")
+    public boolean toAdmission;
 
 
     @OneToMany(mappedBy = "document", fetch = FetchType.EAGER)
@@ -35,11 +40,11 @@ public class Document {
 
 
     public boolean isToAdmission() {
-        return isToAdmission;
+        return toAdmission;
     }
 
     public void setToAdmission(boolean toAdmission) {
-        isToAdmission = toAdmission;
+        this.toAdmission = toAdmission;
     }
 
     public Set<Summary> getSummaries() {

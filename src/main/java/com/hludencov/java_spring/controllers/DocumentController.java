@@ -74,7 +74,7 @@ public class DocumentController {
 
         documentRepository.save(document);
         storageService.store(file);
-        return "redirect:/document";
+        return "redirect:/summary/add";
     }
 
     @GetMapping("/edit/{document}")

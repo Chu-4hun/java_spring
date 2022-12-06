@@ -23,13 +23,11 @@
 <!--        <div style="color: red" th:if="${#fields.hasErrors('file')}" th:errors="*{fileName}"></div>-->
         <br>
 
-        <input th:field="*{fileName}" th:value="file" type="hidden">
-
         <label>
             Отправить документ в приемную коммисию:
-            <input th:field="*{isToAdmission}" type="checkbox" name="isToAdmission">
+            <input th:field="*{toAdmission}" type="checkbox">
         </label>
-        <div style="color: red" th:if="${#fields.hasErrors('isToAdmission')}" th:errors="*{isToAdmission}"></div>
+        <div style="color: red" th:if="${#fields.hasErrors('toAdmission')}" th:errors="*{toAdmission}"></div>
         <br>
 
         <button type="submit"
