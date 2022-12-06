@@ -10,4 +10,5 @@ public interface DocumentRepository extends CrudRepository<Document, Long> {
     List<Document> findByFileNameContains(String name);
     List<Document> findByFileName(String name);
     List<Document> findByUser_id(Long user_id);
+    List<Document> findByToAdmission(boolean toAdmission);
 }

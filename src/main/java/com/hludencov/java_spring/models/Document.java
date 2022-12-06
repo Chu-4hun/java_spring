@@ -24,6 +24,8 @@ public class Document {
     @FutureOrPresent
     public Date archive_date;
 
+    public boolean isToAdmission;
+
 
     @OneToMany(mappedBy = "document", fetch = FetchType.EAGER)
     private Set<Summary> summaries;
@@ -31,6 +33,14 @@ public class Document {
 
     //______________________________BOILERPLATE LINE__________________________________
 
+
+    public boolean isToAdmission() {
+        return isToAdmission;
+    }
+
+    public void setToAdmission(boolean toAdmission) {
+        isToAdmission = toAdmission;
+    }
 
     public Set<Summary> getSummaries() {
         return summaries;

@@ -17,7 +17,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/summary")
-@PreAuthorize("hasAuthority('TEACHER') or hasAuthority('USER')")
+@PreAuthorize("hasAuthority('TEACHER') or hasAuthority('STUDENT')")
 public class SummaryController {
     @Autowired
     private SummaryRepository summaryRepository;
