@@ -10,23 +10,10 @@
 <div class="w-full max-w-xs">
     <form th:object="${candidate_info}" th:action="${'/candidate/add'}" method="post"
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <label>
-            Дата загрузки:
-            <input th:field="*{submissionDate}" type="date" name="submissionDate" placeholder="Введите дату загрузки"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-        </label>
-        <div style="color: red" th:if="${#fields.hasErrors('submissionDate')}" th:errors="*{submissionDate}"></div>
-        <br>
-
+        <p>Выберите отделение</p>
         <label> Отделение:
             <select th:field="*{target_department}">
                 <option  th:each="deps : ${departments}" th:text="${deps.name}" th:value="${deps.id}"></option>
-            </select>
-        </label> <br>
-
-        <label> Пользователь:
-            <select th:field="*{user}">
-                <option  th:each="usr : ${users}" th:text="${usr.login}" th:value="${usr.id}"></option>
             </select>
         </label> <br>
 

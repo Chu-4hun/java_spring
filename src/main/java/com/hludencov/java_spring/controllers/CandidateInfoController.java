@@ -1,7 +1,7 @@
 package com.hludencov.java_spring.controllers;
 
-
 import com.hludencov.java_spring.models.Candidate_info;
+import com.hludencov.java_spring.models.Role;
 import com.hludencov.java_spring.models.User;
 import com.hludencov.java_spring.repo.CandidateRepository;
 import com.hludencov.java_spring.repo.DepartmentRepository;
@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import java.sql.Date;
 import java.util.List;
 
-@PreAuthorize("hasAuthority('TEACHER') or hasAuthority('STUDENT') or hasAuthority('USER')")
+@PreAuthorize("hasAnyAuthority('TEACHER','STUDENT','USER')")
 @Controller
 @RequestMapping("/candidate")
 public class CandidateInfoController {
@@ -29,7 +29,7 @@ public class CandidateInfoController {
 
     @Autowired
     private UserRepository userRepository;
-     User user = new User();
+    User user = new User();
 
     @GetMapping
     public String candidateList(Model model) {
@@ -53,8 +53,15 @@ public class CandidateInfoController {
             model.addAttribute("departments", departmentRepository.findAll());
             return "candidate/candidate-add";
         }
-        candidate.user = user;
+        candidate.user = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         candidate.submissionDate = new Date(System.currentTimeMillis());
+        candidate.user.getRoles().clear();
+        candidate.user.getRoles().add(Role.CANDIDATE);
+        candidate.user.getRoles().add(Role.USER);
+
+        var role = candidate.user.getRoles();
+
+        candidate.user.setRoles(role);
         candidateRepository.save(candidate);
         return "redirect:/candidate";
     }
