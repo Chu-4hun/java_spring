@@ -17,7 +17,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/summary")
-@PreAuthorize("hasAuthority('TEACHER') or hasAuthority('STUDENT')")
+@PreAuthorize("hasAuthority('TEACHER') or hasAuthority('STUDENT') or hasAnyAuthority('HR', 'ADMISSION')")
 public class SummaryController {
     @Autowired
     private SummaryRepository summaryRepository;
@@ -44,7 +44,6 @@ public class SummaryController {
         model.addAttribute("candidate", candidateRepository.findAll());
         model.addAttribute("education_institutions", education_institutionRepository.findAll());
         model.addAttribute("subjects", subjectRepository.findAll());
-        model.addAttribute("candidate", candidateRepository.findAll());
         return "summary/summary-add";
     }
 
@@ -54,7 +53,6 @@ public class SummaryController {
             model.addAttribute("candidate", candidateRepository.findAll());
             model.addAttribute("education_institutions", education_institutionRepository.findAll());
             model.addAttribute("subjects", subjectRepository.findAll());
-            model.addAttribute("candidate", candidateRepository.findAll());
             return "summary/summary-add";
         }
         summaryRepository.save(summary);
@@ -69,7 +67,6 @@ public class SummaryController {
         model.addAttribute("candidate", candidateRepository.findAll());
         model.addAttribute("education_institutions", education_institutionRepository.findAll());
         model.addAttribute("subjects", subjectRepository.findAll());
-        model.addAttribute("candidate", candidateRepository.findAll());
         model.addAttribute("summary", summary);
         return "summary/summary-edit";
     }

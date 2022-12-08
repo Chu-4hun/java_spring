@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>HR/ADMISSION workspace</title>
@@ -8,6 +8,29 @@
 <body>
 <div class="w-full max-w-xs">
 
+    <form th:object="${summary}" th:action="${'/summary/add'}" method="post">
+    <h1 class="font-bold" th:value="${username}"></h1>
+        <label>
+            Оценка:
+            <input th:field="*{mark}" type="number" name="mark" placeholder="Введите оценку" max="5" min="2"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </label>
+        <div style="color: red" th:if="${#fields.hasErrors('mark')}" th:errors="*{mark}"></div>
+        <br>
+        <label> Предмет:
+            <select th:field="*{subject}">
+                <option th:each="sub : ${subjects}" th:text="${sub.name}" th:value="${sub.id}"></option>
+            </select>
+        </label>
+        <div style="color: red" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></div>
+        <br>
+        <div style="color: red" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></div>
+        <br>
+        <button type="submit"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Добавить оценку
+        </button>
+    </form>
 
 </div>
 </body>
