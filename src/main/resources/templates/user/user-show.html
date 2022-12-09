@@ -8,6 +8,6 @@
 <body>
 <div th:insert="header">...</div>
 
-<h3 th:text="'Логин пользователя '${user.login}"></h3>
+<h3 th:text="'Логин пользователя '+ ${user.getLogin()}"></h3>
 </body>
 </html>

@@ -45,7 +45,6 @@ public class Subject {
 
 
     //______________________________BOILERPLATE LINE__________________________________
-
     public Set<Preparation_program> getPreparation_programs() {
         return preparation_programs;
     }

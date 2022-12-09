@@ -26,22 +26,10 @@ public class Summary {
     private Subject subject;
 
     @ManyToOne
-    @JoinColumn(name = "education_institution_id")
-    private Education_institution education_institution;
-    @ManyToOne
     @JoinColumn(name = "candidate_info_id")
     private Candidate_info candidate_info;
 
     //______________________________BOILERPLATE LINE__________________________________
-
-    public Education_institution getEducation_institution() {
-
-        return education_institution;
-    }
-
-    public void setEducation_institution(Education_institution education_institution) {
-        this.education_institution = education_institution;
-    }
 
     public Subject getSubject() {
         return subject;

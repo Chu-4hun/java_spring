@@ -13,8 +13,15 @@
         <p>Выберите отделение</p>
         <label> Отделение:
             <select th:field="*{target_department}">
-                <option  th:each="deps : ${departments}" th:text="${deps.name}" th:value="${deps.id}"></option>
+                <option th:each="deps : ${departments}" th:text="${deps.name}" th:value="${deps.id}"></option>
             </select>
+        </label> <br>
+        <label> Институт:
+            <select th:field="*{education_institution}">
+                <option th:each="ed : ${education_institutions}" th:text="${ed.name}" th:value="${ed.id}"></option>
+            </select>
+            <div style="color: red" th:if="${#fields.hasErrors('education_institution')}"
+                 th:errors="*{education_institution}"></div>
         </label> <br>
 
         <button type="submit"

@@ -15,7 +15,7 @@ public class Education_institution {
     public String name, address;
 
     @OneToMany(mappedBy = "education_institution", fetch = FetchType.EAGER)
-    private Set<Summary> summaries;
+    private Set<Candidate_info> candidateInfos;
 
     //______________________________BOILERPLATE LINE__________________________________
 
@@ -44,11 +44,11 @@ public class Education_institution {
         this.address = address;
     }
 
-    public Set<Summary> getSummaries() {
-        return summaries;
+    public Set<Candidate_info> getCandidateInfos() {
+        return candidateInfos;
     }
 
-    public void setSummaries(Set<Summary> summaries) {
-        this.summaries = summaries;
+    public void setCandidateInfos(Set<Candidate_info> candidateInfos) {
+        this.candidateInfos = candidateInfos;
     }
 }

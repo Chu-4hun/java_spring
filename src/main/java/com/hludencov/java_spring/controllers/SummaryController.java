@@ -17,7 +17,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/summary")
-@PreAuthorize("hasAuthority('TEACHER') or hasAuthority('STUDENT') or hasAnyAuthority('HR', 'ADMISSION')")
+@PreAuthorize("hasAnyAuthority('HR', 'ADMISSION','STUDENT','TEACHER')")
 public class SummaryController {
     @Autowired
     private SummaryRepository summaryRepository;
@@ -65,7 +65,6 @@ public class SummaryController {
             Summary summary,
             Model model) {
         model.addAttribute("candidate", candidateRepository.findAll());
-        model.addAttribute("education_institutions", education_institutionRepository.findAll());
         model.addAttribute("subjects", subjectRepository.findAll());
         model.addAttribute("summary", summary);
         return "summary/summary-edit";
@@ -75,7 +74,6 @@ public class SummaryController {
     public String summaryPostEdit(@ModelAttribute("summary") @Valid Summary summary, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("candidate", candidateRepository.findAll());
-            model.addAttribute("education_institutions", education_institutionRepository.findAll());
             model.addAttribute("subjects", subjectRepository.findAll());
             model.addAttribute("candidate", candidateRepository.findAll());
             return "summary/summary-edit";

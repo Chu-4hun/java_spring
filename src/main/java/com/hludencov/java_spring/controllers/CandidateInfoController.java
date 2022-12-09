@@ -5,6 +5,7 @@ import com.hludencov.java_spring.models.Role;
 import com.hludencov.java_spring.models.User;
 import com.hludencov.java_spring.repo.CandidateRepository;
 import com.hludencov.java_spring.repo.DepartmentRepository;
+import com.hludencov.java_spring.repo.Education_institutionRepository;
 import com.hludencov.java_spring.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,6 +30,9 @@ public class CandidateInfoController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private Education_institutionRepository educationInstitutionRepository;
     User user = new User();
 
     @GetMapping
@@ -42,6 +46,7 @@ public class CandidateInfoController {
     public String candidateAdd(Candidate_info candidate, Model model) {
         model.addAttribute("candidates", candidateRepository.findAll());
         model.addAttribute("departments", departmentRepository.findAll());
+        model.addAttribute("education_institutions", educationInstitutionRepository.findAll());
         model.addAttribute("users", userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName()));
         return "candidate/candidate-add";
     }
@@ -63,7 +68,7 @@ public class CandidateInfoController {
 
         candidate.user.setRoles(role);
         candidateRepository.save(candidate);
-        return "redirect:/candidate";
+        return "redirect:/";
     }
 
 

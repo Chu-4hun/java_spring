@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/subject")
-@PreAuthorize("hasAnyAuthority('ADMIN')")
+//@PreAuthorize("hasAnyAuthority('ADMIN')")
 public class SubjectController {
 
     @Autowired

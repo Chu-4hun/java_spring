@@ -2,16 +2,19 @@ package com.hludencov.java_spring.controllers;
 
 
 import com.hludencov.java_spring.models.Movie;
+import com.hludencov.java_spring.models.Post;
 import com.hludencov.java_spring.models.User;
 import com.hludencov.java_spring.repo.MovieRepository;
 import com.hludencov.java_spring.repo.PostRepository;
 import com.hludencov.java_spring.repo.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.hludencov.java_spring.models.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.List;

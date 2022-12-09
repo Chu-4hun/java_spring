@@ -8,8 +8,8 @@
 <body>
 <div class="w-full max-w-xs">
 
-    <form th:object="${summary}" th:action="${'/summary/add'}" method="post">
-    <h1 class="font-bold" th:value="${username}"></h1>
+    <form th:object="${summary}" th:action="${'/hr/editor/add'}" method="post">
+        <h1 class="font-bold" th:value="${username}"></h1>
         <label>
             Оценка:
             <input th:field="*{mark}" type="number" name="mark" placeholder="Введите оценку" max="5" min="2"
@@ -24,13 +24,27 @@
         </label>
         <div style="color: red" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></div>
         <br>
-        <div style="color: red" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></div>
-        <br>
         <button type="submit"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Добавить оценку
         </button>
     </form>
+    <div class="overflow-x-visible relative shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th class="py-3 px-6">Номер оценки</th>
+                <th class="py-3 px-6">Предмет</th>
+                <th class="py-3 px-6">Оценка</th>
+            </tr>
+            </thead>
+            <tr th:each="sub,iterationstatus :${summaries}">
+                <td class="py-4 px-6" th:text="${iterationstatus.count}">1</td>
+                <td class="py-4 px-6" th:text="${sub.getSubject().getName()}"></td>
+                <td class="py-4 px-6" th:text="${sub.getMark()}"> оценка</td>
+            </tr>
+        </table>
+    </div>
 
 </div>
 </body>

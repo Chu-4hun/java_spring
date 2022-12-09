@@ -28,6 +28,10 @@ public class Candidate_info {
     @OneToMany(mappedBy = "candidate_info", fetch = FetchType.EAGER)
     public Set<Summary> summaries;
 
+    @ManyToOne
+    @JoinColumn(name = "education_institution_id")
+    private Education_institution education_institution;
+
     //______________________________BOILERPLATE LINE__________________________________
 
 
@@ -71,5 +75,13 @@ public class Candidate_info {
 
     public void setSummaries(Set<Summary> summaries) {
         this.summaries = summaries;
+    }
+
+    public Education_institution getEducation_institution() {
+        return education_institution;
+    }
+
+    public void setEducation_institution(Education_institution education_institution) {
+        this.education_institution = education_institution;
     }
 }

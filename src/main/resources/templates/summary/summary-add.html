@@ -34,14 +34,6 @@
             </select>
             <div style="color: red" th:if="${#fields.hasErrors('candidate_info')}" th:errors="*{candidate_info}"></div>
         </label> <br>
-        <label> Институт:
-
-            <select th:field="*{education_institution}">
-                <option th:each="ed : ${education_institutions}" th:text="${ed.name}" th:value="${ed.id}"></option>
-            </select>
-            <div style="color: red" th:if="${#fields.hasErrors('education_institution')}"
-                 th:errors="*{education_institution}"></div>
-        </label> <br>
 
         <button type="submit"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
