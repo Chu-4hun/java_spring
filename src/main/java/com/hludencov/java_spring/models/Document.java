@@ -30,6 +30,8 @@ public class Document {
 
     @Value("false")
     public boolean toAdmission;
+    @Positive
+    public double averageMark;
 
 
     @OneToMany(mappedBy = "document", fetch = FetchType.EAGER)
@@ -93,5 +95,13 @@ public class Document {
 
     public void setArchive_date(Date archive_date) {
         this.archive_date = archive_date;
+    }
+
+    public double getAverageMark() {
+        return averageMark;
+    }
+
+    public void setAverageMark(double averageMark) {
+        this.averageMark = averageMark;
     }
 }

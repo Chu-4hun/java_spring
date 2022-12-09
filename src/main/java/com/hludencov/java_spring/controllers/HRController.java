@@ -87,8 +87,17 @@ public class HRController {
         for (var sum : summaries) {
             sub_names.add(sum.getSubject().getName());
         }
+        int totalSum = 0;
+        for (Integer mark : marks) {
+            totalSum += mark;
+        }
+        double average = (double) totalSum / marks.size();
+
         model.addAttribute("subjects_name", sub_names);
         model.addAttribute("marks", marks);
+        model.addAttribute("marks_average",String.format("%.2f", average) );
+        document.averageMark = average;
+        documentRepository.save(document);
         return "hr/hr-editor";
     }
 
@@ -108,7 +117,7 @@ public class HRController {
     }
 
     @GetMapping("/editor/{document}/export")
-    public String editorExelExport(HttpServletResponse response, @PathVariable Document document) throws IOException {
+    public void editorExelExport(HttpServletResponse response, @PathVariable Document document) throws IOException {
         response.setContentType("application/octet-stream");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
@@ -119,7 +128,6 @@ public class HRController {
 
         ExelExport exelExport = new ExelExport(summaryRepository.findByDocument(document), document.getUser().getPersonal_info());
         exelExport.generateExcelFile(response);
-        return "redirect:/hr/editor/" + doc.id;
     }
 
     @GetMapping(value = "/editor/update", params = {"mark", "summary"})
