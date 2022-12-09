@@ -48,7 +48,8 @@
             <tr th:each="sum,iterationstatus :${summaries}">
                 <td class="py-4 px-6" th:text="${iterationstatus.count}">1</td>
                 <td class="py-4 px-6" th:text="${sum.getSubject().getName()}"></td>
-                <td class="px-auto"><input th:value="${sum.getMark()}" type="number" th:data-filtro="${sum.getId()}" th:id="'summary '+${sum.getId()}"
+                <td class="px-auto"><input th:value="${sum.getMark()}" type="number" th:data-filtro="${sum.getId()}"
+                                           th:id="'summary '+${sum.getId()}"
                                            name="add1" max="5" min="2"
                                            class="border-none shadow appearance-none border rounded w-20 py-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </td>
@@ -75,14 +76,17 @@
 
 </div>
 <script>
-    $("[data-filtro]").bind('change paste keyup', function () {
-        console.log("input event fired" + " " + $(this).attr("id"));
-        var url = "/hr/editor/update?summary=" + $(this).attr("id") + "&mark=" + $(this).val().toString();
-        console.log(url);
 
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open("GET", url, true); // true for asynchronous
-        xmlHttp.send(null);
+    $("[data-filtro]").bind('change paste keyup', function () {
+        jQuery.ajax({
+            url: "/hr/editor/update?summary=" + $(this).attr("data-filtro") + "&mark=" + $(this).val().toString(),
+            success: function (result) {
+                if (result.isOk === false) alert(result.message);
+                location.reload();
+            },
+            async: true
+        });
+
     });
 </script>
 
