@@ -10,11 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/hr")
@@ -54,7 +55,7 @@ public class HRController {
     public String openEditor(Model model, @PathVariable Document document) {
         var summaries = summaryRepository.findByDocument(document);
         var subjects = subjectRepository.findAll();
-        var subjects_un = new HashSet<Subject>();
+        var subjects_checked = new HashSet<Subject>();
 
         for (Subject subject : subjects) {
             boolean r = false;
@@ -65,20 +66,20 @@ public class HRController {
                 }
             }
             if (!r) {
-                subjects_un.add(subject);
+                subjects_checked.add(subject);
             }
         }
 
         model.addAttribute("summaries", summaries);
         model.addAttribute("document", document);
         model.addAttribute("summary", new Summary());
-        model.addAttribute("subjects", subjects_un);
+        model.addAttribute("subjects", subjects_checked);
         model.addAttribute("username", document.user.getPersonal_info().getName());
         doc = document;
 
 
         List<Integer> marks = new ArrayList<Integer>();
-        for (var sum : summaries ) {
+        for (var sum : summaries) {
             marks.add(sum.getMark());
         }
 
@@ -93,7 +94,7 @@ public class HRController {
 
 
     @PostMapping("/editor/add")
-    public String summaryPostAdd(@ModelAttribute("summary") @Valid Summary summary, BindingResult bindingResult, Model model) {
+    public String editorPostAdd(@ModelAttribute("summary") @Valid Summary summary, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("candidate", candidateRepository.findAll());
             model.addAttribute("subjects", subjectRepository.findAll());
@@ -103,6 +104,21 @@ public class HRController {
         summary.setCandidate_info(doc.user.getCandidate_info());
 
         summaryRepository.save(summary);
+        return "redirect:/hr/editor/" + doc.id;
+    }
+
+    @GetMapping("/editor/{document}/export")
+    public String editorExelExport(HttpServletResponse response, @PathVariable Document document) throws IOException {
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=SummaryExportOf_"+document.user.getPersonal_info().getName()+"_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+
+        ExelExport exelExport = new ExelExport(summaryRepository.findByDocument(document), document.getUser().getPersonal_info());
+        exelExport.generateExcelFile(response);
         return "redirect:/hr/editor/" + doc.id;
     }
 
