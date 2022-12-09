@@ -1,9 +1,6 @@
 package com.hludencov.java_spring.controllers;
 
-import com.hludencov.java_spring.models.Document;
-import com.hludencov.java_spring.models.Role;
-import com.hludencov.java_spring.models.Summary;
-import com.hludencov.java_spring.models.User;
+import com.hludencov.java_spring.models.*;
 import com.hludencov.java_spring.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,6 +11,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/hr")
@@ -51,14 +52,46 @@ public class HRController {
 
     @GetMapping("/editor/{document}")
     public String openEditor(Model model, @PathVariable Document document) {
-        model.addAttribute("summaries", summaryRepository.findByDocument(document));
+        var summaries = summaryRepository.findByDocument(document);
+        var subjects = subjectRepository.findAll();
+        var subjects_un = new HashSet<Subject>();
+
+        for (Subject subject : subjects) {
+            boolean r = false;
+            for (Summary summary : summaries) {
+                if (Objects.equals(summary.getSubject().getId(), subject.getId())) {
+                    r = true;
+                    break;
+                }
+            }
+            if (!r) {
+                subjects_un.add(subject);
+            }
+        }
+
+        model.addAttribute("summaries", summaries);
+        model.addAttribute("document", document);
         model.addAttribute("summary", new Summary());
-        model.addAttribute("subjects", subjectRepository.findAll());
+        model.addAttribute("subjects", subjects_un);
         model.addAttribute("username", document.user.getPersonal_info().getName());
         doc = document;
 
+
+        List<Integer> marks = new ArrayList<Integer>();
+        for (var sum : summaries ) {
+            marks.add(sum.getMark());
+        }
+
+        List<String> sub_names = new ArrayList<String>();
+        for (var sum : summaries) {
+            sub_names.add(sum.getSubject().getName());
+        }
+        model.addAttribute("subjects_name", sub_names);
+        model.addAttribute("marks", marks);
         return "hr/hr-editor";
     }
+
+
     @PostMapping("/editor/add")
     public String summaryPostAdd(@ModelAttribute("summary") @Valid Summary summary, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -70,7 +103,7 @@ public class HRController {
         summary.setCandidate_info(doc.user.getCandidate_info());
 
         summaryRepository.save(summary);
-        return "redirect:/hr/editor/"+ doc.id;
+        return "redirect:/hr/editor/" + doc.id;
     }
 
 
