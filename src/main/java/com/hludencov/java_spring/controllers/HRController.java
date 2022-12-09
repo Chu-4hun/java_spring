@@ -95,8 +95,10 @@ public class HRController {
 
         model.addAttribute("subjects_name", sub_names);
         model.addAttribute("marks", marks);
-        model.addAttribute("marks_average",String.format("%.2f", average) );
-        document.averageMark = average;
+        model.addAttribute("marks_average", String.format("%.2f", average));
+        if (average > 1) {
+            document.averageMark = average;
+        }
         documentRepository.save(document);
         return "hr/hr-editor";
     }

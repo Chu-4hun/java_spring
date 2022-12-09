@@ -48,9 +48,9 @@
             <tr th:each="sum,iterationstatus :${summaries}">
                 <td class="py-4 px-6" th:text="${iterationstatus.count}">1</td>
                 <td class="py-4 px-6" th:text="${sum.getSubject().getName()}"></td>
-                <td class="px-auto"><input th:value="${sum.getMark()}" type="number" th:id="${sum.getId()}"
-                                         name="add1" max="5" min="2"
-                                         class="border-none shadow appearance-none border rounded w-20 py-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <td class="px-auto"><input th:value="${sum.getMark()}" type="number" th:data-filtro="${sum.getId()}" th:id="'summary '+${sum.getId()}"
+                                           name="add1" max="5" min="2"
+                                           class="border-none shadow appearance-none border rounded w-20 py-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </td>
             </tr>
             </tbody>
@@ -75,7 +75,7 @@
 
 </div>
 <script>
-    $('input').bind('change paste keyup', function () {
+    $("[data-filtro]").bind('change paste keyup', function () {
         console.log("input event fired" + " " + $(this).attr("id"));
         var url = "/hr/editor/update?summary=" + $(this).attr("id") + "&mark=" + $(this).val().toString();
         console.log(url);

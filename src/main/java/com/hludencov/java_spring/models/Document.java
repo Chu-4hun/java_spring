@@ -30,7 +30,7 @@ public class Document {
 
     @Value("false")
     public boolean toAdmission;
-    @Positive
+//    @PositiveOrZero
     public double averageMark;
 
 
