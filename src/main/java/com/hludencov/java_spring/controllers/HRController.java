@@ -114,11 +114,18 @@ public class HRController {
         String currentDateTime = dateFormatter.format(new Date());
 
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=SummaryExportOf_"+document.user.getPersonal_info().getName()+"_" + currentDateTime + ".xlsx";
+        String headerValue = "attachment; filename=SummaryExportOf_" + document.user.getPersonal_info().getName() + "_" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
 
         ExelExport exelExport = new ExelExport(summaryRepository.findByDocument(document), document.getUser().getPersonal_info());
         exelExport.generateExcelFile(response);
+        return "redirect:/hr/editor/" + doc.id;
+    }
+
+    @GetMapping(value = "/editor/update", params = {"mark", "summary"})
+    public String editorUpdate(@RequestParam(value = "mark") int mark, @RequestParam(value = "summary") Summary summary) {
+        summary.setMark(mark);
+        summaryRepository.save(summary);
         return "redirect:/hr/editor/" + doc.id;
     }
 

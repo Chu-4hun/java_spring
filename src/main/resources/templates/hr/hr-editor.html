@@ -11,7 +11,7 @@
 <div class="w-full max-w-xs">
 
     <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                   th:href="'/document/files/'+${document.fileName}">Скачать документ</a>
+       th:href="'/document/files/'+${document.fileName}">Скачать документ</a>
     <form th:object="${summary}" th:action="${'/hr/editor/add'}" method="post">
         <h1 class="font-bold" th:value="${username}"></h1>
         <label>
@@ -22,7 +22,7 @@
         <div style="color: red" th:if="${#fields.hasErrors('mark')}" th:errors="*{mark}"></div>
         <br>
         <label> Предмет:
-            <select th:field="*{subject}">
+            <select th:field="*{subject}" required>
                 <option th:each="sub : ${subjects}" th:text="${sub.name}" th:value="${sub.id}"></option>
             </select>
         </label>
@@ -39,65 +39,81 @@
             <tr>
                 <th class="py-3 px-6">Номер оценки</th>
                 <th class="py-3 px-6">Предмет</th>
-                <th class="py-3 px-6">Оценка</th>
+                <th>Оценка</th>
             </tr>
             </thead>
-            <tr th:each="sub,iterationstatus :${summaries}">
+            <tr th:each="sum,iterationstatus :${summaries}">
                 <td class="py-4 px-6" th:text="${iterationstatus.count}">1</td>
-                <td class="py-4 px-6" th:text="${sub.getSubject().getName()}"></td>
-                <td class="py-4 px-6" th:text="${sub.getMark()}"> оценка</td>
+                <td class="py-4 px-6" th:text="${sum.getSubject().getName()}"></td>
+                <td><input th:value="${sum.getMark()}" type="number" th:id="${sum.getId()}"
+                           name="add1" max="5" min="2"
+                           class="border-none shadow appearance-none border rounded w-20 py-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </td>
             </tr>
         </table>
     </div>
-
     <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-       th:href="'/hr/editor/'+${document.getId()} + '/export'">Экспорт документа</a>
+       th:href="'/hr/editor/'+${document.getId()} + '/export'">Экспорт результатов</a>
+
+    <div  class="shadow-lg rounded-lg overflow-hidden">
+        <div class="py-3 px-5 bg-gray-50">Успеваемость</div>
+        <canvas class="p-10" id="chartRadar"></canvas>
+    </div>
+
+
 
 </div>
+<script>
+    $('input').bind('change paste keyup', function () {
+        console.log("input event fired" + " " + $(this).attr("id"));
+        var url = "/hr/editor/update?summary=" + $(this).attr("id") + "&mark=" + $(this).val().toString();
+        console.log(url);
+
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", url, true); // true for asynchronous
+        xmlHttp.send(null);
+    });
+</script>
 
 <script th:inline="javascript">
     var subjects = /*[[${subjects_name}]]*/;
     var marks = /*[[${marks}]]*/;
 </script>
 
-<div style="width: 40%"  class="shadow-lg rounded-lg overflow-hidden">
-  <div class="py-3 px-5 bg-gray-50">Radar chart</div>
-  <canvas class="p-10"  id="chartRadar"></canvas>
-</div>
 
 <!-- Required chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!-- Chart radar -->
 <script>
-  const dataRadar = {
-    labels: subjects,
-    datasets: [
-      {
-        label: "My Second Dataset",
-        data: marks,
-        fill: true,
-        backgroundColor: "rgba(54, 162, 235, 0.2)",
-        borderColor: "rgb(54, 162, 235)",
-        pointBackgroundColor: "rgb(54, 162, 235)",
-        pointBorderColor: "#fff",
-        pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgb(54, 162, 235)",
-      },
-        {data:[2]}
-    ],
-  };
+    const dataRadar = {
+        labels: subjects,
+        datasets: [
+            {
+                label: "Успеваемость",
+                data: marks,
+                fill: true,
+                backgroundColor: "rgba(54, 162, 235, 0.2)",
+                borderColor: "rgb(54, 162, 235)",
+                pointBackgroundColor: "rgb(54, 162, 235)",
+                pointBorderColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgb(54, 162, 235)",
+            },
+            {data: [2]}
+        ],
+    };
 
-  const configRadarChart = {
-    type: "radar",
-    data: dataRadar,
-    options: {},
-  };
+    const configRadarChart = {
+        type: "radar",
+        data: dataRadar,
+        options: {},
+    };
 
-  var chartBar = new Chart(
-    document.getElementById("chartRadar"),
-    configRadarChart
-  );
+    var chartBar = new Chart(
+        document.getElementById("chartRadar"),
+        configRadarChart
+    );
 </script>
 </body>
 </html>
