@@ -55,55 +55,26 @@ public class HRController {
 
     @GetMapping("/editor/{document}")
     public String openEditor(Model model, @PathVariable Document document) {
-        if (userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName()) != document.user) {
-            throw new AccessDeniedException("Access denied");
-        }
+
+        user = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        checkAccess(document);
 
         var summaries = summaryRepository.findByDocument(document);
         var subjects = subjectRepository.findAll();
-        var subjects_checked = new HashSet<Subject>();
-
-        for (Subject subject : subjects) {
-            boolean r = false;
-            for (Summary summary : summaries) {
-                if (Objects.equals(summary.getSubject().getId(), subject.getId())) {
-                    r = true;
-                    break;
-                }
-            }
-            if (!r) {
-                subjects_checked.add(subject);
-            }
-        }
-
 
         model.addAttribute("summaries", summaries);
         model.addAttribute("document", document);
         model.addAttribute("summary", new Summary());
-        model.addAttribute("subjects", subjects_checked);
+        model.addAttribute("subjects", getCheckedSubjects(summaries, subjects));
         model.addAttribute("username", document.user.getPersonal_info().getName());
+
         doc = document;
 
+        double average = getAverage(getMarks(summaries));
 
-        List<Integer> marks = new ArrayList<Integer>();
-        for (var sum : summaries) {
-            marks.add(sum.getMark());
-        }
-
-        List<String> sub_names = new ArrayList<String>();
-        for (var sum : summaries) {
-            sub_names.add(sum.getSubject().getName());
-        }
-        int totalSum = 0;
-        for (Integer mark : marks) {
-            totalSum += mark;
-        }
-        double average = 0;
-        if (marks.size() != 0)
-            average = (double) totalSum / marks.size();
-
-        model.addAttribute("subjects_name", sub_names);
-        model.addAttribute("marks", marks);
+        model.addAttribute("subjects_name", getSubjectsNames(summaries));
+        model.addAttribute("marks", getMarks(summaries));
         model.addAttribute("marks_average", String.format("%.2f", average));
         if (average > 1) {
             document.averageMark = average;
@@ -113,8 +84,10 @@ public class HRController {
     }
 
 
+
     @PostMapping("/editor/add")
-    public String editorPostAdd(@ModelAttribute("summary") @Valid Summary summary, BindingResult bindingResult, Model model) {
+    public String editorPostAdd(@ModelAttribute("summary") @Valid Summary summary, BindingResult
+            bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("candidate", candidateRepository.findAll());
             model.addAttribute("subjects", subjectRepository.findAll());
@@ -142,10 +115,64 @@ public class HRController {
     }
 
     @GetMapping(value = "/editor/update", params = {"mark", "summary"})
-    public String editorUpdate(@RequestParam(value = "mark") int mark, @RequestParam(value = "summary") Summary summary) {
+    public String editorUpdate(@RequestParam(value = "mark") int mark,
+                               @RequestParam(value = "summary") Summary summary) {
         summary.setMark(mark);
         summaryRepository.save(summary);
         return "redirect:/hr/editor/" + doc.id;
+    }
+
+
+    //___________________________________Utils______________________________________________________
+    private static HashSet<Subject> getCheckedSubjects(List<Summary> summaries, Iterable<Subject> subjects) {
+        var subjects_checked = new HashSet<Subject>();
+
+        for (Subject subject : subjects) {
+            boolean r = false;
+            for (Summary summary : summaries) {
+                if (Objects.equals(summary.getSubject().getId(), subject.getId())) {
+                    r = true;
+                    break;
+                }
+            }
+            if (!r) {
+                subjects_checked.add(subject);
+            }
+        }
+        return subjects_checked;
+    }
+
+     private static List<Integer> getMarks(List<Summary> summaries) {
+        List<Integer> marks = new ArrayList<Integer>();
+        for (var sum : summaries) {
+            marks.add(sum.getMark());
+        }
+        return marks;
+    }
+
+    private static List<String> getSubjectsNames(List<Summary> summaries) {
+        List<String> sub_names = new ArrayList<String>();
+        for (var sum : summaries) {
+            sub_names.add(sum.getSubject().getName());
+        }
+        return sub_names;
+    }
+
+    private static double getAverage(List<Integer> marks) {
+        double totalSum = 0;
+        for (Integer mark : marks) {
+            totalSum += mark;
+        }
+        double average = 0;
+        if (marks.size() != 0)
+            average = totalSum / marks.size();
+        return average;
+    }
+    private void checkAccess(Document document) {
+        if (!(user.getRoles().contains(Role.ADMISSION) || user.getRoles().contains(Role.HR))
+                && userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName()) != document.user) {
+            throw new AccessDeniedException("Access denied");
+        }
     }
 
 

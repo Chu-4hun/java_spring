@@ -12,28 +12,31 @@
 
     <a class="my-4 inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
        th:href="'/document/files/'+${document.fileName}">Скачать документ</a>
-    <form th:object="${summary}" th:action="${'/hr/editor/add'}" method="post">
-        <h1 class="font-bold" th:value="${username}"></h1>
-        <label class="my-4">
-            Оценка:
-            <br><input th:field="*{mark}" type="number" name="mark" placeholder="Введите оценку" max="5" min="2"
-                   class="shadow appearance-none border rounded w-1/6 py-2  text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-        </label>
-        <div style="color: red" th:if="${#fields.hasErrors('mark')}" th:errors="*{mark}"></div>
-        <br>
-        <label > Предмет:
-            <select class=" border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/5 dark:placeholder-gray-400 dark:text-white  " th:field="*{subject}" required>
-                <option th:each="sub : ${subjects}" th:text="${sub.name}" th:value="${sub.id}"
-                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"></option>
-            </select>
-        </label>
-        <div style="color: red" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></div>
-        <br>
-        <button type="submit"
-                class="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Добавить оценку
-        </button>
-    </form>
+    <div th:if="!${#lists.isEmpty(subjects)}">
+        <form th:object="${summary}" th:action="${'/hr/editor/add'}" method="post">
+            <h1 class="font-bold" th:value="${username}"></h1>
+            <label class="my-4">
+                Оценка:
+                <br><input th:field="*{mark}" type="number" name="mark" placeholder="Введите оценку" max="5" min="2"
+                           class="shadow appearance-none border rounded w-1/6 py-2  text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </label>
+            <div style="color: red" th:if="${#fields.hasErrors('mark')}" th:errors="*{mark}"></div>
+            <br>
+            <label> Предмет:
+                <select class=" border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/5 dark:placeholder-gray-400 dark:text-white  "
+                        th:field="*{subject}" required>
+                    <option th:each="sub : ${subjects}" th:text="${sub.name}" th:value="${sub.id}"
+                            class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"></option>
+                </select>
+            </label>
+            <div style="color: red" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></div>
+
+            <button type="submit"
+                    class="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Добавить оценку
+            </button>
+        </form>
+    </div>
     <div class="overflow-x-visible relative shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
