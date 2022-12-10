@@ -63,11 +63,13 @@ public class HRController {
         var summaries = summaryRepository.findByDocument(document);
         var subjects = subjectRepository.findAll();
 
+
         model.addAttribute("summaries", summaries);
         model.addAttribute("document", document);
         model.addAttribute("summary", new Summary());
         model.addAttribute("subjects", getCheckedSubjects(summaries, subjects));
         model.addAttribute("username", document.user.getPersonal_info().getName());
+        model.addAttribute("target_dep", document.user.getCandidate_info().target_department.getName());
 
         doc = document;
 
