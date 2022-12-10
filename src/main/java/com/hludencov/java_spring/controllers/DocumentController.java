@@ -2,6 +2,7 @@ package com.hludencov.java_spring.controllers;
 
 
 import com.hludencov.java_spring.models.Document;
+import com.hludencov.java_spring.models.Document_status;
 import com.hludencov.java_spring.models.User;
 import com.hludencov.java_spring.repo.DocumentRepository;
 import com.hludencov.java_spring.repo.UserRepository;
@@ -72,6 +73,7 @@ public class DocumentController {
         document.archive_date = Date.valueOf(uploadDate.toLocalDate().plusMonths(1));
         document.user = user;
 
+        document.status = Document_status.PENDING;
         documentRepository.save(document);
         storageService.store(file);
         return "redirect:/candidate/add";

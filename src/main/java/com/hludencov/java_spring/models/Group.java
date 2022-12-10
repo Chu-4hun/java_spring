@@ -1,6 +1,10 @@
 package com.hludencov.java_spring.models;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Set;
 
 @Entity
@@ -10,6 +14,12 @@ public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @PositiveOrZero
+    private int capacity;
+
+    @Value("empty")
+    private String name;
 
 
     @ManyToMany
@@ -58,5 +68,21 @@ public class Group {
 
     public void setTeacher_organizer(User teacher_organizer) {
         this.teacher_organizer = teacher_organizer;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

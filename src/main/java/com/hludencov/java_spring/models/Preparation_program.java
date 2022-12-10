@@ -16,6 +16,8 @@ public class Preparation_program {
     @NotBlank
     private String name;
 
+    private int maxGroupCapacity;
+
     @ManyToMany
     @JoinTable(name = "prep_to_subject",
             joinColumns = @JoinColumn(name = "preparation_program_id"),
@@ -25,6 +27,9 @@ public class Preparation_program {
     @OneToMany(mappedBy = "preparation_program", fetch = FetchType.EAGER)
     private Set<Group> groups;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "department_id")
+    private Department department;
 
     //______________________________BOILERPLATE LINE__________________________________
 
@@ -59,5 +64,21 @@ public class Preparation_program {
 
     public void setSubjectSet(Set<Subject> subjectSet) {
         this.subjectSet = subjectSet;
+    }
+
+    public int getMaxGroupCapacity() {
+        return maxGroupCapacity;
+    }
+
+    public void setMaxGroupCapacity(int maxGroupCapacity) {
+        this.maxGroupCapacity = maxGroupCapacity;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }

@@ -10,13 +10,16 @@
 <div class="w-full max-w-xs">
     <form th:object="${candidate_info}" th:action="${'/candidate/add'}" method="post"
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <p>Выберите отделение</p>
-        <label> Отделение:
+        <p>Форма для кандидата</p><br>
+        <label> Целевое отделение в вузе:
             <select th:field="*{target_department}">
                 <option th:each="deps : ${departments}" th:text="${deps.name}" th:value="${deps.id}"></option>
             </select>
-        </label> <br>
-        <label> Институт:
+        </label>
+
+        <br>
+
+        <label> Где вы учились:
             <select th:field="*{education_institution}">
                 <option th:each="ed : ${education_institutions}" th:text="${ed.name}" th:value="${ed.id}"></option>
             </select>

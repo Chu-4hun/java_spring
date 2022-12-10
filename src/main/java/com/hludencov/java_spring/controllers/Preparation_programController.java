@@ -2,6 +2,7 @@ package com.hludencov.java_spring.controllers;
 
 
 import com.hludencov.java_spring.models.Preparation_program;
+import com.hludencov.java_spring.repo.DepartmentRepository;
 import com.hludencov.java_spring.repo.Preparation_programRepository;
 import com.hludencov.java_spring.repo.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class Preparation_programController {
     @Autowired
     private SubjectRepository subjectRepository;
 
+    @Autowired
+    private DepartmentRepository departmentRepository;
+
 
     @GetMapping
     public String prepprogList(Preparation_program preparation_program, Model model){
@@ -36,6 +40,7 @@ public class Preparation_programController {
     @GetMapping("/add")
     public String prepprogAdd(Preparation_program preparation_program,Model model) {
         model.addAttribute("subjectSet", subjectRepository.findAll());
+        model.addAttribute("departmentSet", departmentRepository.findAll());
         return "preparation_program/preparation_program-add";
     }
 
@@ -43,6 +48,7 @@ public class Preparation_programController {
     public String prepprogPostAdd(@ModelAttribute("preparation_program") @Valid Preparation_program preparation_program, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("subjectSet", subjectRepository.findAll());
+            model.addAttribute("departmentSet", departmentRepository.findAll());
             return "preparation_program/preparation_program-add";
         }
         preparation_programRepository.save(preparation_program);
@@ -55,6 +61,7 @@ public class Preparation_programController {
             Preparation_program preparation_program,
             Model model) {
         model.addAttribute("subjectSet", subjectRepository.findAll());
+        model.addAttribute("departmentSet", departmentRepository.findAll());
         model.addAttribute("preparation_program", preparation_program);
         return "preparation_program/preparation_program-edit";
     }
@@ -63,6 +70,7 @@ public class Preparation_programController {
     public String prepprogPostEdit(@ModelAttribute("preparation_program") @Valid Preparation_program preparation_program, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("subjectSet", subjectRepository.findAll());
+            model.addAttribute("departmentSet", departmentRepository.findAll());
             return "preparation_program/preparation_program-edit";
         }
         preparation_programRepository.save(preparation_program);
@@ -74,6 +82,7 @@ public class Preparation_programController {
             Preparation_program preparation_program,
             Model model) {
         model.addAttribute("preparation_program", preparation_program);
+        model.addAttribute("departmentSet", departmentRepository.findAll());
         return "preparation_program/preparation_program-show";
     }
 

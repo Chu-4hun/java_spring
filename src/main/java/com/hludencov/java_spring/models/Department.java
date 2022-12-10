@@ -22,6 +22,9 @@ public class Department {
     @OneToMany(mappedBy = "department", fetch = FetchType.EAGER)
     private Set<User> department_users;
 
+    @OneToMany(mappedBy = "department", fetch = FetchType.EAGER)
+    private Set<Preparation_program> preparation_programs;
+
     //______________________________BOILERPLATE LINE__________________________________
 
 

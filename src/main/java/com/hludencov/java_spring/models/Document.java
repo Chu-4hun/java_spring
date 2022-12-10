@@ -33,8 +33,9 @@ public class Document {
 //    @PositiveOrZero
     public double averageMark;
 
+    public Document_status status;
 
-    @OneToMany(mappedBy = "document", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "document", fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
     private Set<Summary> summaries;
 
 
@@ -103,5 +104,13 @@ public class Document {
 
     public void setAverageMark(double averageMark) {
         this.averageMark = averageMark;
+    }
+
+    public Document_status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Document_status status) {
+        this.status = status;
     }
 }

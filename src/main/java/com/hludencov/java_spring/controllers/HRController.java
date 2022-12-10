@@ -3,6 +3,7 @@ package com.hludencov.java_spring.controllers;
 import com.hludencov.java_spring.models.*;
 import com.hludencov.java_spring.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/hr")
-@PreAuthorize("hasAnyAuthority('HR','ADMISSION')")
+@PreAuthorize("hasAnyAuthority('HR','ADMISSION','CANDIDATE')")
 public class HRController {
 
 
@@ -39,6 +40,7 @@ public class HRController {
     Document doc;
 
 
+    @PreAuthorize("hasAnyAuthority('HR','ADMISSION')")
     @GetMapping
     public String documentList(Model model) {
         user = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -53,6 +55,10 @@ public class HRController {
 
     @GetMapping("/editor/{document}")
     public String openEditor(Model model, @PathVariable Document document) {
+        if (userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName()) != document.user) {
+            throw new AccessDeniedException("Access denied");
+        }
+
         var summaries = summaryRepository.findByDocument(document);
         var subjects = subjectRepository.findAll();
         var subjects_checked = new HashSet<Subject>();
@@ -69,6 +75,7 @@ public class HRController {
                 subjects_checked.add(subject);
             }
         }
+
 
         model.addAttribute("summaries", summaries);
         model.addAttribute("document", document);
@@ -91,7 +98,9 @@ public class HRController {
         for (Integer mark : marks) {
             totalSum += mark;
         }
-        double average = (double) totalSum / marks.size();
+        double average = 0;
+        if (marks.size() != 0)
+            average = (double) totalSum / marks.size();
 
         model.addAttribute("subjects_name", sub_names);
         model.addAttribute("marks", marks);

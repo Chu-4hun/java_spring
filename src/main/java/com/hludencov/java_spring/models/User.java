@@ -17,16 +17,10 @@ public class User implements UserDetails {
     private Long id;
     @NotBlank
     private String login;
-
-
     @NotBlank
     private String password;
-
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Document> documents;
-
-
     private boolean active;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -34,7 +28,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.DETACH)
     @JoinTable(name = "user_to_group",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "groups_id"))

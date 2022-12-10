@@ -19,7 +19,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/group")
-@PreAuthorize("hasAnyAuthority('ADMIN')")
+@PreAuthorize("hasAnyAuthority('ADMIN') or hasAuthority('TEACHER')")
 public class GroupController {
     @Autowired
     private GroupRepository groupRepository;
