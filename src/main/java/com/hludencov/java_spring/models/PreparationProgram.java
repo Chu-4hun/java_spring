@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "preparation_program")
-public class Preparation_program {
+public class PreparationProgram {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,7 +24,7 @@ public class Preparation_program {
             inverseJoinColumns = @JoinColumn(name = "subject_id"))
     public Set<Subject> subjectSet;
 
-    @OneToMany(mappedBy = "preparation_program", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "preparationProgram", fetch = FetchType.EAGER)
     private Set<Group> groups;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)

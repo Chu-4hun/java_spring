@@ -63,7 +63,6 @@ public class HRController {
         var summaries = summaryRepository.findByDocument(document);
         var subjects = subjectRepository.findAll();
 
-
         model.addAttribute("summaries", summaries);
         model.addAttribute("document", document);
         model.addAttribute("summary", new Summary());
@@ -86,10 +85,9 @@ public class HRController {
     }
 
 
-
     @PostMapping("/editor/add")
-    public String editorPostAdd(@ModelAttribute("summary") @Valid Summary summary, BindingResult
-            bindingResult, Model model) {
+    public String editorPostAdd(@ModelAttribute("summary") @Valid Summary summary, BindingResult bindingResult, Model model) {
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("candidate", candidateRepository.findAll());
             model.addAttribute("subjects", subjectRepository.findAll());
@@ -104,6 +102,7 @@ public class HRController {
 
     @GetMapping("/editor/{document}/export")
     public void editorExelExport(HttpServletResponse response, @PathVariable Document document) throws IOException {
+
         response.setContentType("application/octet-stream");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
@@ -122,6 +121,21 @@ public class HRController {
         summary.setMark(mark);
         summaryRepository.save(summary);
         return "redirect:/hr/editor/" + doc.id;
+    }
+
+    @PreAuthorize("hasAnyAuthority('HR','ADMISSION')")
+    @PostMapping(value = "/editor/{document}/status")
+    public String editorDecision(@PathVariable Document document, @RequestParam(value = "status") Document_status status) {
+
+        document.setStatus(status);
+        if (status != Document_status.ACCEPTED) return "redirect:/hr/editor/" + document.id;
+
+
+        document.getUser().setRoles(Collections.singleton(Role.STUDENT));
+
+
+        documentRepository.save(document);
+        return "redirect:/hr/editor/" + document.id;
     }
 
 
@@ -144,7 +158,7 @@ public class HRController {
         return subjects_checked;
     }
 
-     private static List<Integer> getMarks(List<Summary> summaries) {
+    private static List<Integer> getMarks(List<Summary> summaries) {
         List<Integer> marks = new ArrayList<Integer>();
         for (var sum : summaries) {
             marks.add(sum.getMark());
@@ -166,13 +180,12 @@ public class HRController {
             totalSum += mark;
         }
         double average = 0;
-        if (marks.size() != 0)
-            average = totalSum / marks.size();
+        if (marks.size() != 0) average = totalSum / marks.size();
         return average;
     }
+
     private void checkAccess(Document document) {
-        if (!(user.getRoles().contains(Role.ADMISSION) || user.getRoles().contains(Role.HR))
-                && userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName()) != document.user) {
+        if (!(user.getRoles().contains(Role.ADMISSION) || user.getRoles().contains(Role.HR)) && userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName()) != document.user) {
             throw new AccessDeniedException("Access denied");
         }
     }

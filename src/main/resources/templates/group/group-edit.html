@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Edit preparation_program</title>
+    <title>Edit Group</title>
 </head>
 <body>
 <div th:insert="header">...</div>
@@ -25,7 +25,7 @@
         </label> <br>
 
         <label> Программа подготовки:
-            <select th:field="*{preparation_program}">
+            <select th:field="*{preparationProgram}">
                 <option  th:each="preps : ${preparation_programs}" th:text="${preps.name}" th:value="${preps.id}"></option>
             </select>
         </label> <br>

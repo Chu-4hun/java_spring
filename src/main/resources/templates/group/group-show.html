@@ -11,7 +11,7 @@
 <div th:insert="header">...</div>
 <div class="w-full max-w-xs">
     <h3 class="font-bold" th:text="'Имя педагога организатора ' + ${groups.teacher_organizer.login}"></h3>
-    <h3 class="font-bold" th:text="'Название направления группы ' + ${groups.preparation_program.name}"></h3>
+    <h3 class="font-bold" th:text="'Название направления группы ' + ${groups.preparationProgram.name}"></h3>
     <p>Ученики</p>
     <p th:each="user: ${users}" th:text="${user.login}"></p>
 </div>

@@ -1,9 +1,9 @@
 package com.hludencov.java_spring.controllers;
 
 
-import com.hludencov.java_spring.models.Preparation_program;
+import com.hludencov.java_spring.models.PreparationProgram;
 import com.hludencov.java_spring.repo.DepartmentRepository;
-import com.hludencov.java_spring.repo.Preparation_programRepository;
+import com.hludencov.java_spring.repo.PreparationProgramRepository;
 import com.hludencov.java_spring.repo.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,7 +21,7 @@ import java.util.List;
 public class Preparation_programController {
     
     @Autowired
-    private Preparation_programRepository preparation_programRepository;
+    private PreparationProgramRepository preparationProgramRepository;
 
     @Autowired
     private SubjectRepository subjectRepository;
@@ -31,65 +31,66 @@ public class Preparation_programController {
 
 
     @GetMapping
-    public String prepprogList(Preparation_program preparation_program, Model model){
-        model.addAttribute("preparation_program", preparation_programRepository.findAll());
+    public String prepprogList(PreparationProgram preparationProgram, Model model){
+        model.addAttribute("preparationProgram", preparationProgramRepository.findAll());
         return "preparation_program/preparation_program-main";
     }
 
 
     @GetMapping("/add")
-    public String prepprogAdd(Preparation_program preparation_program,Model model) {
+    public String prepprogAdd(PreparationProgram preparationProgram, Model model) {
         model.addAttribute("subjectSet", subjectRepository.findAll());
         model.addAttribute("departmentSet", departmentRepository.findAll());
         return "preparation_program/preparation_program-add";
     }
 
     @PostMapping("/add")
-    public String prepprogPostAdd(@ModelAttribute("preparation_program") @Valid Preparation_program preparation_program, BindingResult bindingResult, Model model) {
+    public String prepprogPostAdd(@ModelAttribute("preparationProgram") @Valid PreparationProgram preparationProgram, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("subjectSet", subjectRepository.findAll());
             model.addAttribute("departmentSet", departmentRepository.findAll());
             return "preparation_program/preparation_program-add";
         }
-        preparation_programRepository.save(preparation_program);
+        preparationProgramRepository.save(preparationProgram);
         return "redirect:/preparation_program";
     }
 
 
-    @GetMapping("/edit/{preparation_program}")
+    @GetMapping("/edit/{preparationProgram}")
     public String prepprogEdit(
-            Preparation_program preparation_program,
+            PreparationProgram preparationProgram,
             Model model) {
         model.addAttribute("subjectSet", subjectRepository.findAll());
         model.addAttribute("departmentSet", departmentRepository.findAll());
-        model.addAttribute("preparation_program", preparation_program);
+        model.addAttribute("preparationProgram", preparationProgram);
         return "preparation_program/preparation_program-edit";
     }
 
-    @PostMapping("/edit/{preparation_program}")
-    public String prepprogPostEdit(@ModelAttribute("preparation_program") @Valid Preparation_program preparation_program, BindingResult bindingResult, Model model) {
+    @PostMapping("/edit/{preparationProgram}")
+    public String prepprogPostEdit(@ModelAttribute("preparationProgram") @Valid PreparationProgram preparationProgram, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("subjectSet", subjectRepository.findAll());
             model.addAttribute("departmentSet", departmentRepository.findAll());
+        model.addAttribute("preparationProgram", preparationProgram);
             return "preparation_program/preparation_program-edit";
         }
-        preparation_programRepository.save(preparation_program);
+        preparationProgramRepository.save(preparationProgram);
         return "redirect:../";
     }
 
-    @GetMapping("/show/{preparation_program}")
+    @GetMapping("/show/{preparationProgram}")
     public String prepprogShow(
-            Preparation_program preparation_program,
+            PreparationProgram preparationProgram,
             Model model) {
-        model.addAttribute("preparation_program", preparation_program);
+        model.addAttribute("preparationProgram", preparationProgram);
         model.addAttribute("departmentSet", departmentRepository.findAll());
         return "preparation_program/preparation_program-show";
     }
 
-    @GetMapping("/del/{preparation_program}")
+    @GetMapping("/del/{preparationProgram}")
     public String prepprogDel(
-            Preparation_program preparation_program) {
-        preparation_programRepository.delete(preparation_program);
+            PreparationProgram preparationProgram) {
+        preparationProgramRepository.delete(preparationProgram);
         return "redirect:../";
     }
 
@@ -100,14 +101,14 @@ public class Preparation_programController {
 
     @PostMapping("/filter/result")
     public String prepprogResult(@RequestParam String title, Model model) {
-        List<Preparation_program> result = preparation_programRepository.findByNameContains(title);
+        List<PreparationProgram> result = preparationProgramRepository.findByNameContains(title);
         model.addAttribute("result", result);
         return "preparation_program/preparation_program-filter";
     }
 
     @PostMapping("/filter_strict/result")
     public String prepprogStrictResult(@RequestParam String title, Model model) {
-        List<Preparation_program> result = preparation_programRepository.findByName(title);
+        List<PreparationProgram> result = preparationProgramRepository.findByName(title);
         model.addAttribute("result", result);
         return "preparation_program/preparation_program-filter";
     }

@@ -38,18 +38,18 @@ public class Subject {
     @JoinTable(name = "prep_to_subject",
             joinColumns = @JoinColumn(name = "subject_id"),
             inverseJoinColumns = @JoinColumn(name = "preparation_program_id"))
-    public Set<Preparation_program> preparation_programs;
+    public Set<PreparationProgram> preparation_programs;
 
     @OneToMany(mappedBy = "subject", fetch = FetchType.EAGER)
     private Set<Summary> summaries;
 
 
     //______________________________BOILERPLATE LINE__________________________________
-    public Set<Preparation_program> getPreparation_programs() {
+    public Set<PreparationProgram> getPreparation_programs() {
         return preparation_programs;
     }
 
-    public void setPreparation_programs(Set<Preparation_program> preparation_programs) {
+    public void setPreparation_programs(Set<PreparationProgram> preparation_programs) {
         this.preparation_programs = preparation_programs;
     }
 

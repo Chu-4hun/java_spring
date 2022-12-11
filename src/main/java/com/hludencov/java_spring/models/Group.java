@@ -3,7 +3,6 @@ package com.hludencov.java_spring.models;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Set;
 
@@ -33,7 +32,7 @@ public class Group {
 
     @ManyToOne
     @JoinColumn(name = "preparation_program_id")
-    public Preparation_program preparation_program;
+    public PreparationProgram preparationProgram;
 
 
     //______________________________BOILERPLATE LINE__________________________________
@@ -54,12 +53,12 @@ public class Group {
         this.users = users;
     }
 
-    public Preparation_program getPreparation_program() {
-        return preparation_program;
+    public PreparationProgram getPreparationProgram() {
+        return preparationProgram;
     }
 
-    public void setPreparation_program(Preparation_program preparation_program) {
-        this.preparation_program = preparation_program;
+    public void setPreparationProgram(PreparationProgram preparation_program) {
+        this.preparationProgram = preparation_program;
     }
 
     public User getTeacher_organizer() {

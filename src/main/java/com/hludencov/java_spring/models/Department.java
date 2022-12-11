@@ -2,7 +2,6 @@ package com.hludencov.java_spring.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,7 +22,7 @@ public class Department {
     private Set<User> department_users;
 
     @OneToMany(mappedBy = "department", fetch = FetchType.EAGER)
-    private Set<Preparation_program> preparation_programs;
+    private Set<PreparationProgram> preparation_programs;
 
     //______________________________BOILERPLATE LINE__________________________________
 
