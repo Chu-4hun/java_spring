@@ -8,27 +8,29 @@
 </head>
 <body>
 <div th:insert="header">...</div>
-<div class="w-full max-w-xs">
+<div class="w-1/2">
+    <div class="mx-5 w-auto"><label class="text-2xl font-bold  " style="color: red" th:text="${error}"></label></div>
     <form th:object="${group}" th:action="${'/group/add'}" method="post"
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-<!--        th:checked="${groups!=null && #lists.contains(groups.getUsers(), user)}"-->
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">Пользователи</label>
             <div th:each="user : ${users}">
-                <input th:name="${'users[]'}" th:value="${user.id}" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                   type="checkbox">
+                <input th:name="${'users[]'}" th:value="${user.id}"
+                       class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                       type="checkbox">
                 <label th:text="${user.login}"></label>
             </div>
         </div>
         <label> Педагог огранизатор:
             <select th:field="*{teacher_organizer}">
-                <option  th:each="usr : ${users}" th:text="${usr.login}" th:value="${usr.id}"></option>
+                <option th:each="usr : ${users}" th:text="${usr.login}" th:value="${usr.id}"></option>
             </select>
         </label> <br>
 
         <label> Программа подготовки:
             <select th:field="*{preparationProgram}">
-                <option  th:each="preps : ${preparation_programs}" th:text="${preps.name}" th:value="${preps.id}"></option>
+                <option th:each="preps : ${preparation_programs}" th:text="${preps.name}"
+                        th:value="${preps.id}"></option>
             </select>
         </label> <br>
 

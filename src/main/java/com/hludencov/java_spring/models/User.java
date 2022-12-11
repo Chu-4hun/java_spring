@@ -32,7 +32,6 @@ public class User implements UserDetails {
     @JoinTable(name = "user_to_group",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "groups_id"))
-
     private Set<Group> groups;
 
     @ManyToOne
@@ -46,8 +45,7 @@ public class User implements UserDetails {
     private Candidate_info candidate_info;
 
 
-    @ManyToOne
-    @JoinColumn(name = "teacher_info_id")
+    @OneToOne(mappedBy = "user")
     private Teacher_info teacher_info;
 
 

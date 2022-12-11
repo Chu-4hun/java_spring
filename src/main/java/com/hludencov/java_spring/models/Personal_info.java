@@ -1,5 +1,6 @@
 package com.hludencov.java_spring.models;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class Personal_info {
     public String name, surname;
 
     @Nullable
+    @Value("-")
     public String sec_name;
 
     @PastOrPresent

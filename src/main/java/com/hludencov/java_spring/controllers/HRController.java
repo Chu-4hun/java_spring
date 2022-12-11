@@ -67,8 +67,8 @@ public class HRController {
         model.addAttribute("document", document);
         model.addAttribute("summary", new Summary());
         model.addAttribute("subjects", getCheckedSubjects(summaries, subjects));
-        model.addAttribute("username", document.user.getPersonal_info().getName());
-        model.addAttribute("target_dep", document.user.getCandidate_info().target_department.getName());
+        model.addAttribute("username", document.getUser().getPersonal_info().getName());
+        model.addAttribute("target_dep", document.getUser().getCandidate_info().target_department.getName());
 
         doc = document;
 
@@ -77,13 +77,14 @@ public class HRController {
         model.addAttribute("subjects_name", getSubjectsNames(summaries));
         model.addAttribute("marks", getMarks(summaries));
         model.addAttribute("marks_average", String.format("%.2f", average));
+
         if (average > 1) {
+            document.getUser().getCandidate_info().setAverageMark(getAllDocsAverage(document));
             document.averageMark = average;
         }
         documentRepository.save(document);
         return "hr/hr-editor";
     }
-
 
     @PostMapping("/editor/add")
     public String editorPostAdd(@ModelAttribute("summary") @Valid Summary summary, BindingResult bindingResult, Model model) {
@@ -131,8 +132,7 @@ public class HRController {
         if (status != Document_status.ACCEPTED) return "redirect:/hr/editor/" + document.id;
 
 
-        document.getUser().setRoles(Collections.singleton(Role.STUDENT));
-
+//        document.getUser().setRoles(Collections.singleton(Role.STUDENT));
 
         documentRepository.save(document);
         return "redirect:/hr/editor/" + document.id;
@@ -140,6 +140,17 @@ public class HRController {
 
 
     //___________________________________Utils______________________________________________________
+
+
+    private double getAllDocsAverage(Document document) {
+        List<Double> averageMarks = new ArrayList<Double>();
+        for (Document doc : document.user.getDocuments()) {
+            if (doc.averageMark >= 2)
+                averageMarks.add(doc.averageMark);
+        }
+        return getAverage(averageMarks);
+    }
+
     private static HashSet<Subject> getCheckedSubjects(List<Summary> summaries, Iterable<Subject> subjects) {
         var subjects_checked = new HashSet<Subject>();
 
@@ -158,10 +169,10 @@ public class HRController {
         return subjects_checked;
     }
 
-    private static List<Integer> getMarks(List<Summary> summaries) {
-        List<Integer> marks = new ArrayList<Integer>();
+    private static List<Double> getMarks(List<Summary> summaries) {
+        List<Double> marks = new ArrayList<Double>();
         for (var sum : summaries) {
-            marks.add(sum.getMark());
+            marks.add((double) sum.getMark());
         }
         return marks;
     }
@@ -174,9 +185,9 @@ public class HRController {
         return sub_names;
     }
 
-    private static double getAverage(List<Integer> marks) {
+    private static double getAverage(List<Double> marks) {
         double totalSum = 0;
-        for (Integer mark : marks) {
+        for (Double mark : marks) {
             totalSum += mark;
         }
         double average = 0;

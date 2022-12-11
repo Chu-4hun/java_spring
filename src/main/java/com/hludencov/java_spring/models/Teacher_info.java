@@ -24,19 +24,19 @@ public class Teacher_info {
     public Set<Subject> subjectList;
 
 
-    @OneToMany(mappedBy = "teacher_info", fetch = FetchType.EAGER)
-    public Set<User> user_teacher_info;
+    @OneToOne(fetch = FetchType.EAGER)
+    public User user;
 
 
     //______________________________BOILERPLATE LINE__________________________________
 
 
-    public Set<User> getUser_teacher_info() {
-        return user_teacher_info;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser_teacher_info(Set<User> user_teacher_info) {
-        this.user_teacher_info = user_teacher_info;
+    public void setUser(User user_teacher_info) {
+        this.user = user_teacher_info;
     }
 
     public Set<Subject> getSubjectList() {

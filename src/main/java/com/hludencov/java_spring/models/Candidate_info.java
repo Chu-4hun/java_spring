@@ -25,6 +25,8 @@ public class Candidate_info {
     @JoinColumn(name = "user_id")
     public User user;
 
+    public double averageMark;
+
     @OneToMany(mappedBy = "candidate_info", fetch = FetchType.EAGER)
     public Set<Summary> summaries;
 
@@ -83,5 +85,13 @@ public class Candidate_info {
 
     public void setEducation_institution(Education_institution education_institution) {
         this.education_institution = education_institution;
+    }
+
+    public double getAverageMark() {
+        return averageMark;
+    }
+
+    public void setAverageMark(double averageMark) {
+        this.averageMark = averageMark;
     }
 }

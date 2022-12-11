@@ -11,9 +11,37 @@
 <div th:insert="header">...</div>
 <div class="w-full max-w-xs">
     <h3 class="font-bold" th:text="'Имя педагога организатора ' + ${groups.teacher_organizer.login}"></h3>
-    <h3 class="font-bold" th:text="'Название направления группы ' + ${groups.preparationProgram.name}"></h3>
+    <h3 class="font-bold" th:text="'Направление группы ' + ${groups.preparationProgram.name}"></h3>
     <p>Ученики</p>
-    <p th:each="user: ${users}" th:text="${user.login}"></p>
+    
+    <div class="overflow-x-visible relative shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th class="py-3 px-6">Номер</th>
+                <th class="py-3 px-6">Пользователь</th>
+                <th>Средний балл</th>
+            </tr>
+            </thead>
+
+            <tbody class="uppercase text-gray-900 dark:text-white">
+
+            <tr th:each="user,iterationstatus :${users}">
+                <td class="py-4 px-6" th:text="${iterationstatus.count}">1</td>
+                <td class="py-4 px-6" th:text="${user.getPersonal_info().getName() + ' ' + user.getPersonal_info().getSec_name()}"></td>
+                <td class="py-4 px-6" th:text="${user.getCandidate_info().getAverageMark()}"></td>
+            </tr>
+            </tbody>
+
+<!--            <tfoot>-->
+<!--            <tr class="font-semibold text-gray-900 dark:text-white">-->
+<!--                <th scope="row" class="py-3 px-6 text-base">Средний балл</th>-->
+<!--                <td></td>-->
+<!--                <td th:text="${marks_average}"></td>-->
+<!--            </tr>-->
+<!--            </tfoot>-->
+        </table>
+    </div>
 </div>
 </body>
 </html>
