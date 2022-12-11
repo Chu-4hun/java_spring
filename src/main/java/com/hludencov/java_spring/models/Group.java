@@ -34,6 +34,10 @@ public class Group {
     @JoinColumn(name = "preparation_program_id")
     public PreparationProgram preparationProgram;
 
+    public boolean isFull(){
+        return users.size() >= capacity;
+    }
+
 
     //______________________________BOILERPLATE LINE__________________________________
 

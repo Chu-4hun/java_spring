@@ -5,6 +5,7 @@ import com.google.common.collect.Iterables;
 import com.hludencov.java_spring.models.Group;
 import com.hludencov.java_spring.models.Role;
 import com.hludencov.java_spring.models.User;
+import com.hludencov.java_spring.repo.CandidateRepository;
 import com.hludencov.java_spring.repo.GroupRepository;
 import com.hludencov.java_spring.repo.PreparationProgramRepository;
 import com.hludencov.java_spring.repo.UsersRepository;
@@ -13,10 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -30,9 +28,11 @@ public class GroupController {
 
     @Autowired
     private UsersRepository usersRepository;
-
     @Autowired
     private PreparationProgramRepository preparation_programRepository;
+
+    @Autowired
+    private CandidateRepository candidateRepository;
 
     @GetMapping
     public String educationList(Group group, Model model) {
@@ -70,11 +70,27 @@ public class GroupController {
         groupRepository.save(group);
         return "redirect:/group";
     }
-//TODO Добавление пользователя в группу
 
-//    @PreAuthorize("hasAnyAuthority('HR','ADMISSION','TEACHER')")
-//    @GetMapping("/add/{user}/")
-//    public String
+    //TODO Добавление пользователя в группу
+    @PreAuthorize("hasAnyAuthority('HR','ADMISSION','TEACHER')")
+    @GetMapping("/add/{user}/")
+    public String addUserToGroup(Model model, @PathVariable User user) {
+        List<Group> allGroups = groupRepository.findByPreparationProgram(user.getCandidate_info().getPreparationProgram());
+        Group successGroup = null;
+        for (var group:allGroups) {
+            if (!group.isFull()){
+                group.users.add(user);
+                successGroup = group;
+                candidateRepository.delete(user.getCandidate_info());
+                break;
+            }
+        }
+        if (successGroup != null) return "redirect:group/show/"+successGroup.getId();
+
+        model.addAttribute("groups", groupRepository.findAll());
+        model.addAttribute("message", "В группах закончилось места");
+        return "group/group-main";
+    }
 
     @GetMapping("/edit/{group}")
     public String educationEdit(

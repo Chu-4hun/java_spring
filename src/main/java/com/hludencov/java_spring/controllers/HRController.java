@@ -68,7 +68,7 @@ public class HRController {
         model.addAttribute("summary", new Summary());
         model.addAttribute("subjects", getCheckedSubjects(summaries, subjects));
         model.addAttribute("username", document.getUser().getPersonal_info().getName());
-        model.addAttribute("target_dep", document.getUser().getCandidate_info().target_department.getName());
+        model.addAttribute("preparationProgram", document.getUser().getCandidate_info().preparationProgram.getName());
 
         doc = document;
 

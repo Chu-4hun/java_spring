@@ -18,8 +18,8 @@ public class Candidate_info {
     public Date submissionDate;
 
     @ManyToOne
-    @JoinColumn(name = "target_department_id")
-    public Department target_department;
+    @JoinColumn(name = "prepatation_program_id")
+    public PreparationProgram preparationProgram;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
@@ -45,13 +45,12 @@ public class Candidate_info {
         this.user = user;
     }
 
-
-    public Department getTarget_department() {
-        return target_department;
+    public PreparationProgram getPreparationProgram() {
+        return preparationProgram;
     }
 
-    public void setTarget_department(Department target_department) {
-        this.target_department = target_department;
+    public void setPreparationProgram(PreparationProgram preparationProgram) {
+        this.preparationProgram = preparationProgram;
     }
 
     public Long getId() {

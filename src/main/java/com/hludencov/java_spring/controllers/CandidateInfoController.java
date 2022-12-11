@@ -3,10 +3,7 @@ package com.hludencov.java_spring.controllers;
 import com.hludencov.java_spring.models.Candidate_info;
 import com.hludencov.java_spring.models.Role;
 import com.hludencov.java_spring.models.User;
-import com.hludencov.java_spring.repo.CandidateRepository;
-import com.hludencov.java_spring.repo.DepartmentRepository;
-import com.hludencov.java_spring.repo.Education_institutionRepository;
-import com.hludencov.java_spring.repo.UserRepository;
+import com.hludencov.java_spring.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,7 +23,7 @@ public class CandidateInfoController {
     @Autowired
     private CandidateRepository candidateRepository;
     @Autowired
-    private DepartmentRepository departmentRepository;
+    private PreparationProgramRepository preparationProgramRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -45,7 +42,7 @@ public class CandidateInfoController {
     @GetMapping("/add")
     public String candidateAdd(Candidate_info candidate, Model model) {
         model.addAttribute("candidates", candidateRepository.findAll());
-        model.addAttribute("departments", departmentRepository.findAll());
+        model.addAttribute("preparationPrograms", preparationProgramRepository.findAll());
         model.addAttribute("education_institutions", educationInstitutionRepository.findAll());
         model.addAttribute("users", userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName()));
         return "candidate/candidate-add";
@@ -55,7 +52,7 @@ public class CandidateInfoController {
     public String candidatePostAdd(@ModelAttribute("candidate_info") @Valid Candidate_info candidate, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("candidates", candidateRepository.findAll());
-            model.addAttribute("departments", departmentRepository.findAll());
+            model.addAttribute("preparationPrograms", preparationProgramRepository.findAll());
             return "candidate/candidate-add";
         }
         candidate.user = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -76,7 +73,7 @@ public class CandidateInfoController {
     public String candidateEdit(
             Candidate_info candidate,
             Model model) {
-        model.addAttribute("departments", departmentRepository.findAll());
+        model.addAttribute("preparationPrograms", preparationProgramRepository.findAll());
         model.addAttribute("candidates", candidate);
         return "candidate/candidate-edit";
     }
@@ -85,7 +82,7 @@ public class CandidateInfoController {
     public String candidatePostEdit(@ModelAttribute("candidate_info") @Valid Candidate_info candidate, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("candidates", candidateRepository.findAll());
-            model.addAttribute("departments", departmentRepository.findAll());
+            model.addAttribute("preparationPrograms", preparationProgramRepository.findAll());
             return "candidate/candidate-edit";
         }
         candidateRepository.save(candidate);
@@ -96,7 +93,7 @@ public class CandidateInfoController {
     public String candidateShow(
             Candidate_info candidate,
             Model model) {
-        model.addAttribute("departments", departmentRepository.findAll());
+        model.addAttribute("preparationPrograms", preparationProgramRepository.findAll());
         model.addAttribute("candidates", candidate);
         return "candidate/candidate-show";
     }

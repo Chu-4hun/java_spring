@@ -12,7 +12,7 @@
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <p>Форма для кандидата</p><br>
         <label> Целевое отделение в вузе:
-            <select th:field="*{target_department}">
+            <select th:field="*{preparationProgram}">
                 <option th:each="deps : ${departments}" th:text="${deps.name}" th:value="${deps.id}"></option>
             </select>
         </label>

@@ -27,6 +27,14 @@ public class Department {
     //______________________________BOILERPLATE LINE__________________________________
 
 
+    public Set<PreparationProgram> getPreparation_programs() {
+        return preparation_programs;
+    }
+
+    public void setPreparation_programs(Set<PreparationProgram> preparation_programs) {
+        this.preparation_programs = preparation_programs;
+    }
+
     public Set<Candidate_info> getCandidate_infos() {
         return candidate_infos;
     }
