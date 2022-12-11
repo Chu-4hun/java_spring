@@ -43,22 +43,24 @@ public class GroupController {
 
     @GetMapping("/add")
     public String educationAdd(Group group, Model model) {
+        model.addAttribute("teachers", usersRepository.findByRoles(Role.TEACHER));
         model.addAttribute("users", deleteDublicates(usersRepository.findByRolesIn(new HashSet<>(Arrays.asList(Role.STUDENT, Role.CANDIDATE)))));
         model.addAttribute("preparation_programs", preparation_programRepository.findAll());
         return "group/group-add";
     }
 
-    
 
     @PostMapping("/add")
     public String educationPostAdd(@ModelAttribute("group") @Valid Group group, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("users", deleteDublicates(usersRepository.findByRolesIn(new HashSet<>(Arrays.asList(Role.STUDENT, Role.CANDIDATE)))));
+            model.addAttribute("teachers", usersRepository.findByRoles(Role.TEACHER));
             model.addAttribute("preparation_programs", preparation_programRepository.findAll());
             return "group/group-add";
         }
         if (group.getPreparationProgram().getMaxGroupCapacity() < (Iterables.size(groupRepository.findByPreparationProgram(group.getPreparationProgram())) + 1)) {
             model.addAttribute("users", deleteDublicates(usersRepository.findByRolesIn(new HashSet<>(Arrays.asList(Role.STUDENT, Role.CANDIDATE)))));
+            model.addAttribute("teachers", usersRepository.findByRoles(Role.TEACHER));
             model.addAttribute("preparation_programs", preparation_programRepository.findAll());
             model.addAttribute("error", "У программы подготовки " + group.getPreparationProgram().getName() + " не предусмотренно больше групп");
             return "group/group-add";
@@ -79,6 +81,7 @@ public class GroupController {
             Group group,
             Model model) {
         model.addAttribute("users", deleteDublicates(usersRepository.findByRolesIn(new HashSet<>(Arrays.asList(Role.STUDENT, Role.CANDIDATE)))));
+        model.addAttribute("teachers", usersRepository.findByRoles(Role.TEACHER));
         model.addAttribute("preparation_programs", preparation_programRepository.findAll());
         model.addAttribute("group", group);
         return "group/group-edit";
@@ -88,6 +91,7 @@ public class GroupController {
     public String educationPostEdit(@ModelAttribute("group") @Valid Group group, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("users", deleteDublicates(usersRepository.findByRolesIn(new HashSet<>(Arrays.asList(Role.STUDENT, Role.CANDIDATE)))));
+            model.addAttribute("teachers", usersRepository.findByRoles(Role.TEACHER));
             model.addAttribute("preparation_programs", preparation_programRepository.findAll());
             return "group/group-edit";
         }
@@ -120,13 +124,14 @@ public class GroupController {
     }
 
     //_________________________________UTILS_____________________________________
-    
+
     private List<User> deleteDublicates(List<User> list) {
         Set<User> set = new HashSet<>(list);
         list.clear();
         list.addAll(set);
         return list;
     }
+
     private String generateName(Group group) {
         return group.getPreparationProgram().getName() + "-"
                 + (Iterables.size(groupRepository.findByPreparationProgram(group.getPreparationProgram())) + 1) + "-"

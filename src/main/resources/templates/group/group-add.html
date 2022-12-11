@@ -23,7 +23,7 @@
         </div>
         <label> Педагог огранизатор:
             <select th:field="*{teacher_organizer}">
-                <option th:each="usr : ${users}" th:text="${usr.login}" th:value="${usr.id}"></option>
+                <option th:each="usr : ${teachers}" th:text="${usr.login}" th:value="${usr.id}"></option>
             </select>
         </label> <br>
 
