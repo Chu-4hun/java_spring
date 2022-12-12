@@ -1,12 +1,17 @@
 package com.hludencov.java_spring.models;
 
 
+import com.hludencov.java_spring.interfaces.IExelExport;
+
 import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Entity
-public class Summary {
+public class Summary implements IExelExport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,4 +75,20 @@ public class Summary {
     public void setCandidate_info(Candidate_info candidate_info) {
         this.candidate_info = candidate_info;
     }
+
+    public List<Object> getHeaders() {
+        return Arrays.asList(
+                "Предмет",
+                "Оценка",
+                "Пользователь: " + candidate_info.user.getPersonal_info().name + " "
+                        + candidate_info.user.getPersonal_info().getSec_name()
+        );
+    }
+    public List<Object> getData() {
+        return Arrays.asList(
+                getSubject().getName(),
+                getMark()
+        );
+    }
+
 }

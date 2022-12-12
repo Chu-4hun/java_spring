@@ -7,11 +7,13 @@
 <div th:insert="header">...</div>
 <body>
 <div class="w-full max-w-xs">
-<h1 class="font-bold">Все документы</h1>
-    <a href="/document/filter" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Поиск
-        документов</a>
+    <h1 class="font-bold">Рабочее пространство</h1>
     <a sec:authorize="hasAnyAuthority('HR','ADMISSION')"
-       href="/document/filter"  class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Поиск
+       href="/document/filter" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Поиск
+        по
+        документам</a>
+    <a sec:authorize="hasAnyAuthority('HR','ADMISSION')"
+       href="/hr/main/export" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Поиск
         документов</a>
     <br>
     <div th:each="el : ${documents}">

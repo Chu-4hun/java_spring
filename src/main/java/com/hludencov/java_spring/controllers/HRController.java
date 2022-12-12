@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import com.hludencov.java_spring.interfaces.IExelExport;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -113,7 +114,11 @@ public class HRController {
         String headerValue = "attachment; filename=SummaryExportOf_" + document.user.getPersonal_info().getName() + "_" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
 
-        ExelExport exelExport = new ExelExport(summaryRepository.findByDocument(document), document.getUser().getPersonal_info());
+        Summary[] data = new Summary[]{};
+
+        data = summaryRepository.findByDocument(document).toArray(data);
+
+        ExelExport exelExport = new ExelExport(data);
         exelExport.generateExcelFile(response);
     }
 
@@ -129,8 +134,10 @@ public class HRController {
         String headerValue = "attachment; filename=AllHrOrCommissionExport_" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
 
-//        ExelExport exelExport = new ExelExport()
-//        exelExport.generateExcelFile(response);
+        Document[] data2 = documentRepository.findByToAdmission(isHrOrAdmission()).toArray(new Document[0]);
+
+        ExelExport exelExport = new ExelExport(data2);
+        exelExport.generateExcelFile(response);
     }
 
     @GetMapping(value = "/editor/update", params = {"mark", "summary"})
@@ -221,6 +228,9 @@ public class HRController {
                 && getAuthUser() != document.user) {
             throw new AccessDeniedException("Access denied");
         }
+    }
+    private boolean isHrOrAdmission() {
+        return getAuthUser().getRoles().contains(Role.HR) || getAuthUser().getRoles().contains(Role.ADMISSION);
     }
 
 

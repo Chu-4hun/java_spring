@@ -1,5 +1,6 @@
 package com.hludencov.java_spring.models;
 
+import com.hludencov.java_spring.interfaces.IExelExport;
 import net.bytebuddy.implementation.bind.annotation.Default;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.bind.DefaultValue;
@@ -7,10 +8,12 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.sql.Date;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 @Entity
-public class Document {
+public class Document implements IExelExport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -112,5 +115,24 @@ public class Document {
 
     public void setStatus(Document_status status) {
         this.status = status;
+    }
+
+    public List<Object> getHeaders() {
+        return Arrays.asList(
+                "Имя файла",
+                "Пользователь",
+                "Средний балл",
+                "Дата загрузки",
+                "Дата архивации"
+        );
+    }
+    public List<Object> getData() {
+        return Arrays.asList(
+                getFileName(),
+                getUser().getPersonal_info().name +" "+ getUser().getPersonal_info().getSec_name(),
+                getAverageMark(),
+                getDate().toString(),
+                getArchive_date().toString()
+        );
     }
 }

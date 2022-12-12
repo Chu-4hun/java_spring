@@ -1,9 +1,8 @@
 package com.hludencov.java_spring.controllers;
 
 
-import com.hludencov.java_spring.models.Document;
-import com.hludencov.java_spring.models.Document_status;
-import com.hludencov.java_spring.models.User;
+import com.google.common.collect.Iterables;
+import com.hludencov.java_spring.models.*;
 import com.hludencov.java_spring.repo.DocumentRepository;
 import com.hludencov.java_spring.repo.UserRepository;
 import com.hludencov.java_spring.storage.StorageService;
@@ -11,20 +10,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
+@PreAuthorize("hasAnyAuthority('ADMIN','ARCHIVE')")
 @RequestMapping("/document")
 public class DocumentController {
     private final StorageService storageService;
@@ -46,7 +49,10 @@ public class DocumentController {
     public String documentList(Model model) {
         user = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute("user", user);
-        model.addAttribute("documents", documentRepository.findByUser_id(user.getId()));
+        if (user.getRoles().contains(Role.ARCHIVE)) {
+            model.addAttribute("documents", documentRepository.findAll());
+        } else
+            model.addAttribute("documents", documentRepository.findByUser_id(user.getId()));
         return "document/document-main";
     }
 
@@ -117,17 +123,21 @@ public class DocumentController {
         return "redirect:../";
     }
 
-    //    @GetMapping("/")
-//	public String listUploadedFiles(Model model) throws IOException {
-//
-//		model.addAttribute("files", storageService.loadAll().map(
-//				path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
-//						"serveFile", path.getFileName().toString()).build().toUri().toString())
-//				.collect(Collectors.toList()));
-//
-//		return "uploadForm";
-//	}
-//
+    @GetMapping("/main/export")
+    public void mainExelExport(HttpServletResponse response) throws IOException {
+
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new java.util.Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=AllHrOrCommissionExport_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+
+        ExelExport exelExport = new ExelExport(Iterables.toArray(documentRepository.findAll(), Document.class));
+        exelExport.generateExcelFile(response);
+    }
+
     @GetMapping("/files/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
