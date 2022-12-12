@@ -29,6 +29,8 @@
                 <option  th:each="preps : ${preparation_programs}" th:text="${preps.name}" th:value="${preps.id}"></option>
             </select>
         </label> <br>
+        <label> Максимальное количество групп:
+            <input type="number" th:field="*{capacity}" min="1"/>
 
         <button type="submit"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">

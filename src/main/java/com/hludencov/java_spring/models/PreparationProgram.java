@@ -3,6 +3,7 @@ package com.hludencov.java_spring.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
 import java.util.Set;
 
 
@@ -31,8 +32,20 @@ public class PreparationProgram {
     @JoinColumn(name = "department_id")
     private Department department;
 
+    @OneToMany(mappedBy = "preparationProgram", fetch = FetchType.EAGER)
+    public List<Candidate_info> candidateInfos;
+
+
     //______________________________BOILERPLATE LINE__________________________________
 
+
+    public List<Candidate_info> getCandidateInfos() {
+        return candidateInfos;
+    }
+
+    public void setCandidateInfos(List<Candidate_info> candidateInfos) {
+        this.candidateInfos = candidateInfos;
+    }
 
     public Set<Group> getGroups() {
         return groups;

@@ -13,7 +13,7 @@
         <p>Форма для кандидата</p><br>
         <label> Целевое отделение в вузе:
             <select th:field="*{preparationProgram}">
-                <option th:each="deps : ${departments}" th:text="${deps.name}" th:value="${deps.id}"></option>
+                <option th:each="deps : ${preparationPrograms}" th:text="${deps.name}" th:value="${deps.id}"></option>
             </select>
         </label>
 

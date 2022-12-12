@@ -2,6 +2,7 @@ package com.hludencov.java_spring.controllers;
 
 
 import com.google.common.collect.Iterables;
+import com.hludencov.java_spring.models.Candidate_info;
 import com.hludencov.java_spring.models.Group;
 import com.hludencov.java_spring.models.Role;
 import com.hludencov.java_spring.models.User;
@@ -21,7 +22,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/group")
-@PreAuthorize("hasAnyAuthority('ADMIN') or hasAuthority('TEACHER')")
+@PreAuthorize("hasAnyAuthority('ADMIN','CANDIDATE','STUDENT','TEACHER', 'HR', 'ADMISSION')")
 public class GroupController {
     @Autowired
     private GroupRepository groupRepository;
@@ -41,6 +42,7 @@ public class GroupController {
     }
 
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @GetMapping("/add")
     public String educationAdd(Group group, Model model) {
         model.addAttribute("teachers", usersRepository.findByRoles(Role.TEACHER));
@@ -50,6 +52,7 @@ public class GroupController {
     }
 
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @PostMapping("/add")
     public String educationPostAdd(@ModelAttribute("group") @Valid Group group, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -71,27 +74,29 @@ public class GroupController {
         return "redirect:/group";
     }
 
-    //TODO Добавление пользователя в группу
+    //Добавление пользователя в группу
     @PreAuthorize("hasAnyAuthority('HR','ADMISSION','TEACHER')")
-    @GetMapping("/add/{user}/")
-    public String addUserToGroup(Model model, @PathVariable User user) {
-        List<Group> allGroups = groupRepository.findByPreparationProgram(user.getCandidate_info().getPreparationProgram());
+    @GetMapping("/candidate/add/{candidate_info}")
+    public String addUserToGroup(Model model, @PathVariable Candidate_info candidate_info) {
+
+        List<Group> allGroups = groupRepository.findByPreparationProgram(candidate_info.getPreparationProgram());
         Group successGroup = null;
         for (var group:allGroups) {
             if (!group.isFull()){
-                group.users.add(user);
+                group.getUsers().add(candidate_info.getUser());
+                groupRepository.save(group);
                 successGroup = group;
-                candidateRepository.delete(user.getCandidate_info());
                 break;
             }
         }
-        if (successGroup != null) return "redirect:group/show/"+successGroup.getId();
+        if (successGroup != null) return "redirect:/group/show/"+successGroup.getId();
 
         model.addAttribute("groups", groupRepository.findAll());
         model.addAttribute("message", "В группах закончилось места");
         return "group/group-main";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @GetMapping("/edit/{group}")
     public String educationEdit(
             Group group,
@@ -103,6 +108,7 @@ public class GroupController {
         return "group/group-edit";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @PostMapping("/edit/{group}")
     public String educationPostEdit(@ModelAttribute("group") @Valid Group group, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -119,7 +125,7 @@ public class GroupController {
 
     @GetMapping("/show/{group}")
     public String educationShow(
-            Group group,
+            @PathVariable Group group,
             Model model) {
         model.addAttribute("users", usersRepository.findByGroupsContaining(group));
         model.addAttribute("preparation_programs", preparation_programRepository.findAll());
@@ -127,6 +133,7 @@ public class GroupController {
         return "group/group-show";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @GetMapping("/del/{group}")
     public String educationDel(
             Group group) {

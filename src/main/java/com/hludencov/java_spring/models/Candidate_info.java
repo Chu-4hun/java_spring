@@ -17,20 +17,20 @@ public class Candidate_info {
     @PastOrPresent
     public Date submissionDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "prepatation_program_id")
     public PreparationProgram preparationProgram;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "user_id")
     public User user;
 
     public double averageMark;
 
-    @OneToMany(mappedBy = "candidate_info", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "candidate_info", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     public Set<Summary> summaries;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "education_institution_id")
     private Education_institution education_institution;
 

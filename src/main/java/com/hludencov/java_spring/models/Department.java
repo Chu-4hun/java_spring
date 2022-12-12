@@ -15,8 +15,8 @@ public class Department {
     @NotBlank
     private String name;
 
-    @OneToMany(mappedBy = "target_department", fetch = FetchType.EAGER)
-    private Set<Candidate_info> candidate_infos;
+//    @OneToMany(mappedBy = "target_department", fetch = FetchType.EAGER)
+//    private Set<Candidate_info> candidate_infos;
 
     @OneToMany(mappedBy = "department", fetch = FetchType.EAGER)
     private Set<User> department_users;
@@ -33,14 +33,6 @@ public class Department {
 
     public void setPreparation_programs(Set<PreparationProgram> preparation_programs) {
         this.preparation_programs = preparation_programs;
-    }
-
-    public Set<Candidate_info> getCandidate_infos() {
-        return candidate_infos;
-    }
-
-    public void setCandidate_infos(Set<Candidate_info> candidate_infos) {
-        this.candidate_infos = candidate_infos;
     }
 
     public Set<User> getDepartment_users() {

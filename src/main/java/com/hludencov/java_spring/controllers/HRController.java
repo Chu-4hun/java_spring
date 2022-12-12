@@ -35,7 +35,6 @@ public class HRController {
     @Autowired
     CandidateRepository candidateRepository;
 
-
     User user = new User();
     Document doc;
 
@@ -43,7 +42,7 @@ public class HRController {
     @PreAuthorize("hasAnyAuthority('HR','ADMISSION')")
     @GetMapping
     public String documentList(Model model) {
-        user = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+        user = getAuthUser();
         model.addAttribute("user", user);
         if (user.getRoles().contains(Role.ADMISSION)) {
             model.addAttribute("documents", documentRepository.findByToAdmission(true));
@@ -53,10 +52,11 @@ public class HRController {
         return "hr/hr-main";
     }
 
+
     @GetMapping("/editor/{document}")
     public String openEditor(Model model, @PathVariable Document document) {
 
-        user = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+        user = getAuthUser();
 
         checkAccess(document);
 
@@ -64,6 +64,7 @@ public class HRController {
         var subjects = subjectRepository.findAll();
 
         model.addAttribute("summaries", summaries);
+        model.addAttribute("document_status", Document_status.values());
         model.addAttribute("document", document);
         model.addAttribute("summary", new Summary());
         model.addAttribute("subjects", getCheckedSubjects(summaries, subjects));
@@ -116,6 +117,22 @@ public class HRController {
         exelExport.generateExcelFile(response);
     }
 
+    //TODO main page exel export
+    @GetMapping("/main/export")
+    public void mainExelExport(HttpServletResponse response) throws IOException {
+
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=AllHrOrCommissionExport_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+
+//        ExelExport exelExport = new ExelExport()
+//        exelExport.generateExcelFile(response);
+    }
+
     @GetMapping(value = "/editor/update", params = {"mark", "summary"})
     public String editorUpdate(@RequestParam(value = "mark") int mark,
                                @RequestParam(value = "summary") Summary summary) {
@@ -125,22 +142,26 @@ public class HRController {
     }
 
     @PreAuthorize("hasAnyAuthority('HR','ADMISSION')")
-    @PostMapping(value = "/editor/{document}/status")
-    public String editorDecision(@PathVariable Document document, @RequestParam(value = "status") Document_status status) {
+    @PostMapping(value = "/editor/status/")
+    public String editorDecision(@RequestParam(value = "status") Document_status status) {
 
-        document.setStatus(status);
-        if (status != Document_status.ACCEPTED) return "redirect:/hr/editor/" + document.id;
+        doc.setStatus(status);
+        documentRepository.save(doc);
+        if (status != Document_status.ACCEPTED) return "redirect:/hr/editor/" + doc.id;
+
+        doc.getUser().setRoles(Collections.singleton(Role.STUDENT));
+        userRepository.save(doc.getUser());
 
 
-//        document.getUser().setRoles(Collections.singleton(Role.STUDENT));
-
-        documentRepository.save(document);
-        return "redirect:/hr/editor/" + document.id;
+        return "redirect:/group/candidate/add/" + doc.getUser().getCandidate_info().getId();
     }
 
 
     //___________________________________Utils______________________________________________________
 
+    private User getAuthUser() {
+        return userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
 
     private double getAllDocsAverage(Document document) {
         List<Double> averageMarks = new ArrayList<Double>();
@@ -196,7 +217,8 @@ public class HRController {
     }
 
     private void checkAccess(Document document) {
-        if (!(user.getRoles().contains(Role.ADMISSION) || user.getRoles().contains(Role.HR)) && userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName()) != document.user) {
+        if (!(user.getRoles().contains(Role.ADMISSION) || user.getRoles().contains(Role.HR))
+                && getAuthUser() != document.user) {
             throw new AccessDeniedException("Access denied");
         }
     }

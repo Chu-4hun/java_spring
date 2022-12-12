@@ -18,8 +18,8 @@
         <br>
 
         <label> Отделение:
-            <select th:field="*{target_department}">
-                <option  th:each="deps : ${departments}" th:text="${deps.name}" th:value="${deps.id}"></option>
+            <select th:field="*{preparationProgram}">
+                <option  th:each="deps : ${preparationPrograms}" th:text="${deps.name}" th:value="${deps.id}"></option>
             </select>
         </label> <br>
          <input type="hidden" th:field="*{user}" th:value="*{user.id}">
@@ -32,7 +32,7 @@
 
         <button type="submit"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Редактировать документ
+            Редактировать Кандидата
         </button>
     </form>
 </div>

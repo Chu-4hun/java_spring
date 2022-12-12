@@ -16,8 +16,8 @@ import javax.validation.Valid;
 import java.sql.Date;
 import java.util.List;
 
-@PreAuthorize("hasAnyAuthority('TEACHER','STUDENT','USER')")
 @Controller
+@PreAuthorize("hasAnyAuthority('TEACHER','STUDENT','USER','CANDIDATE')")
 @RequestMapping("/candidate")
 public class CandidateInfoController {
     @Autowired
@@ -34,8 +34,13 @@ public class CandidateInfoController {
 
     @GetMapping
     public String candidateList(Model model) {
-        model.addAttribute("candidates", candidateRepository.findAll());
-        user = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+        user = getAuthUser();
+
+        if (user.getRoles().contains(Role.CANDIDATE)) {
+            model.addAttribute("candidates", user.getCandidate_info());
+        } else {
+            model.addAttribute("candidates", candidateRepository.findAll());
+        }
         return "candidate/candidate-main";
     }
 
@@ -47,8 +52,8 @@ public class CandidateInfoController {
         model.addAttribute("users", userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName()));
         return "candidate/candidate-add";
     }
-
     @PostMapping("/add")
+
     public String candidatePostAdd(@ModelAttribute("candidate_info") @Valid Candidate_info candidate, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("candidates", candidateRepository.findAll());
@@ -67,7 +72,6 @@ public class CandidateInfoController {
         candidateRepository.save(candidate);
         return "redirect:/";
     }
-
 
     @GetMapping("/edit/{candidate_info}")
     public String candidateEdit(
@@ -98,6 +102,7 @@ public class CandidateInfoController {
         return "candidate/candidate-show";
     }
 
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
     @GetMapping("/del/{candidate_info}")
     public String candidateDel(
             Candidate_info candidate) {
@@ -105,15 +110,22 @@ public class CandidateInfoController {
         return "redirect:../";
     }
 
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
     @GetMapping("/filter")
     public String candidateFilter(Model model) {
         return "candidate/candidate-filter";
     }
 
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
     @PostMapping("/filter/result")
     public String candidateResult(@RequestParam String title, Model model) {
         List<Candidate_info> result = candidateRepository.findBySubmissionDateContains(title);
         model.addAttribute("result", result);
         return "candidate/candidate-filter";
+    }
+
+    //________________________________________UTILS______________________________________________
+     private User getAuthUser() {
+        return userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }

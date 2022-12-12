@@ -24,7 +24,7 @@ public class User implements UserDetails {
     private boolean active;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "user_role",joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
@@ -34,22 +34,22 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "groups_id"))
     private Set<Group> groups;
 
-    @ManyToOne
-    @JoinColumn(name = "department_id")
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "department_id" )
     private Department department;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user",cascade = CascadeType.REMOVE)
     private Personal_info personal_info;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user",cascade = CascadeType.REMOVE)
     private Candidate_info candidate_info;
 
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user",cascade = CascadeType.REMOVE)
     private Teacher_info teacher_info;
 
 
-    @OneToMany(mappedBy = "teacher_organizer", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "teacher_organizer", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private Set<Group> teacher_org_groups;
 
 

@@ -38,11 +38,11 @@
                        class="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent"
                        aria-current="page">Домашняя страница</a>
                 </li>
-                <!--                <li class="nav-item">-->
-                <!--                    <a class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"-->
-                <!--                       href="/candidate" data-mdb-ripple="true" data-mdb-ripple-color="light">Кандидат</a>-->
-                <!--                </li>-->
-                <li class="nav-item" sec:authorize="hasAuthority('USER')">
+                                <li class="nav-item" sec:authorize="hasAnyAuthority('CANDIDATE')">
+                                    <a class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+                                       href="/candidate" data-mdb-ripple="true" data-mdb-ripple-color="light">Кандидат</a>
+                                </li>
+                <li class="nav-item" sec:authorize="hasAnyAuthority('USER','CANDIDATE')">
                     <a class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
                        href="/document" data-mdb-ripple="true" data-mdb-ripple-color="light">Мои докуметы</a>
                 </li>
@@ -50,6 +50,11 @@
                     <a class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
                        href="/hr" data-mdb-ripple="true" data-mdb-ripple-color="light">Редактор для приемной коммисси /
                         HR</a>
+                </li>
+                <li class="nav-item"
+                    sec:authorize="hasAnyAuthority('ADMIN','TEACHER','STUDENT','CANDIDATE')">
+                    <a class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+                       href="/group" data-mdb-ripple="true" data-mdb-ripple-color="light">Группы</a>
                 </li>
                 <li sec:authorize="hasAuthority('ADMIN')">
                     <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar"
@@ -100,11 +105,7 @@
                                    href="/education" data-mdb-ripple="true" data-mdb-ripple-color="light">Об.
                                     учреждения</a>
                             </li>
-                            <li class="nav-item"
-                                sec:authorize="hasAuthority('ADMIN') or hasAuthority('TEACHER')">
-                                <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                   href="/group" data-mdb-ripple="true" data-mdb-ripple-color="light">Группа</a>
-                            </li>
+
                         </ul>
                     </div>
                 </li>
