@@ -16,13 +16,15 @@
         </button>
         <div class="flex items-center md:order-2">
             <form method="get" sec:authorize="hasAnyAuthority('ADMIN')" action="/dump">
-                <button class="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 focus:outline-none" href="/login"
+                <button class="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 focus:outline-none"
+                        href="/login"
                         type="submit">
                     Dump DB
                 </button>
             </form>
             <form method="post" sec:authorize="!isAuthenticated()" th:action="@{/login}">
-                <button class="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 focus:outline-none" href="/login" sec:authorize="!isAuthenticated()"
+                <button class="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 focus:outline-none"
+                        href="/login" sec:authorize="!isAuthenticated()"
                         type="submit">
                     Login
                 </button>
@@ -31,9 +33,10 @@
                     up</a>
             </form>
             <form method="post" sec:authorize="isAuthenticated()" th:action="@{/logout}">
-                <button class="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 focus:outline-none" href="/login"
+                <button class="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 focus:outline-none"
+                        href="/login"
                         type="submit">
-                    Logout
+                    Выйти
                 </button>
             </form>
         </div>
@@ -67,7 +70,8 @@
                        data-mdb-ripple="true" data-mdb-ripple-color="light" href="/group">Группы</a>
                 </li>
                 <li sec:authorize="hasAuthority('ADMIN')">
-                    <button class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent" data-dropdown-toggle="dropdownNavbar"
+                    <button class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+                            data-dropdown-toggle="dropdownNavbar"
                             id="dropdownNavbarLink">
                         Меню администратора
                         <svg aria-hidden="true" class="ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
@@ -92,35 +96,14 @@
                                    data-mdb-ripple="true" data-mdb-ripple-color="light" href="/personal_info">Пресональная
                                     информация</a>
                             </li>
-                            <li class="nav-item"
-                                sec:authorize="hasAuthority('ADMIN') or hasAuthority('TEACHER')">
-                                <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                   data-mdb-ripple="true" data-mdb-ripple-color="light"
-                                   href="/preparation_program">Программа
-                                    подготовки</a>
-                            </li>
-                            <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
-                                <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                   data-mdb-ripple="true" data-mdb-ripple-color="light"
-                                   href="/subject">Предмет</a>
-                            </li>
-                            <li class="nav-item"
-                                sec:authorize="hasAuthority('ADMIN') or hasAuthority('TEACHER')">
-                                <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                   data-mdb-ripple="true" data-mdb-ripple-color="light" href="/department">Отделение</a>
-                            </li>
-                            <li class="nav-item"
-                                sec:authorize="hasAuthority('ADMIN') or hasAuthority('TEACHER')">
-                                <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                   data-mdb-ripple="true" data-mdb-ripple-color="light" href="/education">Об.
-                                    учреждения</a>
-                            </li>
+
 
                         </ul>
                     </div>
                 </li>
                 <li sec:authorize="hasAuthority('TEACHER')">
-                    <button class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent" data-dropdown-toggle="teachDropdownNavbar"
+                    <button class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+                            data-dropdown-toggle="teachDropdownNavbar"
                             id="teachDropdownNavbarLink">
                         Меню учебной части
                         <svg aria-hidden="true" class="ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
@@ -153,6 +136,11 @@
                                    href="/preparation_program">Программа
                                     подготовки</a>
                             </li>
+                            <li class="nav-item" sec:authorize="hasAuthority('TEACHER')">
+                                <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                   data-mdb-ripple="true" data-mdb-ripple-color="light"
+                                   href="/subject">Предмет</a>
+                            </li>
                             <li class="nav-item"
                                 sec:authorize="hasAuthority('ADMIN') or hasAuthority('TEACHER')">
                                 <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -162,6 +150,12 @@
                         </ul>
                     </div>
                 </li>
+                <li sec:authorize="hasAuthority('HR')">
+                    <a aria-current="page"
+                       class="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent"
+                        href="/user">Пользователи</a>
+                </li>
+
                 <!--                <li sec:authorize="hasAuthority('TEACHER') or hasAuthority('USER')">-->
                 <!--                    <button id="userDropdownNavbarLink" data-dropdown-toggle="userDropdownNavbar"-->
                 <!--                            class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">-->

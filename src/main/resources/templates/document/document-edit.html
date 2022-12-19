@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
@@ -27,7 +28,7 @@
         <div style="color: red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
         <br>
 
-        <label>
+        <label sec:authorize="hasAnyAuthority('HR','ADMISSION','ARCHIVE')">
             Дата архивации:
             <input th:field="*{archive_date}" type="date" name="archive_date" placeholder="Введите оценку"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">

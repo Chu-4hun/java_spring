@@ -27,7 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
-@PreAuthorize("hasAnyAuthority('ADMIN','ARCHIVE')")
+@PreAuthorize("hasAnyAuthority('ADMIN','ARCHIVE','USER','CANDIDATE')")
 @RequestMapping("/document")
 public class DocumentController {
     private final StorageService storageService;

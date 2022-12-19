@@ -10,7 +10,7 @@
 <body>
 <div class="p-4 w-1/2 shadow-xl rounded-lg">
 
-    <p class="text-2xl" th:text="'Целевая программа обучеия '+ ${preparationProgram}"></p>
+    <p class="text-2xl" th:text="'Целевая программа обучеия '+ ${preparationProgram}"></p><br>
     <a class="my-4 inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
        th:href="'/document/files/'+${document.fileName}">Скачать документ</a>
 
@@ -82,7 +82,8 @@
         <canvas class="p-10" id="chartRadar"></canvas>
     </div>
 
-    <form th:object="${document}" th:action="${'/hr/editor/status/'}" method="post" sec:authorize="hasAnyAuthority('HR','ADMISSION')">
+    <form th:object="${document}" th:action="${'/hr/editor/status/'}" method="post"
+          sec:authorize="hasAnyAuthority('HR','ADMISSION')">
         <label> Статусы:
             <select class=" border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/5 dark:placeholder-gray-400 dark:text-white  "
                     th:field="*{status}" required>
@@ -92,7 +93,8 @@
         </label>
         <button type="submit"
                 class="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Изменить статус документа</button>
+            Изменить статус документа
+        </button>
     </form>
 
 

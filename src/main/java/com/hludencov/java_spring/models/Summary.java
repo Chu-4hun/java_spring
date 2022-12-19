@@ -90,5 +90,4 @@ public class Summary implements IExelExport {
                 getMark()
         );
     }
-
 }
