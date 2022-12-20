@@ -21,19 +21,19 @@ public class DepartmentController {
     private DepartmentRepository departmentRepository;
 
     @GetMapping
-    public String educationList(Department department, Model model){
+    public String departmentList(Department department, Model model){
         model.addAttribute("department", departmentRepository.findAll());
         return "department/department-main";
     }
 
 
     @GetMapping("/add")
-    public String educationAdd(Department department) {
+    public String departmentAdd(Department department) {
         return "department/department-add";
     }
 
     @PostMapping("/add")
-    public String educationPostAdd(@ModelAttribute("department") @Valid Department department, BindingResult bindingResult) {
+    public String departmentPostAdd(@ModelAttribute("department") @Valid Department department, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "department/department-add";
         }
@@ -43,7 +43,7 @@ public class DepartmentController {
 
 
     @GetMapping("/edit/{department}")
-    public String educationEdit(
+    public String departmentEdit(
             Department department,
             Model model) {
         model.addAttribute("department", department);
@@ -51,7 +51,7 @@ public class DepartmentController {
     }
 
     @PostMapping("/edit/{department}")
-    public String educationPostEdit(@ModelAttribute("department") @Valid Department department, BindingResult bindingResult) {
+    public String departmentPostEdit(@ModelAttribute("department") @Valid Department department, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "department/department-edit";
         }
@@ -60,7 +60,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/show/{department}")
-    public String educationShow(
+    public String departmentShow(
             Department department,
             Model model) {
         model.addAttribute("department", department);
@@ -68,26 +68,26 @@ public class DepartmentController {
     }
 
     @GetMapping("/del/{department}")
-    public String educationDel(
+    public String departmentDel(
             Department department) {
         departmentRepository.delete(department);
         return "redirect:../";
     }
 
     @GetMapping("/filter")
-    public String educationFilter(Model model) {
+    public String departmentFilter(Model model) {
         return "department/department-filter";
     }
 
     @PostMapping("/filter/result")
-    public String educationResult(@RequestParam String title, Model model) {
+    public String departmentResult(@RequestParam String title, Model model) {
         List<Department> result = departmentRepository.findByNameContains(title);
         model.addAttribute("result", result);
         return "department/department-filter";
     }
 
     @PostMapping("/filter_strict/result")
-    public String educationStrictResult(@RequestParam String title, Model model) {
+    public String departmentStrictResult(@RequestParam String title, Model model) {
         List<Department> result = departmentRepository.findByName(title);
         model.addAttribute("result", result);
         return "department/department-filter";
